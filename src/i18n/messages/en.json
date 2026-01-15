@@ -1,0 +1,834 @@
+{
+  "metadata": {
+    "title": "Ophir Estate - Luxury Real Estate",
+    "description": "An exclusive selection of exceptional properties where simplicity meets absolute luxury."
+  },
+  "nav": {
+    "home": "Ophir House",
+    "patrimoine": "Heritage",
+    "diaspora": "Diaspora",
+    "advisory": "Advisory",
+    "offMarket": "Off-Market",
+    "allocation": "Allocation",
+    "contact": "Contact Us"
+  },
+  "hero": {
+    "badge": "Real Estate Excellence",
+    "titleLine1": "Build with",
+    "highlight1": "Wisdom",
+    "titleLine2": "Invest with",
+    "highlight2": "Vision",
+    "subtitle": "An exclusive selection of exceptional properties where simplicity meets absolute luxury.",
+    "ctaPrimary": "Discover the Collection",
+    "ctaSecondary": "Our Philosophy",
+    "scroll": "Scroll"
+  },
+  "philosophy": {
+    "title": "The Art of",
+    "titleHighlight": "Timeless Elegance",
+    "paragraph1": "At Ophir Estate, we believe that true luxury lies in the simplicity of things. It's not just about an address, but the feeling of coming home to a masterpiece.",
+    "paragraph2": "Our color palette, inspired by the deep mystery of the night sky and the eternal glow of gold, reflects our commitment to stability and prosperity. We select properties that are not just structures, but legacies.",
+    "quote": "Luxury is in every detail.",
+    "quoteAuthor": "Hubert de Givenchy"
+  },
+  "properties": {
+    "label": "Exclusive Selection",
+    "title": "Exceptional Residences",
+    "viewAll": "View All Properties",
+    "forSale": "For Sale",
+    "beds": "beds",
+    "baths": "baths",
+    "priceOnRequest": "Price on request"
+  },
+  "services": {
+    "label": "Our Expertise",
+    "title": "Premium Real Estate Services",
+    "description": "We offer a 360-degree approach to luxury real estate, ensuring every aspect of your acquisition or sale is handled with precision.",
+    "search": {
+      "title": "Property Search",
+      "description": "Access to off-market properties and rare opportunities in the most sought-after locations."
+    },
+    "investment": {
+      "title": "Investment Advisory",
+      "description": "Strategic guidance to optimize the value of your real estate portfolio."
+    },
+    "concierge": {
+      "title": "Private Concierge",
+      "description": "Relocation services, interior design advice, and lifestyle management."
+    }
+  },
+  "contact": {
+    "title": "Ready to Elevate Your Lifestyle?",
+    "subtitle": "Contact our private office to schedule a confidential consultation.",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "John Smith",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "country": "Country",
+      "countryPlaceholder": "Select your country",
+      "subject": "Subject",
+      "subjectPlaceholder": "Subject of your inquiry",
+      "message": "Message",
+      "messagePlaceholder": "Describe your project or inquiry...",
+      "submit": "Send Request"
+    }
+  },
+  "footer": {
+    "description": "Luxury Real Estate Agency based in Paris, serving the most discerning clients with discretion and excellence.",
+    "navigation": "Navigation",
+    "legal": "Legal Notice",
+    "contactTitle": "Contact",
+    "copyright": "Ophir Estate. All rights reserved.",
+    "legalLinks": {
+      "mentions": "Legal Notice",
+      "terms": "Terms of Use",
+      "privacy": "Privacy Policy",
+      "cookies": "Cookie Policy",
+      "offMarket": "Off-Market Clause"
+    }
+  },
+  "contactPage": {
+    "badge": "Contact",
+    "title": "Get in",
+    "titleHighlight": "Touch",
+    "subtitle": "OPHIR receives contact requests in discreet mode.",
+    "subtitleHighlight": "No heritage data is requested on first contact.",
+    "guarantees": {
+      "discreet": {
+        "title": "Discreet Mode",
+        "description": "Your information is treated with the strictest confidentiality."
+      },
+      "simple": {
+        "title": "Simple First Contact",
+        "description": "No heritage data is requested on first contact."
+      },
+      "protected": {
+        "title": "Protected Data",
+        "description": "Secure storage compliant with GDPR standards."
+      }
+    },
+    "info": {
+      "title": "Our Details",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "hours": "Hours",
+      "hoursValue": "Mon - Fri: 9am - 7pm\nSat: By appointment"
+    },
+    "confidentialityNote": "All your communications with OPHIR are treated confidentially.",
+    "map": {
+      "title": "Our Office"
+    }
+  },
+  "stats": {
+    "properties": "Exceptional Properties",
+    "volume": "Sales Volume"
+  },
+  "filters": {
+    "title": "Filters",
+    "search": "Search...",
+    "type": "Property type",
+    "location": "Location",
+    "surface": "Surface",
+    "surfaceMin": "Min sqm",
+    "surfaceMax": "Max sqm",
+    "rooms": "Rooms",
+    "bedrooms": "Bedrooms",
+    "price": "Price",
+    "priceMin": "Min €",
+    "priceMax": "Max €",
+    "reset": "Reset",
+    "noResults": "No properties match your criteria"
+  },
+  "introduction": {
+    "label": "Heritage House",
+    "title": "OPHIR — Heritage House",
+    "titleHighlight": "in Paris",
+    "paragraph1": "OPHIR is an independent heritage house based in Paris. We support families, the diaspora, and international capital in their challenges of acquisition, transmission, and heritage real estate allocation, in France and internationally.",
+    "paragraph2": "Our approach is based on advice, discretion, and knowledge of Parisian heritage dynamics. We operate outside public channels, through mandate or introduction, serving family trajectories or long-term allocations.",
+    "pillars": {
+      "acquisition": "Acquisition",
+      "transmission": "Transmission",
+      "allocation": "Allocation",
+      "patrimoine": "Heritage"
+    }
+  },
+  "parisPatrimoine": {
+    "label": "Living Heritage",
+    "title": "Paris as a",
+    "titleHighlight": "living heritage",
+    "description": "Paris remains one of the world's major heritage capitals. Its real estate market, structured by stone, family, and transmission, plays a central role in anchoring, inheritance, and portfolio diversification strategies.",
+    "features": {
+      "pierre": { "label": "Stone", "description": "Solid real estate anchoring" },
+      "famille": { "label": "Family", "description": "Generational transmission" },
+      "heritage": { "label": "Heritage", "description": "Patrimony preservation" }
+    },
+    "stats": "Years of history"
+  },
+  "diasporaBridge": {
+    "label": "International",
+    "title": "A bridge between Paris, the Diaspora",
+    "titleHighlight": "and Capital",
+    "diaspora": {
+      "title": "Diaspora",
+      "description": "Families and entrepreneurs internationally"
+    },
+    "paris": {
+      "title": "Paris",
+      "description": "Parisian real estate heritage"
+    },
+    "description": "OPHIR operates as a bridge between the diaspora and Paris. We support families and entrepreneurs who wish to build or consolidate their Parisian real estate heritage from abroad — through trust, continuity, or projection.",
+    "indicator1": "Trust",
+    "indicator2": "Continuity",
+    "indicator3": "Projection"
+  },
+  "confidentiality": {
+    "label": "Our Approach",
+    "title": "Confidentiality, advisory",
+    "titleHighlight": "and off-market",
+    "description": "Because a large part of heritage transactions do not take place on the public market, OPHIR operates in confidential mode, by mandate or off-market, with identified and qualified counterparts.",
+    "cta": "Confidentiality guaranteed on every transaction",
+    "features": {
+      "confidential": {
+        "title": "Confidential Mode",
+        "description": "Off-market transactions, total discretion on every operation."
+      },
+      "mandate": {
+        "title": "By Mandate",
+        "description": "Exclusive representation of your heritage interests."
+      },
+      "offmarket": {
+        "title": "Off-Market",
+        "description": "Access to opportunities not listed on the market."
+      },
+      "qualified": {
+        "title": "Qualified Counterparts",
+        "description": "Verified and qualified network for every transaction."
+      }
+    }
+  },
+  "vocation": {
+    "label": "Our Vocation",
+    "title": "Giving those who need it a",
+    "titleHighlight": "structured and discreet access",
+    "titleEnd": "to Parisian heritage.",
+    "audiences": {
+      "families": "Families",
+      "heirs": "Heirs",
+      "entrepreneurs": "Entrepreneurs",
+      "diaspora": "Diaspora",
+      "capital": "Capital allocators"
+    }
+  },
+  "allocation": {
+    "hero": {
+      "badge": "Allocation",
+      "title": "Real Estate",
+      "titleHighlight": "Allocation",
+      "paragraph1": "For certain players — family offices, private banks, entrepreneurs, capitalized diaspora — Parisian real estate is not just an asset for use, but an",
+      "paragraph1Highlight": "allocation asset",
+      "paragraph2": "OPHIR supports these allocators in diversification, risk, liquidity and projection.",
+      "metrics": {
+        "yield": "Optimized returns",
+        "vision": "Long-term vision",
+        "approach": "Institutional approach"
+      }
+    },
+    "patrimoniale": {
+      "label": "Heritage Allocation",
+      "title": "Heritage real estate",
+      "titleHighlight": "allocation",
+      "paragraph1": "OPHIR supports families, the diaspora and allocators in positioning real estate within a global estate, according to a logic of use, transmission or diversification.",
+      "paragraph2": "For certain players — family offices, private banks, international entrepreneurs — Parisian real estate is not solely an asset for use, but an allocation asset on par with other heritage asset classes.",
+      "points": {
+        "usage": "Usage logic",
+        "transmission": "Heritage transmission",
+        "diversification": "Strategic diversification"
+      }
+    },
+    "pillars": {
+      "label": "Our Pillars",
+      "title": "The Four Axes of Allocation",
+      "subtitle": "A structured methodology to optimize your real estate investments",
+      "diversification": {
+        "title": "Diversification",
+        "description": "Strategic allocation of real estate assets to optimize overall portfolio returns.",
+        "metric": "Multi-asset"
+      },
+      "risk": {
+        "title": "Risk",
+        "description": "Analysis and mitigation of risks related to Parisian real estate investment.",
+        "metric": "Controlled"
+      },
+      "liquidity": {
+        "title": "Liquidity",
+        "description": "Exit strategies and liquidity management of real estate assets.",
+        "metric": "Optimized"
+      },
+      "projection": {
+        "title": "Projection",
+        "description": "Long-term vision and heritage planning across multiple generations.",
+        "metric": "Long term"
+      },
+      "status": "Status",
+      "pillar": "Pillar"
+    },
+    "clients": {
+      "label": "Our Clients",
+      "title": "Who Allocation Is For",
+      "subtitle": "Institutional and private players seeking a structured approach to real estate investment.",
+      "familyOffice": {
+        "title": "Family Offices",
+        "description": "Heritage management for prominent families"
+      },
+      "privateBank": {
+        "title": "Private Banks",
+        "description": "Trusted institutional partnership"
+      },
+      "entrepreneurs": {
+        "title": "Entrepreneurs",
+        "description": "Professional capital diversification"
+      },
+      "diaspora": {
+        "title": "Capitalized Diaspora",
+        "description": "Heritage anchoring in Paris"
+      }
+    },
+    "contact": {
+      "label": "Get Started",
+      "title": "Structure Your Allocation",
+      "subtitle": "Contact our team for a personalized analysis of your real estate allocation strategy.",
+      "metrics": {
+        "volume": "Volume managed",
+        "volumeValue": "€500M+",
+        "clients": "Institutional clients",
+        "clientsValue": "50+",
+        "track": "Track record",
+        "trackValue": "15 years"
+      },
+      "trust": "Confidentiality and discretion guaranteed"
+    }
+  },
+  "patrimoine": {
+    "hero": {
+      "badge": "Heritage",
+      "title": "Heritage &",
+      "titleHighlight": "Transmission",
+      "paragraph1": "Parisian real estate heritage is often a legacy to be passed down. It involves family, inheritance, legal, and sometimes emotional considerations.",
+      "paragraph2": "OPHIR supports families in these situations where time, discretion, and understanding of heritage dynamics are essential.",
+      "scroll": "Discover"
+    },
+    "collection": {
+      "badge": "Exclusive Collection",
+      "title": "Exceptional",
+      "titleHighlight": "Properties",
+      "subtitle": "A selection of prestigious properties in the heart of Paris's most sought-after neighborhoods"
+    },
+    "filters": {
+      "searchPlaceholder": "Search by name or location...",
+      "button": "Filters",
+      "country": "Country",
+      "district": "District",
+      "propertyType": "Property type",
+      "budget": "Budget (€)",
+      "surface": "Surface (sqm)",
+      "rooms": "Rooms",
+      "bedrooms": "Bedrooms",
+      "all": "All",
+      "min": "Min",
+      "max": "Max",
+      "roomsUnit": "rooms",
+      "bedroomsUnit": "bedrooms",
+      "reset": "Reset filters",
+      "resultsCount": "exceptional property(ies)"
+    },
+    "property": {
+      "rooms": "rooms",
+      "beds": "beds",
+      "baths": "baths",
+      "price": "Price",
+      "discover": "Discover",
+      "noResults": "No properties found",
+      "noResultsMessage": "Adjust your criteria or contact us for a personalized search."
+    },
+    "services": {
+      "badge": "Our Support",
+      "title": "A structured process for your heritage",
+      "service1": {
+        "title": "Transmission & Succession",
+        "description": "We intervene when heritage changes hands: succession, joint ownership, division, family arbitration, repositioning, asset reallocation."
+      },
+      "service2": {
+        "title": "Heritage Mandate",
+        "description": "OPHIR acts on mandate on behalf of the family or its representative, in coordination with heritage professionals (notary, tax, family office, lawyers, private bank)."
+      },
+      "service3": {
+        "title": "Acquisition or Arbitration",
+        "description": "We identify, evaluate, arbitrate, or secure heritage real estate assets according to the family's strategy: preservation, repositioning, or liquidation."
+      }
+    },
+    "contact": {
+      "title": "Heritage to pass on?",
+      "subtitle": "Contact our team for a confidential consultation and discover how OPHIR can support you in your heritage challenges."
+    },
+    "modal": {
+      "surface": "Surface",
+      "rooms": "Rooms",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Baths",
+      "description": "Description",
+      "features": "Features",
+      "type": "Type",
+      "location": "Location",
+      "parking": "Parking",
+      "parkingUnit": "space",
+      "parkingUnitPlural": "spaces",
+      "interested": "Interested in this property?",
+      "requestVisit": "Request a visit"
+    },
+    "propertyTypes": {
+      "apartment": "Apartment",
+      "house": "House",
+      "villa": "Villa",
+      "mansion": "Mansion",
+      "loft": "Loft"
+    }
+  },
+  "advisory": {
+    "hero": {
+      "badge": "Heritage Advisory",
+      "title": "Heritage",
+      "titleHighlight": "Advisory",
+      "paragraph1": "OPHIR operates as a heritage advisory, providing independent counsel to families, entrepreneurs, the diaspora, and capital allocators.",
+      "paragraph2": "Our role is to structure, filter, analyze, introduce, coordinate, and represent. We intervene in acquisition, disposal, allocation, arbitration, and transmission.",
+      "keywords": {
+        "structure": "Structure",
+        "filter": "Filter",
+        "analyze": "Analyze",
+        "coordinate": "Coordinate",
+        "represent": "Represent"
+      }
+    },
+    "positioning": {
+      "badge": "Our Positioning",
+      "title": "A differentiated approach to heritage advisory",
+      "whatWeDo": {
+        "title": "What we do",
+        "subtitle": "7 areas of expertise"
+      },
+      "whatWeDont": {
+        "title": "What we don't do",
+        "subtitle": "Our positioning",
+        "item1": "Mass-market real estate agency",
+        "item2": "Storefront and mass-market",
+        "item3": "Listing exposure"
+      },
+      "commitment": {
+        "badge": "Our Commitment",
+        "text": "Independent advice, aligned with your heritage interests."
+      }
+    },
+    "services": {
+      "localAnalysis": "Local heritage analysis",
+      "offMarketSearch": "Off-market search and access",
+      "dueDiligence": "Real estate due diligence",
+      "acquisitionMandate": "Acquisition or sale mandate",
+      "allocation": "Real estate allocation",
+      "notarialCoordination": "Notarial coordination",
+      "crossBorder": "Cross-border support"
+    },
+    "contact": {
+      "badge": "Consultation",
+      "title": "Need heritage advice?",
+      "subtitle": "Contact our team for a confidential consultation.",
+      "step1": {
+        "title": "First exchange",
+        "description": "Understanding your situation"
+      },
+      "step2": {
+        "title": "Analysis",
+        "description": "Study of your heritage needs"
+      },
+      "step3": {
+        "title": "Proposal",
+        "description": "Personalized recommendations"
+      }
+    }
+  },
+  "diaspora": {
+    "hero": {
+      "badge": "Diaspora",
+      "title": "Diaspora &",
+      "titleHighlight": "Paris",
+      "paragraph1": "For part of the diaspora, Paris is a place of heritage, cultural capital, and family projection. For others, it is a point of connection, a place of investment, or a symbol of continuity.",
+      "paragraph2": "OPHIR supports the international diaspora — entrepreneurs, executives, families, and allocators — in building or returning to their heritage in Paris.",
+      "stats": {
+        "countries": "Countries represented",
+        "confidential": "Confidential"
+      }
+    },
+    "approach": {
+      "badge": "Our Approach",
+      "title": "A Bridge to Paris",
+      "subtitle": "We create the link between the diaspora and Parisian heritage"
+    },
+    "services": {
+      "context": {
+        "title": "Context",
+        "description": "From a distance, accessing Parisian heritage is complex: fragmented information, multiple intermediaries, lack of transparency, absence of advice, and difficulty in positioning oneself."
+      },
+      "role": {
+        "title": "Our Role",
+        "description": "Building trust, simplifying access, filtering intermediaries, structuring operations, representing interests, and securing the process."
+      },
+      "crossBorder": {
+        "title": "Cross-Border Support",
+        "description": "Acquisition, allocation, succession, mandate, or repositioning: OPHIR operates as a local heritage representative, serving families and their interests."
+      }
+    },
+    "highlights": {
+      "presence": {
+        "label": "Local presence",
+        "value": "Paris"
+      },
+      "families": {
+        "label": "Families supported",
+        "value": "200+"
+      },
+      "assets": {
+        "label": "Assets managed",
+        "value": "€500M+"
+      }
+    },
+    "contact": {
+      "badge": "Contact Us",
+      "title": "Are you from the diaspora?",
+      "subtitle": "Contact our team for a confidential consultation and discover how OPHIR can support you in your heritage project in Paris.",
+      "points": {
+        "consultation": "Initial consultation with no obligation",
+        "languages": "Support in French and English",
+        "timezone": "Video conference adapted to your time zone"
+      }
+    }
+  },
+  "offMarket": {
+    "hero": {
+      "badge": "Restricted Access",
+      "title": "Off-",
+      "titleHighlight": "Market",
+      "paragraph1": "A large part of heritage transactions take place outside the public market.",
+      "paragraph2": "OPHIR operates in this discreet world, by mandate or introduction, with verified counterparts."
+    },
+    "properties": {
+      "badge": "Available Properties",
+      "title": "Off-Market Selection",
+      "subtitle": "Exceptional properties accessible only through introduction",
+      "searchPlaceholder": "Search by name or location...",
+      "filters": "Filters",
+      "country": "Country",
+      "district": "District",
+      "propertyType": "Property type",
+      "surface": "Surface (sqm)",
+      "min": "Min",
+      "max": "Max",
+      "rooms": "Rooms",
+      "bedrooms": "Bedrooms",
+      "all": "All",
+      "roomsUnit": "rooms",
+      "bedroomsUnit": "bedrooms",
+      "resetFilters": "Reset all filters",
+      "propertiesFound": "property(ies) found",
+      "activeFilters": "active filter(s)",
+      "roomsAbbr": "rms",
+      "bedsAbbr": "beds",
+      "priceOnRequest": "Price on request",
+      "noResults": "No properties found",
+      "noResultsMessage": "Adjust your search criteria or contact us for a personalized search.",
+      "resetButton": "Reset filters",
+      "searchCta": "Looking for a specific property? Our team can assist you with a tailored search.",
+      "accessOnRequest": "Access to other properties on request"
+    },
+    "reasons": {
+      "badge": "Why Off-Market",
+      "title": "The reasons for discretion",
+      "subtitle": "Heritage situations that require confidentiality and expertise",
+      "items": {
+        "successions": { "label": "Successions", "description": "Discreet transmission of family assets" },
+        "arbitrages": { "label": "Arbitration", "description": "Strategic portfolio repositioning" },
+        "family": { "label": "Family operations", "description": "Private heritage restructuring" },
+        "allocation": { "label": "Capital allocation", "description": "Discreet institutional investment" },
+        "repositioning": { "label": "Repositioning", "description": "Optimization of existing assets" },
+        "inheritance": { "label": "Inheritance", "description": "Confidential estate management" }
+      }
+    },
+    "approach": {
+      "badge": "Our Approach",
+      "title": "Access and Confidentiality",
+      "items": {
+        "mandate": { "title": "By Mandate", "description": "We act exclusively by mandate, representing your interests with the strictest confidentiality." },
+        "introduction": { "title": "By Introduction", "description": "Access to our network is by introduction, guaranteeing the quality of counterparts." },
+        "verified": { "title": "Verified Counterparts", "description": "Each party is qualified and verified before any connection." }
+      },
+      "preferred": "Preferred Method",
+      "guarantee": "Confidentiality guaranteed on every transaction"
+    },
+    "contact": {
+      "title": "Access on request",
+      "subtitle": "Access to our complete off-market selection is reserved for qualified counterparts. Contact us to discover all our opportunities.",
+      "badges": {
+        "confidentiality": "Confidentiality",
+        "tailored": "Tailored",
+        "exclusivity": "Exclusivity"
+      }
+    },
+    "modal": {
+      "surface": "Surface",
+      "rooms": "Rooms",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Baths",
+      "description": "Description",
+      "features": "Features",
+      "type": "Type",
+      "location": "Location",
+      "parking": "Parking",
+      "parkingUnit": "space",
+      "parkingUnitPlural": "spaces",
+      "availableOnRequest": "Property available exclusively on request",
+      "contactUs": "Contact us"
+    },
+    "status": {
+      "exclusive": "Exclusive",
+      "offMarket": "Off-Market"
+    }
+  },
+  "legalNotice": {
+    "hero": {
+      "badge": "Legal Information",
+      "title": "Legal",
+      "titleHighlight": "Notice",
+      "subtitle": "OPHIR ESTATE — Heritage house based in Paris, operating in advisory, mandate and representation."
+    },
+    "sections": {
+      "identity": {
+        "title": "Identity",
+        "content": "OPHIR ESTATE — Paris (France)"
+      },
+      "activity": {
+        "title": "Nature of Activity",
+        "content": "Heritage house operating in advisory, mandate and representation.\n\nOPHIR is not a mass-market real estate agency and does not expose listings."
+      },
+      "regulation": {
+        "title": "Regulation",
+        "content": "For transactional operations subject to French law, OPHIR holds the T Card (Transaction) required within the mandate framework."
+      },
+      "publication": {
+        "title": "Publication Director",
+        "content": "OPHIR ESTATE"
+      },
+      "hosting": {
+        "title": "Hosting Provider",
+        "content": "Vercel Inc. — Technical hosting provider"
+      },
+      "ip": {
+        "title": "Intellectual Property",
+        "content": "The site content (texts, identity, structure, brand, concept) is protected.\n\nAny reproduction requires written authorization."
+      },
+      "law": {
+        "title": "Applicable Law",
+        "content": "French law — Paris jurisdiction"
+      }
+    },
+    "contact": {
+      "text": "For any questions, contact us at"
+    }
+  },
+  "terms": {
+    "hero": {
+      "badge": "Legal Framework",
+      "title": "Terms of",
+      "titleHighlight": "Use",
+      "subtitle": "The terms governing access and use of the OPHIR ESTATE website, a heritage house based in Paris."
+    },
+    "sections": {
+      "object": {
+        "title": "Purpose",
+        "content": "These Terms of Use govern access and use of the ophirestate.com website (the \"Site\"), operated by OPHIR ESTATE, a heritage house based in Paris.\n\nBy accessing the Site, the user accepts these terms."
+      },
+      "nature": {
+        "title": "Nature of Information",
+        "content": "The Site presents general information about OPHIR, its heritage advisory, mandate and representation activities.\n\nThe Site does not constitute a public real estate agency, does not offer listings, does not engage in real estate advertising, nor public offerings.\n\nNo element of the Site constitutes a public offer, solicitation or investment recommendation."
+      },
+      "access": {
+        "title": "Site Access and Use",
+        "content": "The user may access the Site for personal or professional information purposes.\n\nAny reproduction, misappropriation, commercial use or unauthorized distribution is prohibited without prior written consent."
+      },
+      "precontract": {
+        "title": "Pre-contractual Contact",
+        "content": "The Site's contact forms constitute a pre-contractual step.\n\nAny heritage operation (acquisition, disposal, allocation, succession, off-market or introduction) requires the signature of a mandate between the user and OPHIR."
+      },
+      "mandate": {
+        "title": "Mandate & Advisory",
+        "content": "OPHIR operates in heritage advisory and representation under mandate.\n\nOPHIR is not a mass-market real estate agency and does not operate through listing exposure or mass-market."
+      },
+      "regulation": {
+        "title": "Regulatory Compliance (T Card)",
+        "content": "For transactional operations subject to French law, OPHIR holds the T Card, a mandatory license under the Hoguet law for real estate transaction activities.\n\nThis framework applies only within the scope of a signed mandate."
+      },
+      "confidentiality": {
+        "title": "Confidentiality & Off-market",
+        "content": "Part of heritage operations are conducted off-market, in confidential environments.\n\nAny unauthorized disclosure is strictly prohibited."
+      },
+      "international": {
+        "title": "International Interactions",
+        "content": "OPHIR may interact with international clients (families, diaspora, entrepreneurs, allocators, family offices).\n\nThese interactions are governed by French law."
+      },
+      "liability": {
+        "title": "Liability & Limitations",
+        "content": "OPHIR makes reasonable efforts to ensure the accuracy of published information.\n\n**OPHIR cannot be held liable for:**\n• Indirect damages\n• Data loss\n• Decisions made solely based on the Site\n• External content beyond its control"
+      },
+      "ip": {
+        "title": "Intellectual Property",
+        "content": "All content (texts, identity, structure, brand and concept) is protected by intellectual property law.\n\nAny reproduction requires prior written authorization."
+      },
+      "law": {
+        "title": "Applicable Law & Jurisdiction",
+        "content": "These terms are governed by French law.\n\nExclusive jurisdiction is attributed to the Paris courts, unless otherwise provided by law."
+      },
+      "modification": {
+        "title": "Modification of Terms",
+        "content": "OPHIR may update these terms to account for regulatory or operational changes.\n\nThe user is invited to consult them regularly.\n\n**Last update: January 2025**"
+      }
+    },
+    "contact": {
+      "text": "For any questions regarding these terms, contact us at"
+    }
+  },
+  "privacy": {
+    "hero": {
+      "badge": "Data Protection",
+      "title": "Privacy",
+      "titleHighlight": "Policy",
+      "subtitle": "OPHIR is committed to protecting your personal data with the utmost rigor, in compliance with GDPR and French law."
+    },
+    "sections": {
+      "object": {
+        "title": "Purpose",
+        "content": "This policy describes how OPHIR processes personal data in the context of its wealth management activities."
+      },
+      "data": {
+        "title": "Data Collected",
+        "content": "• Identification data (Name, Email, etc.)\n• Request-related data\n• Contractual data within the mandate framework"
+      },
+      "purposes": {
+        "title": "Purposes",
+        "content": "• Responding to requests\n• Mandate execution\n• Wealth coordination (notaries, FO, lawyers, PB, etc.)\n• Regulatory compliance"
+      },
+      "legal": {
+        "title": "Legal Basis",
+        "content": "• Pre-contractual execution\n• Contract execution (mandate)\n• Legitimate interest\n• Legal obligation (Carte T)"
+      },
+      "recipients": {
+        "title": "Recipients",
+        "content": "Notaries, family offices, lawyers, private banks, technical service providers."
+      },
+      "duration": {
+        "title": "Duration",
+        "content": "12 months without mandate / legal duration with mandate."
+      },
+      "international": {
+        "title": "International",
+        "content": "Possible international diaspora interactions — always under French law."
+      },
+      "rights": {
+        "title": "GDPR Rights",
+        "content": "Access, rectification, deletion, opposition, CNIL."
+      }
+    },
+    "contact": {
+      "text": "For any questions regarding your personal data, contact us at"
+    }
+  },
+  "cookies": {
+    "hero": {
+      "badge": "Transparency & Respect",
+      "title": "Cookie",
+      "titleHighlight": "Policy",
+      "subtitle": "OPHIR is committed to respecting your privacy. Our approach remains restrained, without marketing tracking or commercial exploitation of your data."
+    },
+    "sections": {
+      "object": {
+        "title": "Policy Purpose",
+        "content": "This Cookie Policy describes how cookies are used on the ophirestate.com website."
+      },
+      "noMarketing": {
+        "title": "No Marketing or Advertising Cookies",
+        "content": "OPHIR does not use any advertising, marketing or retargeting cookies.\n\nNo browsing data is used for commercial or promotional purposes."
+      },
+      "functional": {
+        "title": "Functional (Technical) Cookies",
+        "content": "Essential cookies may only be used to ensure the website functions properly (display, navigation, security, language, etc.).\n\nThese cookies do not collect personal information for commercial purposes."
+      },
+      "analytics": {
+        "title": "Audience Measurement (Optional)",
+        "content": "OPHIR may use a statistical audience measurement tool to better understand website usage.\n\nThis type of cookie does not track users for marketing purposes.\n\nIf the chosen solution requires consent, a banner will clearly indicate this."
+      },
+      "preferences": {
+        "title": "Managing Preferences",
+        "content": "Users may refuse non-essential cookies via their browser settings or, if applicable, via the consent banner."
+      },
+      "data": {
+        "title": "Data Collected",
+        "content": "No personal data is collected via cookies for profiling, advertising or transmission to commercial third parties."
+      },
+      "thirdParty": {
+        "title": "Third Parties and Subcontractors",
+        "content": "Some technical cookies may come from technical providers solely for hosting, security or audience measurement."
+      },
+      "update": {
+        "title": "Policy Updates",
+        "content": "This policy may be updated in accordance with regulatory or technical changes.\n\n**Last update: January 2025**"
+      }
+    },
+    "contact": {
+      "text": "For any questions regarding cookies, contact us at"
+    }
+  },
+  "offMarketClause": {
+    "hero": {
+      "badge": "Confidentiality",
+      "title": "Off-Market",
+      "titleHighlight": "Clause",
+      "subtitle": "Off-market wealth operations are subject to strict confidentiality. Access by introduction or mandate only."
+    },
+    "sections": {
+      "confidentiality": {
+        "title": "Confidential Operations",
+        "content": "Some wealth operations are non-public.\n\nAccess requires introduction or mandate."
+      },
+      "prohibitions": {
+        "title": "Prohibitions",
+        "content": "It is prohibited to:\n\n• Disclose\n• Reproduce\n• Transmit\n• Commercialize\n• Publish\n\noff-market information relating to families, estates, successions or allocations."
+      },
+      "representation": {
+        "title": "Representation",
+        "content": "OPHIR acts on behalf of the principal in a wealth management context."
+      },
+      "compliance": {
+        "title": "Compliance",
+        "content": "When the operation is transactional, OPHIR operates under Carte T (Hoguet Law)."
+      },
+      "international": {
+        "title": "International",
+        "content": "Applicable to diaspora / FO / PB / notary / lawyer interactions."
+      },
+      "law": {
+        "title": "Law",
+        "content": "French law — Paris jurisdiction."
+      }
+    },
+    "contact": {
+      "text": "For any questions regarding off-market operations, contact us at"
+    }
+  }
+}

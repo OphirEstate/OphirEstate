@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dark text-gray-100 antialiased;
+  }
+
+  ::selection {
+    @apply bg-gold text-dark;
+  }
+}
+
+@layer components {
+  .text-gold-gradient {
+    @apply bg-gold-gradient bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  .gradient-blur {
+    @apply rounded-full mix-blend-multiply blur-[150px] opacity-[0.08];
+  }
+}

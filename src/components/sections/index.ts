@@ -1,0 +1,10 @@
+export { Hero } from "./hero";
+export { Philosophy } from "./philosophy";
+export { Properties } from "./properties";
+export { Services } from "./services";
+export { Contact } from "./contact";
+export { Introduction } from "./introduction";
+export { ParisPatrimoine } from "./paris-patrimoine";
+export { DiasporaBridge } from "./diaspora-bridge";
+export { Confidentiality } from "./confidentiality";
+export { Vocation } from "./vocation";

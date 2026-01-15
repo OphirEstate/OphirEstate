@@ -1,0 +1,834 @@
+{
+  "metadata": {
+    "title": "Ophir Estate - Immobilier de Luxe",
+    "description": "Une sélection exclusive de biens d'exception où la simplicité rencontre le luxe absolu."
+  },
+  "nav": {
+    "home": "Maison Ophir",
+    "patrimoine": "Patrimoine",
+    "diaspora": "Diaspora",
+    "advisory": "Advisory",
+    "offMarket": "Off-Market",
+    "allocation": "Allocation",
+    "contact": "Contactez-Nous"
+  },
+  "hero": {
+    "badge": "L'Excellence Immobilière",
+    "titleLine1": "Bâtir avec",
+    "highlight1": "Sagesse",
+    "titleLine2": "Investir avec",
+    "highlight2": "Vision",
+    "subtitle": "Une sélection exclusive de biens d'exception où la simplicité rencontre le luxe absolu.",
+    "ctaPrimary": "Découvrir la Collection",
+    "ctaSecondary": "Notre Philosophie",
+    "scroll": "Défiler"
+  },
+  "philosophy": {
+    "title": "L'Art de",
+    "titleHighlight": "l'Élégance Intemporelle",
+    "paragraph1": "Chez Ophir Estate, nous croyons que le vrai luxe réside dans la simplicité des choses. Il ne s'agit pas seulement d'une adresse, mais du sentiment de rentrer chez soi dans un chef-d'œuvre.",
+    "paragraph2": "Notre palette de couleurs, inspirée par le mystère profond du ciel nocturne et l'éclat éternel de l'or, reflète notre engagement envers la stabilité et la prospérité. Nous sélectionnons des biens qui ne sont pas de simples structures, mais des héritages.",
+    "quote": "Le luxe est dans chaque détail.",
+    "quoteAuthor": "Hubert de Givenchy"
+  },
+  "properties": {
+    "label": "Sélection Exclusive",
+    "title": "Résidences d'Exception",
+    "viewAll": "Voir Tous les Biens",
+    "forSale": "À Vendre",
+    "beds": "ch",
+    "baths": "sdb",
+    "priceOnRequest": "Prix sur demande"
+  },
+  "services": {
+    "label": "Notre Expertise",
+    "title": "Services Immobiliers Haut de Gamme",
+    "description": "Nous offrons une approche à 360 degrés de l'immobilier de luxe, garantissant que chaque aspect de votre acquisition ou vente soit traité avec précision.",
+    "search": {
+      "title": "Recherche de Biens",
+      "description": "Accès à des biens hors-marché et des opportunités rares dans les emplacements les plus prisés."
+    },
+    "investment": {
+      "title": "Conseil en Investissement",
+      "description": "Accompagnement stratégique pour optimiser la valeur de votre patrimoine immobilier."
+    },
+    "concierge": {
+      "title": "Conciergerie Privée",
+      "description": "Services de relocation, conseil en décoration d'intérieur et gestion de votre cadre de vie."
+    }
+  },
+  "contact": {
+    "title": "Prêt à Élever Votre Art de Vivre ?",
+    "subtitle": "Contactez notre bureau privé pour planifier une consultation confidentielle.",
+    "form": {
+      "name": "Nom",
+      "namePlaceholder": "Laurent Durand",
+      "email": "Email",
+      "emailPlaceholder": "votre@email.com",
+      "country": "Pays",
+      "countryPlaceholder": "Sélectionner votre pays",
+      "subject": "Sujet",
+      "subjectPlaceholder": "Objet de votre demande",
+      "message": "Message",
+      "messagePlaceholder": "Décrivez votre projet ou votre demande...",
+      "submit": "Envoyer la Demande"
+    }
+  },
+  "footer": {
+    "description": "Agence Immobilière de Luxe basée à Paris, au service des clients les plus exigeants avec discrétion et excellence.",
+    "navigation": "Navigation",
+    "legal": "Mentions légales",
+    "contactTitle": "Contact",
+    "copyright": "Ophir Estate. Tous droits réservés.",
+    "legalLinks": {
+      "mentions": "Mentions légales",
+      "terms": "Conditions d'utilisation",
+      "privacy": "Politique de confidentialité",
+      "cookies": "Politique cookies",
+      "offMarket": "Clause Off-market"
+    }
+  },
+  "contactPage": {
+    "badge": "Contact",
+    "title": "Prendre",
+    "titleHighlight": "Contact",
+    "subtitle": "OPHIR reçoit les demandes de contact en mode discret.",
+    "subtitleHighlight": "Aucune donnée patrimoniale n'est demandée en premier contact.",
+    "guarantees": {
+      "discreet": {
+        "title": "Mode Discret",
+        "description": "Vos informations sont traitées avec la plus stricte confidentialité."
+      },
+      "simple": {
+        "title": "Premier Contact Simple",
+        "description": "Aucune donnée patrimoniale n'est demandée en premier contact."
+      },
+      "protected": {
+        "title": "Données Protégées",
+        "description": "Stockage sécurisé et conforme aux normes RGPD."
+      }
+    },
+    "info": {
+      "title": "Nos Coordonnées",
+      "address": "Adresse",
+      "phone": "Téléphone",
+      "email": "Email",
+      "hours": "Horaires",
+      "hoursValue": "Lun - Ven : 9h00 - 19h00\nSam : Sur rendez-vous"
+    },
+    "confidentialityNote": "Toutes vos communications avec OPHIR sont traitées de manière confidentielle.",
+    "map": {
+      "title": "Notre Bureau"
+    }
+  },
+  "stats": {
+    "properties": "Biens d'Exception",
+    "volume": "Volume de Ventes"
+  },
+  "filters": {
+    "title": "Filtres",
+    "search": "Rechercher...",
+    "type": "Type de bien",
+    "location": "Localisation",
+    "surface": "Surface",
+    "surfaceMin": "Min m²",
+    "surfaceMax": "Max m²",
+    "rooms": "Pièces",
+    "bedrooms": "Chambres",
+    "price": "Prix",
+    "priceMin": "Min €",
+    "priceMax": "Max €",
+    "reset": "Réinitialiser",
+    "noResults": "Aucun bien ne correspond à vos critères"
+  },
+  "introduction": {
+    "label": "Maison Patrimoniale",
+    "title": "OPHIR — Maison Patrimoniale",
+    "titleHighlight": "à Paris",
+    "paragraph1": "OPHIR est une Maison patrimoniale indépendante basée à Paris. Nous accompagnons les familles, la diaspora et le capital international dans leurs enjeux d'acquisition, de transmission et d'allocation immobilière patrimoniale, en France et à l'international.",
+    "paragraph2": "Notre approche est fondée sur le conseil, la discrétion et la connaissance des dynamiques patrimoniales parisiennes. Nous intervenons en dehors des circuits publics, dans une logique de mandat ou d'introduction, au service de trajectoires familiales ou d'allocations de long terme.",
+    "pillars": {
+      "acquisition": "Acquisition",
+      "transmission": "Transmission",
+      "allocation": "Allocation",
+      "patrimoine": "Patrimoine"
+    }
+  },
+  "parisPatrimoine": {
+    "label": "Patrimoine Vivant",
+    "title": "Paris comme",
+    "titleHighlight": "patrimoine vivant",
+    "description": "Paris demeure l'une des capitales patrimoniales majeures du monde. Son marché immobilier, structuré par la pierre, la famille et la transmission, joue un rôle central dans les stratégies d'ancrage, d'héritage et de diversification des patrimoines.",
+    "features": {
+      "pierre": { "label": "Pierre", "description": "Ancrage immobilier solide" },
+      "famille": { "label": "Famille", "description": "Transmission générationnelle" },
+      "heritage": { "label": "Héritage", "description": "Préservation patrimoniale" }
+    },
+    "stats": "Années d'histoire"
+  },
+  "diasporaBridge": {
+    "label": "International",
+    "title": "Un pont entre Paris, la Diaspora",
+    "titleHighlight": "et le Capital",
+    "diaspora": {
+      "title": "Diaspora",
+      "description": "Familles et entrepreneurs à l'international"
+    },
+    "paris": {
+      "title": "Paris",
+      "description": "Patrimoine immobilier parisien"
+    },
+    "description": "OPHIR opère comme un pont entre la diaspora et Paris. Nous accompagnons les familles et entrepreneurs qui souhaitent constituer ou consolider leur patrimoine immobilier parisien depuis l'étranger — par confiance, continuité ou projection.",
+    "indicator1": "Confiance",
+    "indicator2": "Continuité",
+    "indicator3": "Projection"
+  },
+  "confidentiality": {
+    "label": "Notre Approche",
+    "title": "Confidentialité, advisory",
+    "titleHighlight": "et off-market",
+    "description": "Parce qu'une grande partie des transactions patrimoniales ne se déroule pas sur le marché public, OPHIR intervient en mode confidentiel, en mandat ou en off-market, avec des interlocuteurs identifiés et qualifiés.",
+    "cta": "Confidentialité garantie sur chaque opération",
+    "features": {
+      "confidential": {
+        "title": "Mode Confidentiel",
+        "description": "Transactions hors marché public, discrétion totale sur chaque opération."
+      },
+      "mandate": {
+        "title": "Sur Mandat",
+        "description": "Représentation exclusive de vos intérêts patrimoniaux."
+      },
+      "offmarket": {
+        "title": "Off-Market",
+        "description": "Accès à des opportunités non diffusées sur le marché."
+      },
+      "qualified": {
+        "title": "Interlocuteurs Qualifiés",
+        "description": "Réseau vérifié et qualifié pour chaque transaction."
+      }
+    }
+  },
+  "vocation": {
+    "label": "Notre Vocation",
+    "title": "Donner à ceux qui en ont le besoin un",
+    "titleHighlight": "accès structuré et discret",
+    "titleEnd": "au patrimoine parisien.",
+    "audiences": {
+      "families": "Familles",
+      "heirs": "Héritiers",
+      "entrepreneurs": "Entrepreneurs",
+      "diaspora": "Diaspora",
+      "capital": "Allocateurs de capital"
+    }
+  },
+  "allocation": {
+    "hero": {
+      "badge": "Allocation",
+      "title": "Allocation",
+      "titleHighlight": "Immobilière",
+      "paragraph1": "Pour certains acteurs — family offices, banques privées, entrepreneurs, diaspora capitalisée — l'immobilier parisien n'est pas seulement un actif d'usage, mais un",
+      "paragraph1Highlight": "actif d'allocation",
+      "paragraph2": "OPHIR accompagne ces allocateurs dans la diversification, le risque, la liquidité et la projection.",
+      "metrics": {
+        "yield": "Rendement optimisé",
+        "vision": "Vision long terme",
+        "approach": "Approche institutionnelle"
+      }
+    },
+    "patrimoniale": {
+      "label": "Allocation Patrimoniale",
+      "title": "Allocation immobilière",
+      "titleHighlight": "patrimoniale",
+      "paragraph1": "OPHIR accompagne les familles, la diaspora et les allocateurs dans le positionnement de l'immobilier au sein d'un patrimoine global, selon une logique d'usage, de transmission ou de diversification.",
+      "paragraph2": "Pour certains acteurs — family offices, banques privées, entrepreneurs internationaux — l'immobilier parisien n'est pas uniquement un actif d'usage, mais un actif d'allocation au même titre que d'autres classes d'actifs patrimoniaux.",
+      "points": {
+        "usage": "Logique d'usage",
+        "transmission": "Transmission patrimoniale",
+        "diversification": "Diversification stratégique"
+      }
+    },
+    "pillars": {
+      "label": "Nos Piliers",
+      "title": "Les Quatre Axes de l'Allocation",
+      "subtitle": "Une méthodologie structurée pour optimiser vos investissements immobiliers",
+      "diversification": {
+        "title": "Diversification",
+        "description": "Répartition stratégique des actifs immobiliers pour optimiser le rendement global du portefeuille.",
+        "metric": "Multi-actifs"
+      },
+      "risk": {
+        "title": "Risque",
+        "description": "Analyse et mitigation des risques liés à l'investissement immobilier parisien.",
+        "metric": "Contrôlé"
+      },
+      "liquidity": {
+        "title": "Liquidité",
+        "description": "Stratégies de sortie et gestion de la liquidité des actifs immobiliers.",
+        "metric": "Optimisée"
+      },
+      "projection": {
+        "title": "Projection",
+        "description": "Vision à long terme et planification patrimoniale sur plusieurs générations.",
+        "metric": "Long terme"
+      },
+      "status": "Status",
+      "pillar": "Pilier"
+    },
+    "clients": {
+      "label": "Nos Clients",
+      "title": "À Qui S'Adresse l'Allocation",
+      "subtitle": "Des acteurs institutionnels et privés recherchant une approche structurée de l'investissement immobilier.",
+      "familyOffice": {
+        "title": "Family Offices",
+        "description": "Gestion patrimoniale pour les grandes familles"
+      },
+      "privateBank": {
+        "title": "Banques Privées",
+        "description": "Partenariat institutionnel de confiance"
+      },
+      "entrepreneurs": {
+        "title": "Entrepreneurs",
+        "description": "Diversification du capital professionnel"
+      },
+      "diaspora": {
+        "title": "Diaspora Capitalisée",
+        "description": "Ancrage patrimonial à Paris"
+      }
+    },
+    "contact": {
+      "label": "Commencer",
+      "title": "Structurez Votre Allocation",
+      "subtitle": "Contactez notre équipe pour une analyse personnalisée de votre stratégie d'allocation immobilière.",
+      "metrics": {
+        "volume": "Volume géré",
+        "volumeValue": "500M€+",
+        "clients": "Clients institutionnels",
+        "clientsValue": "50+",
+        "track": "Track record",
+        "trackValue": "15 ans"
+      },
+      "trust": "Confidentialité et discrétion garanties"
+    }
+  },
+  "patrimoine": {
+    "hero": {
+      "badge": "Patrimoine",
+      "title": "Patrimoine &",
+      "titleHighlight": "Transmission",
+      "paragraph1": "Le patrimoine immobilier parisien est souvent un patrimoine de transmission. Il implique des enjeux familiaux, successoraux, juridiques et parfois émotionnels.",
+      "paragraph2": "OPHIR accompagne les familles dans ces situations où le temps long, la discrétion et la compréhension des dynamiques patrimoniales sont essentiels.",
+      "scroll": "Découvrir"
+    },
+    "collection": {
+      "badge": "Collection Exclusive",
+      "title": "Biens d'",
+      "titleHighlight": "Exception",
+      "subtitle": "Une sélection de propriétés prestigieuses au cœur des quartiers les plus prisés de Paris"
+    },
+    "filters": {
+      "searchPlaceholder": "Rechercher par nom ou localisation...",
+      "button": "Filtres",
+      "country": "Pays",
+      "district": "Arrondissement",
+      "propertyType": "Type de bien",
+      "budget": "Budget (€)",
+      "surface": "Surface (m²)",
+      "rooms": "Pièces",
+      "bedrooms": "Chambres",
+      "all": "Tous",
+      "min": "Min",
+      "max": "Max",
+      "roomsUnit": "pièces",
+      "bedroomsUnit": "chambres",
+      "reset": "Réinitialiser les filtres",
+      "resultsCount": "bien(s) d'exception"
+    },
+    "property": {
+      "rooms": "pièces",
+      "beds": "ch.",
+      "baths": "sdb",
+      "price": "Prix",
+      "discover": "Découvrir",
+      "noResults": "Aucun bien trouvé",
+      "noResultsMessage": "Modifiez vos critères ou contactez-nous pour une recherche personnalisée."
+    },
+    "services": {
+      "badge": "Notre Accompagnement",
+      "title": "Un processus structuré pour votre patrimoine",
+      "service1": {
+        "title": "Transmission & Succession",
+        "description": "Nous intervenons aux moments où le patrimoine change de mains : succession, indivision, partage, arbitrage familial, repositionnement, réallocation d'actifs."
+      },
+      "service2": {
+        "title": "Mandat Patrimonial",
+        "description": "OPHIR agit en mandat pour le compte de la famille ou de son représentant, en coordination avec les professionnels du patrimoine (notariat, fiscalité, family office, avocats, banque privée)."
+      },
+      "service3": {
+        "title": "Acquisition ou Arbitrage",
+        "description": "Nous identifions, évaluons, arbitrons ou sécurisons des actifs immobiliers patrimoniaux selon la stratégie de la famille : conservation, repositionnement ou liquidation."
+      }
+    },
+    "contact": {
+      "title": "Un patrimoine à transmettre ?",
+      "subtitle": "Contactez notre équipe pour une consultation confidentielle et découvrez comment OPHIR peut vous accompagner dans vos enjeux patrimoniaux."
+    },
+    "modal": {
+      "surface": "Surface",
+      "rooms": "Pièces",
+      "bedrooms": "Chambres",
+      "bathrooms": "Sdb",
+      "description": "Description",
+      "features": "Prestations",
+      "type": "Type",
+      "location": "Localisation",
+      "parking": "Parking",
+      "parkingUnit": "place",
+      "parkingUnitPlural": "places",
+      "interested": "Intéressé par ce bien ?",
+      "requestVisit": "Demander une visite"
+    },
+    "propertyTypes": {
+      "apartment": "Appartement",
+      "house": "Maison",
+      "villa": "Villa",
+      "mansion": "Hôtel Particulier",
+      "loft": "Loft"
+    }
+  },
+  "advisory": {
+    "hero": {
+      "badge": "Conseil Patrimonial",
+      "title": "Advisory",
+      "titleHighlight": "Patrimonial",
+      "paragraph1": "OPHIR opère en advisory patrimonial, c'est-à-dire en conseil indépendant auprès des familles, des entrepreneurs, de la diaspora et des allocateurs de capital.",
+      "paragraph2": "Notre rôle est de structurer, filtrer, analyser, introduire, coordonner et représenter. Nous intervenons en acquisition, cession, allocation, arbitrage et transmission.",
+      "keywords": {
+        "structure": "Structurer",
+        "filter": "Filtrer",
+        "analyze": "Analyser",
+        "coordinate": "Coordonner",
+        "represent": "Représenter"
+      }
+    },
+    "positioning": {
+      "badge": "Notre Positionnement",
+      "title": "Une approche différenciée du conseil patrimonial",
+      "whatWeDo": {
+        "title": "Ce que nous faisons",
+        "subtitle": "7 domaines d'expertise"
+      },
+      "whatWeDont": {
+        "title": "Ce que nous ne faisons pas",
+        "subtitle": "Notre positionnement",
+        "item1": "Agence immobilière grand public",
+        "item2": "Vitrine et mass-market",
+        "item3": "Exposition de listings"
+      },
+      "commitment": {
+        "badge": "Notre Engagement",
+        "text": "Un conseil indépendant, aligné sur vos intérêts patrimoniaux."
+      }
+    },
+    "services": {
+      "localAnalysis": "Analyse patrimoniale locale",
+      "offMarketSearch": "Recherche et accès off-market",
+      "dueDiligence": "Due diligence immobilière",
+      "acquisitionMandate": "Mandat d'acquisition ou de vente",
+      "allocation": "Allocation immobilière",
+      "notarialCoordination": "Coordination notariale",
+      "crossBorder": "Accompagnement transfrontalier"
+    },
+    "contact": {
+      "badge": "Consultation",
+      "title": "Besoin d'un conseil patrimonial ?",
+      "subtitle": "Contactez notre équipe pour une consultation confidentielle.",
+      "step1": {
+        "title": "Premier échange",
+        "description": "Compréhension de votre situation"
+      },
+      "step2": {
+        "title": "Analyse",
+        "description": "Étude de vos besoins patrimoniaux"
+      },
+      "step3": {
+        "title": "Proposition",
+        "description": "Recommandations personnalisées"
+      }
+    }
+  },
+  "diaspora": {
+    "hero": {
+      "badge": "Diaspora",
+      "title": "Diaspora &",
+      "titleHighlight": "Paris",
+      "paragraph1": "Pour une partie de la diaspora, Paris est un lieu de patrimoine, de capital culturel et de projection familiale. Pour d'autres, c'est un point de rattachement, un lieu d'investissement ou un symbole de continuité.",
+      "paragraph2": "OPHIR accompagne la diaspora internationale — entrepreneurs, cadres, familles et allocateurs — dans la constitution ou le retour patrimonial à Paris.",
+      "stats": {
+        "countries": "Pays représentés",
+        "confidential": "Confidentiel"
+      }
+    },
+    "approach": {
+      "badge": "Notre Approche",
+      "title": "Un Pont vers Paris",
+      "subtitle": "Nous créons le lien entre la diaspora et le patrimoine parisien"
+    },
+    "services": {
+      "context": {
+        "title": "Contexte",
+        "description": "À distance, accéder au patrimoine parisien est complexe : information fragmentée, interlocuteurs multiples, manque de transparence, absence de conseil et difficulté à se situer."
+      },
+      "role": {
+        "title": "Notre Rôle",
+        "description": "Créer de la confiance, simplifier l'accès, filtrer les interlocuteurs, structurer les opérations, représenter les intérêts et sécuriser le processus."
+      },
+      "crossBorder": {
+        "title": "Accompagnement Transfrontalier",
+        "description": "Acquisition, allocation, succession, mandat ou repositionnement : OPHIR opère en tant que représentant patrimonial local, au service des familles et de leurs intérêts."
+      }
+    },
+    "highlights": {
+      "presence": {
+        "label": "Présence locale",
+        "value": "Paris"
+      },
+      "families": {
+        "label": "Familles accompagnées",
+        "value": "200+"
+      },
+      "assets": {
+        "label": "Actifs gérés",
+        "value": "500M€+"
+      }
+    },
+    "contact": {
+      "badge": "Contactez-Nous",
+      "title": "Vous êtes de la diaspora ?",
+      "subtitle": "Contactez notre équipe pour une consultation confidentielle et découvrez comment OPHIR peut vous accompagner dans votre projet patrimonial à Paris.",
+      "points": {
+        "consultation": "Consultation initiale sans engagement",
+        "languages": "Accompagnement en français et anglais",
+        "timezone": "Visioconférence adaptée à votre fuseau horaire"
+      }
+    }
+  },
+  "offMarket": {
+    "hero": {
+      "badge": "Accès Restreint",
+      "title": "Off-",
+      "titleHighlight": "Market",
+      "paragraph1": "Une large part des transactions patrimoniales se déroule en dehors du marché public.",
+      "paragraph2": "OPHIR opère dans ce monde discret, sur mandat ou sur introduction, avec des interlocuteurs vérifiés."
+    },
+    "properties": {
+      "badge": "Biens Disponibles",
+      "title": "Sélection Off-Market",
+      "subtitle": "Des biens d'exception accessibles uniquement sur introduction",
+      "searchPlaceholder": "Rechercher par nom ou localisation...",
+      "filters": "Filtres",
+      "country": "Pays",
+      "district": "Arrondissement",
+      "propertyType": "Type de bien",
+      "surface": "Surface (m²)",
+      "min": "Min",
+      "max": "Max",
+      "rooms": "Pièces",
+      "bedrooms": "Chambres",
+      "all": "Tous",
+      "roomsUnit": "pièces",
+      "bedroomsUnit": "chambres",
+      "resetFilters": "Réinitialiser tous les filtres",
+      "propertiesFound": "bien(s) trouvé(s)",
+      "activeFilters": "filtre(s) actif(s)",
+      "roomsAbbr": "pcs",
+      "bedsAbbr": "ch",
+      "priceOnRequest": "Prix sur demande",
+      "noResults": "Aucun bien trouvé",
+      "noResultsMessage": "Modifiez vos critères de recherche ou contactez-nous pour une recherche personnalisée.",
+      "resetButton": "Réinitialiser les filtres",
+      "searchCta": "Vous recherchez un bien spécifique ? Notre équipe peut vous accompagner dans une recherche sur-mesure.",
+      "accessOnRequest": "Accès à d'autres biens sur demande"
+    },
+    "reasons": {
+      "badge": "Pourquoi le Off-Market",
+      "title": "Les raisons de la discrétion",
+      "subtitle": "Des situations patrimoniales qui nécessitent confidentialité et expertise",
+      "items": {
+        "successions": { "label": "Successions", "description": "Transmission discrète d'actifs familiaux" },
+        "arbitrages": { "label": "Arbitrages", "description": "Repositionnement stratégique de portefeuille" },
+        "family": { "label": "Opérations familiales", "description": "Restructuration patrimoniale privée" },
+        "allocation": { "label": "Allocation de capital", "description": "Investissement institutionnel discret" },
+        "repositioning": { "label": "Repositionnement", "description": "Optimisation d'actifs existants" },
+        "inheritance": { "label": "Héritage", "description": "Gestion successorale confidentielle" }
+      }
+    },
+    "approach": {
+      "badge": "Notre Approche",
+      "title": "Accès et Confidentialité",
+      "items": {
+        "mandate": { "title": "Sur Mandat", "description": "Nous agissons exclusivement sur mandat, représentant vos intérêts avec la plus stricte confidentialité." },
+        "introduction": { "title": "Sur Introduction", "description": "L'accès à notre réseau se fait par introduction, garantissant la qualité des interlocuteurs." },
+        "verified": { "title": "Interlocuteurs Vérifiés", "description": "Chaque partie est qualifiée et vérifiée avant toute mise en relation." }
+      },
+      "preferred": "Méthode Privilégiée",
+      "guarantee": "Confidentialité garantie sur chaque opération"
+    },
+    "contact": {
+      "title": "Accès sur demande",
+      "subtitle": "L'accès à notre sélection complète off-market est réservé aux interlocuteurs qualifiés. Contactez-nous pour découvrir l'ensemble de nos opportunités.",
+      "badges": {
+        "confidentiality": "Confidentialité",
+        "tailored": "Sur-mesure",
+        "exclusivity": "Exclusivité"
+      }
+    },
+    "modal": {
+      "surface": "Surface",
+      "rooms": "Pièces",
+      "bedrooms": "Chambres",
+      "bathrooms": "Sdb",
+      "description": "Description",
+      "features": "Prestations",
+      "type": "Type",
+      "location": "Localisation",
+      "parking": "Parking",
+      "parkingUnit": "place",
+      "parkingUnitPlural": "places",
+      "availableOnRequest": "Bien disponible exclusivement sur demande",
+      "contactUs": "Nous contacter"
+    },
+    "status": {
+      "exclusive": "Exclusif",
+      "offMarket": "Off-Market"
+    }
+  },
+  "legalNotice": {
+    "hero": {
+      "badge": "Informations Légales",
+      "title": "Mentions",
+      "titleHighlight": "Légales",
+      "subtitle": "OPHIR ESTATE — Maison patrimoniale basée à Paris, opérant en advisory, mandat et représentation."
+    },
+    "sections": {
+      "identity": {
+        "title": "Identité",
+        "content": "OPHIR ESTATE — Paris (France)"
+      },
+      "activity": {
+        "title": "Nature de l'activité",
+        "content": "Maison patrimoniale opérant en advisory, mandat et représentation.\n\nOPHIR n'est pas une agence immobilière grand public et n'expose pas de listings."
+      },
+      "regulation": {
+        "title": "Réglementation",
+        "content": "Pour les opérations transactionnelles soumises à la loi française, OPHIR détient la Carte T (Transaction) requise dans le cadre du mandat."
+      },
+      "publication": {
+        "title": "Direction de la publication",
+        "content": "OPHIR ESTATE"
+      },
+      "hosting": {
+        "title": "Hébergeur",
+        "content": "Vercel Inc. — Prestataire technique d'hébergement"
+      },
+      "ip": {
+        "title": "Propriété intellectuelle",
+        "content": "Le contenu du site (textes, identité, structure, marque, concept) est protégé.\n\nToute reproduction nécessite une autorisation écrite."
+      },
+      "law": {
+        "title": "Droit applicable",
+        "content": "Droit français — juridiction Paris"
+      }
+    },
+    "contact": {
+      "text": "Pour toute question, contactez-nous à"
+    }
+  },
+  "terms": {
+    "hero": {
+      "badge": "Cadre Juridique",
+      "title": "Conditions Générales",
+      "titleHighlight": "d'Utilisation",
+      "subtitle": "Les conditions régissant l'accès et l'utilisation du site OPHIR ESTATE, Maison patrimoniale basée à Paris."
+    },
+    "sections": {
+      "object": {
+        "title": "Objet",
+        "content": "Les présentes Conditions Générales d'Utilisation régissent l'accès et l'utilisation du site ophirestate.com (le « Site »), opéré par OPHIR ESTATE, Maison patrimoniale basée à Paris.\n\nEn accédant au Site, l'utilisateur accepte les présentes conditions."
+      },
+      "nature": {
+        "title": "Nature des informations",
+        "content": "Le Site présente des informations générales sur OPHIR, ses activités d'advisory patrimonial, de mandat et de représentation.\n\nLe Site ne constitue pas une agence immobilière publique, ne propose pas de listings, ne réalise pas de publicité immobilière, ni d'offre au public.\n\nAucun élément du Site ne constitue une offre publique, une sollicitation ou une recommandation d'investissement."
+      },
+      "access": {
+        "title": "Accès et utilisation du Site",
+        "content": "L'utilisateur peut accéder au Site à titre personnel ou professionnel pour information.\n\nToute reproduction, détournement, usage commercial ou diffusion non autorisée est interdit sans accord préalable écrit."
+      },
+      "precontract": {
+        "title": "Contact précontractuel",
+        "content": "Les formulaires de contact du Site constituent une étape précontractuelle.\n\nToute opération patrimoniale (acquisition, cession, allocation, succession, off-market ou introduction) requiert la signature d'un mandat entre l'utilisateur et OPHIR."
+      },
+      "mandate": {
+        "title": "Mandat & Advisory",
+        "content": "OPHIR exerce en advisory patrimonial et en représentation sous mandat.\n\nOPHIR n'est pas une agence immobilière grand public et n'opère pas par exposition de listings ni en mass-market."
+      },
+      "regulation": {
+        "title": "Conformité réglementaire (Carte T)",
+        "content": "Pour les opérations transactionnelles soumises au droit français, OPHIR détient la Carte T, licence obligatoire au titre de la loi Hoguet pour l'exercice de l'activité de transaction immobilière.\n\nCe cadre s'applique uniquement dans le cadre d'un mandat signé."
+      },
+      "confidentiality": {
+        "title": "Confidentialité & Off-market",
+        "content": "Une partie des opérations patrimoniales s'effectue en off-market, dans des environnements confidentiels.\n\nToute divulgation non autorisée est strictement interdite."
+      },
+      "international": {
+        "title": "Interactions internationales",
+        "content": "OPHIR peut interagir avec des clients internationaux (familles, diaspora, entrepreneurs, allocateurs, family offices).\n\nCes interactions sont régies par le droit français."
+      },
+      "liability": {
+        "title": "Responsabilité & limitations",
+        "content": "OPHIR met en œuvre des efforts raisonnables pour assurer l'exactitude des informations publiées.\n\n**OPHIR ne saurait être tenue responsable de :**\n• Dommages indirects\n• Pertes de données\n• Décisions prises uniquement sur la base du Site\n• Contenu externe hors de son contrôle"
+      },
+      "ip": {
+        "title": "Propriété intellectuelle",
+        "content": "L'ensemble du contenu (textes, identité, structure, marque et concept) est protégé par le droit de la propriété intellectuelle.\n\nToute reproduction nécessite une autorisation écrite préalable."
+      },
+      "law": {
+        "title": "Loi applicable & juridiction",
+        "content": "Les présentes conditions sont régies par le droit français.\n\nLa compétence exclusive est attribuée aux juridictions de Paris, sauf disposition légale contraire."
+      },
+      "modification": {
+        "title": "Modification des conditions",
+        "content": "OPHIR peut mettre à jour les présentes conditions pour tenir compte d'évolutions réglementaires ou opérationnelles.\n\nL'utilisateur est invité à les consulter régulièrement.\n\n**Dernière mise à jour : Janvier 2025**"
+      }
+    },
+    "contact": {
+      "text": "Pour toute question relative aux présentes conditions, contactez-nous à"
+    }
+  },
+  "privacy": {
+    "hero": {
+      "badge": "Protection des Données",
+      "title": "Politique de",
+      "titleHighlight": "Confidentialité",
+      "subtitle": "OPHIR s'engage à protéger vos données personnelles avec la plus grande rigueur, dans le respect du RGPD et du droit français."
+    },
+    "sections": {
+      "object": {
+        "title": "Objet",
+        "content": "La présente politique décrit la manière dont OPHIR traite les données personnelles dans le cadre de ses activités patrimoniales."
+      },
+      "data": {
+        "title": "Données collectées",
+        "content": "• Données d'identification (Nom, Email, etc.)\n• Données liées à la demande\n• Données contractuelles dans le cadre du mandat"
+      },
+      "purposes": {
+        "title": "Finalités",
+        "content": "• Réponse aux demandes\n• Exécution du mandat\n• Coordination patrimoniale (notariat, FO, avocats, PB, etc.)\n• Conformité réglementaire"
+      },
+      "legal": {
+        "title": "Base légale",
+        "content": "• Exécution précontractuelle\n• Exécution du contrat (mandat)\n• Intérêt légitime\n• Obligation légale (Carte T)"
+      },
+      "recipients": {
+        "title": "Destinataires",
+        "content": "Notaires, family offices, avocats, banques privées, prestataires techniques."
+      },
+      "duration": {
+        "title": "Durée",
+        "content": "12 mois sans mandat / durée légale avec mandat."
+      },
+      "international": {
+        "title": "International",
+        "content": "Possible interactions diaspora internationales — toujours sous droit FR."
+      },
+      "rights": {
+        "title": "Droits RGPD",
+        "content": "Accès, rectification, suppression, opposition, CNIL."
+      }
+    },
+    "contact": {
+      "text": "Pour toute question relative à vos données personnelles, contactez-nous à"
+    }
+  },
+  "cookies": {
+    "hero": {
+      "badge": "Transparence & Respect",
+      "title": "Politique des",
+      "titleHighlight": "Cookies",
+      "subtitle": "OPHIR s'engage à respecter votre vie privée. Notre approche reste sobre, sans tracking marketing ni exploitation commerciale de vos données."
+    },
+    "sections": {
+      "object": {
+        "title": "Objet de la politique",
+        "content": "La présente Politique de Cookies décrit la manière dont les cookies sont utilisés sur le site ophirestate.com."
+      },
+      "noMarketing": {
+        "title": "Absence de cookies marketing et publicitaires",
+        "content": "OPHIR n'utilise aucun cookie publicitaire, marketing ou de retargeting.\n\nAucune donnée de navigation n'est exploitée à des fins commerciales ou promotionnelles."
+      },
+      "functional": {
+        "title": "Cookies fonctionnels (techniques)",
+        "content": "Des cookies essentiels peuvent être utilisés uniquement pour assurer le fonctionnement du site (affichage, navigation, sécurité, langue, etc.).\n\nCes cookies ne collectent pas d'informations personnelles à des fins commerciales."
+      },
+      "analytics": {
+        "title": "Mesure d'audience (optionnelle)",
+        "content": "OPHIR peut utiliser un outil de mesure d'audience statistique afin de mieux comprendre l'utilisation du site.\n\nCe type de cookie ne trace pas les utilisateurs à des fins marketing.\n\nSi la solution retenue nécessite un consentement, un bandeau l'indiquera clairement."
+      },
+      "preferences": {
+        "title": "Gestion des préférences",
+        "content": "L'utilisateur peut refuser les cookies non essentiels via les paramètres de son navigateur ou, si applicable, via le bandeau de consentement."
+      },
+      "data": {
+        "title": "Données collectées",
+        "content": "Aucune donnée personnelle n'est collectée via des cookies à des fins de profilage, publicité ou transmission à des tiers commerciaux."
+      },
+      "thirdParty": {
+        "title": "Tiers et sous-traitants",
+        "content": "Certains cookies techniques peuvent provenir de prestataires techniques uniquement pour l'hébergement, la sécurité ou la mesure d'audience."
+      },
+      "update": {
+        "title": "Mise à jour de la politique",
+        "content": "La présente politique peut être mise à jour en fonction des évolutions réglementaires ou techniques.\n\n**Dernière mise à jour : Janvier 2025**"
+      }
+    },
+    "contact": {
+      "text": "Pour toute question relative aux cookies, contactez-nous à"
+    }
+  },
+  "offMarketClause": {
+    "hero": {
+      "badge": "Confidentialité",
+      "title": "Clause",
+      "titleHighlight": "Off-Market",
+      "subtitle": "Les opérations patrimoniales off-market sont soumises à une stricte confidentialité. Accès sur introduction ou mandat uniquement."
+    },
+    "sections": {
+      "confidentiality": {
+        "title": "Confidentialité des opérations",
+        "content": "Une partie des opérations patrimoniales est non publique.\n\nL'accès nécessite introduction ou mandat."
+      },
+      "prohibitions": {
+        "title": "Interdictions",
+        "content": "Il est interdit de :\n\n• Divulguer\n• Reproduire\n• Transmettre\n• Commercialiser\n• Publier\n\ndes informations off-market relatives à des familles, patrimoines, successions ou allocations."
+      },
+      "representation": {
+        "title": "Représentation",
+        "content": "OPHIR intervient pour le mandant dans un cadre patrimonial."
+      },
+      "compliance": {
+        "title": "Conformité",
+        "content": "Lorsque l'opération est transactionnelle, OPHIR opère sous Carte T (Loi Hoguet)."
+      },
+      "international": {
+        "title": "International",
+        "content": "Applicable aux interactions diaspora / FO / PB / notaires / avocats."
+      },
+      "law": {
+        "title": "Droit",
+        "content": "Droit français — juridiction Paris."
+      }
+    },
+    "contact": {
+      "text": "Pour toute question relative aux opérations off-market, contactez-nous à"
+    }
+  }
+}
