@@ -11,18 +11,6 @@ import enMessages from "@/i18n/messages/en.json";
 
 const messages = { fr: frMessages, en: enMessages };
 
-// Strapi media image interface
-interface StrapiImage {
-  id: number;
-  url: string;
-  formats?: {
-    thumbnail?: { url: string };
-    small?: { url: string };
-    medium?: { url: string };
-    large?: { url: string };
-  };
-}
-
 // Strapi property interface
 interface StrapiProperty {
   id: number;
@@ -40,7 +28,7 @@ interface StrapiProperty {
   parking: number | null;
   propertyId: string;
   category: "patrimoine" | "offmarket";
-  images: StrapiImage[] | null; // Strapi Media Library images
+  images: string | null; // Comma-separated image filenames stored in GitHub
 }
 
 const reasonKeys = ["successions", "arbitrages", "family", "allocation", "repositioning", "inheritance"] as const;
@@ -94,15 +82,14 @@ export function OffMarketContent() {
 
       if (data.data && Array.isArray(data.data)) {
         const mappedProperties: Property[] = data.data.map((item: StrapiProperty) => {
-          // Parse images from Strapi Media Library
-          const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || "https://ophir-strapi.onrender.com";
-          const allImages = item.images && item.images.length > 0
-            ? item.images.map((img: StrapiImage) => {
-                // Use large format if available, otherwise use original URL
-                const imageUrl = img.formats?.large?.url || img.url;
-                // Prepend Strapi URL if the path is relative
-                return imageUrl.startsWith("http") ? imageUrl : `${strapiUrl}${imageUrl}`;
-              })
+          // Parse comma-separated image filenames from Strapi (images stored in GitHub)
+          const imageFilenames = item.images
+            ? item.images.split(",").map(f => f.trim()).filter(f => f.length > 0)
+            : [];
+
+          // Construct URLs from /images/properties/ folder (GitHub)
+          const allImages = imageFilenames.length > 0
+            ? imageFilenames.map(filename => `/images/properties/${filename}`)
             : ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop"];
 
           const imageUrl = allImages[0];
