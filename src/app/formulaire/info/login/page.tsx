@@ -31,11 +31,10 @@ export default function LoginPage() {
         throw new Error(data.error || "Erreur de connexion");
       }
 
-      // Redirect to dashboard
-      router.push("/formulaire/info/dashboard");
+      // Redirect to dashboard using window.location for reliable redirect
+      window.location.href = "/formulaire/info/dashboard";
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erreur de connexion");
-    } finally {
       setLoading(false);
     }
   };
