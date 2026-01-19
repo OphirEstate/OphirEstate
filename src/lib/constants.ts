@@ -42,8 +42,8 @@ export const FOOTER_LEGAL = [
 
 // Informations de contact
 export const CONTACT_INFO = {
-  address: "12 Avenue Montaigne,\n75008 Paris, France",
-  phone: "+33 1 42 00 00 00",
+  address: "50 Avenue des Champs-Élysées,\n75008 Paris, France",
+  phone: "+33 7 81 92 18 19",
   email: "contact@ophirestate.com",
 } as const;
 
