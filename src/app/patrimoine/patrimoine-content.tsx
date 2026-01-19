@@ -1,10 +1,41 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ContactForm } from "@/components/ui";
 import { useLanguage } from "@/lib/language-context";
+import { Loader2 } from "lucide-react";
+
+// Strapi property interface
+interface StrapiProperty {
+  id: number;
+  documentId: string;
+  name: string;
+  location: string;
+  description: string;
+  rooms: number;
+  bedrooms: number;
+  bathrooms: number;
+  surface: number;
+  price: string;
+  views: string | null;
+  type: string | null;
+  parking: number | null;
+  propertyId: string;
+  category: "patrimoine" | "offmarket";
+  images: {
+    id: number;
+    url: string;
+    formats?: {
+      large?: { url: string };
+      medium?: { url: string };
+      small?: { url: string };
+    };
+  }[];
+}
+
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "https://ophir-strapi.onrender.com";
 import {
   Search,
   SlidersHorizontal,
@@ -325,8 +356,67 @@ type Property = typeof luxuryPropertiesData.fr[0];
 export function PatrimoineContent() {
   const { locale, t } = useLanguage();
 
-  // Get localized data
-  const luxuryProperties = luxuryPropertiesData[locale as keyof typeof luxuryPropertiesData] || luxuryPropertiesData.fr;
+  // Strapi properties state
+  const [strapiProperties, setStrapiProperties] = useState<Property[]>([]);
+  const [loadingProperties, setLoadingProperties] = useState(true);
+  const [propertiesError, setPropertiesError] = useState(false);
+
+  // Fetch properties from Strapi
+  const fetchProperties = useCallback(async () => {
+    setLoadingProperties(true);
+    setPropertiesError(false);
+    try {
+      const response = await fetch("/api/properties?category=patrimoine");
+      if (!response.ok) throw new Error("Failed to fetch");
+      const data = await response.json();
+
+      if (data.data && Array.isArray(data.data)) {
+        const mappedProperties: Property[] = data.data.map((item: StrapiProperty) => {
+          const imageUrl = item.images?.[0]?.url
+            ? `${STRAPI_URL}${item.images[0].url}`
+            : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop";
+
+          const allImages = item.images?.map(img => `${STRAPI_URL}${img.url}`) || [imageUrl];
+
+          return {
+            id: item.id,
+            title: item.name,
+            country: "France",
+            arrondissement: item.location,
+            type: item.type || "Appartement",
+            price: parseInt(item.price) || 0,
+            surface: item.surface,
+            rooms: item.rooms,
+            bedrooms: item.bedrooms,
+            bathrooms: item.bathrooms,
+            parking: item.parking || 0,
+            image: imageUrl,
+            images: allImages,
+            highlight: item.views?.split(",")[0]?.trim() || "Exclusif",
+            description: item.description.replace(/<[^>]*>/g, ''),
+            features: item.views?.split(",").map(v => v.trim()) || [],
+          };
+        });
+        setStrapiProperties(mappedProperties);
+      }
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+      setPropertiesError(true);
+    } finally {
+      setLoadingProperties(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProperties();
+  }, [fetchProperties]);
+
+  // Get localized fallback data
+  const fallbackProperties = luxuryPropertiesData[locale as keyof typeof luxuryPropertiesData] || luxuryPropertiesData.fr;
+
+  // Use Strapi properties if available, otherwise use fallback
+  const luxuryProperties = strapiProperties.length > 0 ? strapiProperties : (propertiesError ? fallbackProperties : []);
+
   const filters = filterOptions[locale as keyof typeof filterOptions] || filterOptions.fr;
   const allLabel = locale === 'en' ? 'All' : 'Tous';
 
@@ -722,7 +812,18 @@ export function PatrimoineContent() {
             </div>
           </motion.div>
 
+          {/* Loading State */}
+          {loadingProperties && (
+            <div className="flex items-center justify-center py-20">
+              <div className="text-center">
+                <Loader2 className="w-12 h-12 text-gold animate-spin mx-auto mb-4" />
+                <p className="text-gray-400">{locale === 'en' ? 'Loading properties...' : 'Chargement des biens...'}</p>
+              </div>
+            </div>
+          )}
+
           {/* Luxury Properties Grid - Innovative Display */}
+          {!loadingProperties && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {filteredProperties.map((property, index) => (
               <motion.div
@@ -811,9 +912,10 @@ export function PatrimoineContent() {
               </motion.div>
             ))}
           </div>
+          )}
 
           {/* No results */}
-          {filteredProperties.length === 0 && (
+          {!loadingProperties && filteredProperties.length === 0 && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

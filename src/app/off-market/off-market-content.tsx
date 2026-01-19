@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Lock, Eye, EyeOff, Search, SlidersHorizontal, MapPin, Home, Maximize, X, ChevronDown, Key, Shield, Handshake, BedDouble, ChevronLeft, ChevronRight, Bath, Car, TreePine, Building } from "lucide-react";
+import { Lock, Eye, EyeOff, Search, SlidersHorizontal, MapPin, Home, Maximize, X, ChevronDown, Key, Shield, Handshake, BedDouble, ChevronLeft, ChevronRight, Bath, Car, TreePine, Building, Loader2 } from "lucide-react";
 import { ContactForm } from "@/components/ui";
 import Image from "next/image";
 import { useLanguage } from "@/lib/language-context";
@@ -10,6 +10,31 @@ import frMessages from "@/i18n/messages/fr.json";
 import enMessages from "@/i18n/messages/en.json";
 
 const messages = { fr: frMessages, en: enMessages };
+
+// Strapi property interface
+interface StrapiProperty {
+  id: number;
+  documentId: string;
+  name: string;
+  location: string;
+  description: string;
+  rooms: number;
+  bedrooms: number;
+  bathrooms: number;
+  surface: number;
+  price: string;
+  views: string | null;
+  type: string | null;
+  parking: number | null;
+  propertyId: string;
+  category: "patrimoine" | "offmarket";
+  images: {
+    id: number;
+    url: string;
+  }[];
+}
+
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "https://ophir-strapi.onrender.com";
 
 // Sample properties data
 const properties = [
@@ -208,6 +233,61 @@ export function OffMarketContent() {
   const { locale } = useLanguage();
   const t = messages[locale as keyof typeof messages]?.offMarket || messages.fr.offMarket;
 
+  // Strapi properties state
+  const [strapiProperties, setStrapiProperties] = useState<Property[]>([]);
+  const [loadingProperties, setLoadingProperties] = useState(true);
+  const [propertiesError, setPropertiesError] = useState(false);
+
+  // Fetch properties from Strapi
+  const fetchProperties = useCallback(async () => {
+    setLoadingProperties(true);
+    setPropertiesError(false);
+    try {
+      const response = await fetch("/api/properties?category=offmarket");
+      if (!response.ok) throw new Error("Failed to fetch");
+      const data = await response.json();
+
+      if (data.data && Array.isArray(data.data)) {
+        const mappedProperties: Property[] = data.data.map((item: StrapiProperty) => {
+          const imageUrl = item.images?.[0]?.url
+            ? `${STRAPI_URL}${item.images[0].url}`
+            : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop";
+
+          const allImages = item.images?.map(img => `${STRAPI_URL}${img.url}`) || [imageUrl];
+
+          return {
+            id: item.id,
+            title: item.name,
+            country: "France",
+            arrondissement: item.location,
+            type: item.type || "Appartement",
+            price: parseInt(item.price) || 0,
+            surface: item.surface,
+            rooms: item.rooms,
+            bedrooms: item.bedrooms,
+            bathrooms: item.bathrooms,
+            parking: item.parking || 0,
+            image: imageUrl,
+            images: allImages,
+            status: "Off-Market",
+            description: item.description.replace(/<[^>]*>/g, ''),
+            features: item.views?.split(",").map(v => v.trim()) || [],
+          };
+        });
+        setStrapiProperties(mappedProperties);
+      }
+    } catch (error) {
+      console.error("Error fetching off-market properties:", error);
+      setPropertiesError(true);
+    } finally {
+      setLoadingProperties(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProperties();
+  }, [fetchProperties]);
+
   const reasons = reasonKeys.map((key) => ({
     label: t.reasons.items[key].label,
     description: t.reasons.items[key].description,
@@ -220,6 +300,9 @@ export function OffMarketContent() {
   }));
 
   const allLabel = t.properties.all;
+
+  // Use Strapi properties if available, otherwise use fallback
+  const displayProperties = strapiProperties.length > 0 ? strapiProperties : (propertiesError ? properties : []);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(allLabel);
@@ -284,7 +367,7 @@ export function OffMarketContent() {
   const [showFilters, setShowFilters] = useState(false);
 
   const filteredProperties = useMemo(() => {
-    return properties.filter((property) => {
+    return displayProperties.filter((property) => {
       const matchesSearch = property.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         property.arrondissement.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCountry = selectedCountry === allLabel || property.country === selectedCountry;
@@ -303,7 +386,7 @@ export function OffMarketContent() {
 
       return matchesSearch && matchesCountry && matchesArrondissement && matchesType && matchesSurface && matchesRooms && matchesBedrooms;
     });
-  }, [searchQuery, selectedCountry, selectedArrondissement, selectedType, surfaceMin, surfaceMax, selectedRooms, selectedBedrooms, allLabel]);
+  }, [displayProperties, searchQuery, selectedCountry, selectedArrondissement, selectedType, surfaceMin, surfaceMax, selectedRooms, selectedBedrooms, allLabel]);
 
   const activeFiltersCount = [
     selectedCountry !== allLabel,
@@ -632,7 +715,18 @@ export function OffMarketContent() {
             </div>
           </motion.div>
 
+          {/* Loading State */}
+          {loadingProperties && (
+            <div className="flex items-center justify-center py-20">
+              <div className="text-center">
+                <Loader2 className="w-12 h-12 text-gold animate-spin mx-auto mb-4" />
+                <p className="text-gray-400">{locale === 'en' ? 'Loading properties...' : 'Chargement des biens...'}</p>
+              </div>
+            </div>
+          )}
+
           {/* Properties Grid */}
+          {!loadingProperties && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProperties.map((property, index) => (
               <motion.div
@@ -716,9 +810,10 @@ export function OffMarketContent() {
               </motion.div>
             ))}
           </div>
+          )}
 
           {/* No results */}
-          {filteredProperties.length === 0 && (
+          {!loadingProperties && filteredProperties.length === 0 && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
