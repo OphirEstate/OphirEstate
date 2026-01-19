@@ -222,6 +222,8 @@ export function Footer() {
                 <a
                   key={social.icon}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-gold/20 flex items-center justify-center text-gray-500 hover:text-gold-light hover:border-gold/40 transition-all duration-300"
                   aria-label={social.icon}
                 >

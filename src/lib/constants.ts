@@ -50,7 +50,7 @@ export const CONTACT_INFO = {
 // Réseaux sociaux
 export const SOCIAL_LINKS = [
   { href: "#", icon: "instagram" as const },
-  { href: "#", icon: "linkedin" as const },
+  { href: "https://www.linkedin.com/company/ophir-estate/", icon: "linkedin" as const },
   { href: "#", icon: "facebook" as const },
 ] as const;
 
