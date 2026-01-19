@@ -245,7 +245,7 @@ export function ContactPageContent() {
       <section className="relative h-[400px] lg:h-[500px] bg-dark">
         {/* Map */}
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.2158746985795!2d2.3044762!3d48.8661473!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66fc4f8f3049d%3A0x5df3eb1c7c1d8c50!2s12%20Av.%20Montaigne%2C%2075008%20Paris!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.0158746985795!2d2.3063!3d48.8719!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66fc5a3d9b1e7%3A0x9d0a8c8c8c8c8c8c!2s50%20Av.%20des%20Champs-%C3%89lys%C3%A9es%2C%2075008%20Paris!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr"
           width="100%"
           height="100%"
           style={{ border: 0 }}
@@ -269,7 +269,7 @@ export function ContactPageContent() {
               <MapPin className="w-5 h-5 text-gold" />
               <span className="text-gold-light text-sm uppercase tracking-wider font-semibold">{t.map.title}</span>
             </div>
-            <p className="text-white font-serif text-lg mb-1">12 Avenue Montaigne</p>
+            <p className="text-white font-serif text-lg mb-1">50 Avenue des Champs-Élysées</p>
             <p className="text-gray-400 font-light">75008 Paris, France</p>
           </div>
         </motion.div>
