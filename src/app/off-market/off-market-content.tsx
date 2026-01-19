@@ -11,6 +11,18 @@ import enMessages from "@/i18n/messages/en.json";
 
 const messages = { fr: frMessages, en: enMessages };
 
+// Strapi media image interface
+interface StrapiImage {
+  id: number;
+  url: string;
+  formats?: {
+    thumbnail?: { url: string };
+    small?: { url: string };
+    medium?: { url: string };
+    large?: { url: string };
+  };
+}
+
 // Strapi property interface
 interface StrapiProperty {
   id: number;
@@ -28,188 +40,8 @@ interface StrapiProperty {
   parking: number | null;
   propertyId: string;
   category: "patrimoine" | "offmarket";
-  images: string | null; // Comma-separated filenames stored in Git
+  images: StrapiImage[] | null; // Strapi Media Library images
 }
-
-// Sample properties data
-const properties = [
-  {
-    id: 1,
-    title: "Hôtel Particulier - Triangle d'Or",
-    country: "France",
-    arrondissement: "Paris 8ème",
-    type: "Hôtel Particulier",
-    price: 12500000,
-    surface: 650,
-    rooms: 8,
-    bedrooms: 5,
-    bathrooms: 4,
-    parking: 2,
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop",
-    images: [
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop",
-    ],
-    status: "Exclusif",
-    description: "Exceptionnel hôtel particulier situé au cœur du Triangle d'Or, à quelques pas des Champs-Élysées. Cette demeure d'exception offre des volumes généreux avec de hauts plafonds ornés de moulures d'époque, des parquets en point de Hongrie et des cheminées en marbre dans chaque pièce de réception.",
-    features: ["Jardin privatif", "Cave à vin", "Ascenseur privé", "Gardien"],
-  },
-  {
-    id: 2,
-    title: "Appartement Haussmannien",
-    country: "France",
-    arrondissement: "Paris 16ème",
-    type: "Appartement",
-    price: 4200000,
-    surface: 280,
-    rooms: 5,
-    bedrooms: 3,
-    bathrooms: 2,
-    parking: 1,
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop",
-    images: [
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=1200&auto=format&fit=crop",
-    ],
-    status: "Off-Market",
-    description: "Magnifique appartement haussmannien entièrement rénové avec des matériaux nobles. Situé dans un immeuble de standing avec gardien, cet appartement bénéficie d'une triple exposition et d'une luminosité exceptionnelle. Les prestations haut de gamme incluent une cuisine équipée Bulthaup et des salles de bains en marbre.",
-    features: ["Triple exposition", "Balcon filant", "Parquet massif", "Domotique"],
-  },
-  {
-    id: 3,
-    title: "Penthouse avec Terrasse",
-    country: "France",
-    arrondissement: "Paris 7ème",
-    type: "Appartement",
-    price: 8900000,
-    surface: 420,
-    rooms: 6,
-    bedrooms: 4,
-    bathrooms: 3,
-    parking: 2,
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop",
-    images: [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=1200&auto=format&fit=crop",
-    ],
-    status: "Exclusif",
-    description: "Penthouse d'exception avec vue panoramique sur la Tour Eiffel et les Invalides. Cette propriété unique offre une terrasse de 150m² aménagée en véritable jardin suspendu. L'intérieur signé par un architecte de renom allie modernité et élégance avec des finitions irréprochables.",
-    features: ["Vue Tour Eiffel", "Terrasse 150m²", "Piscine intérieure", "Suite parentale"],
-  },
-  {
-    id: 4,
-    title: "Maison de Ville",
-    country: "France",
-    arrondissement: "Paris 6ème",
-    type: "Maison",
-    price: 6500000,
-    surface: 350,
-    rooms: 7,
-    bedrooms: 4,
-    bathrooms: 3,
-    parking: 1,
-    image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=800&auto=format&fit=crop",
-    images: [
-      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
-    ],
-    status: "Off-Market",
-    description: "Rare maison de ville au cœur de Saint-Germain-des-Prés, alliant le charme de l'ancien au confort moderne. Cette propriété dispose d'un jardin privatif arboré, d'une cave voûtée et d'un garage. Les espaces de vie généreux sont baignés de lumière naturelle.",
-    features: ["Jardin 80m²", "Cave voûtée", "Garage", "Cheminées"],
-  },
-  {
-    id: 5,
-    title: "Villa Contemporaine",
-    country: "France",
-    arrondissement: "Neuilly-sur-Seine",
-    type: "Villa",
-    price: 9500000,
-    surface: 500,
-    rooms: 9,
-    bedrooms: 5,
-    bathrooms: 4,
-    parking: 3,
-    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=800&auto=format&fit=crop",
-    images: [
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop",
-    ],
-    status: "Exclusif",
-    description: "Villa d'architecte contemporaine située dans le quartier le plus prisé de Neuilly-sur-Seine. Cette propriété d'exception offre des espaces de vie fluides avec de grandes baies vitrées ouvrant sur un jardin paysager de 800m². Piscine chauffée, pool house et dépendances complètent cet ensemble rare.",
-    features: ["Piscine chauffée", "Jardin 800m²", "Pool house", "Salle de cinéma"],
-  },
-  {
-    id: 6,
-    title: "Immeuble de Bureaux",
-    country: "France",
-    arrondissement: "Paris 2ème",
-    type: "Immeuble de bureaux",
-    price: 15000000,
-    surface: 1200,
-    rooms: 20,
-    bedrooms: 0,
-    bathrooms: 6,
-    parking: 0,
-    image: "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=80&w=800&auto=format&fit=crop",
-    images: [
-      "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=1200&auto=format&fit=crop",
-    ],
-    status: "Off-Market",
-    description: "Immeuble de bureaux indépendant en pierre de taille, idéalement situé à proximité de la Bourse. Cet actif d'investissement offre une surface utile de 1200m² répartis sur 5 niveaux avec ascenseur. Entièrement restructuré, il répond aux normes les plus exigeantes.",
-    features: ["Pierre de taille", "Ascenseur", "Climatisation", "Fibre optique"],
-  },
-  {
-    id: 7,
-    title: "Duplex Saint-Germain",
-    country: "France",
-    arrondissement: "Paris 6ème",
-    type: "Appartement",
-    price: 3800000,
-    surface: 220,
-    rooms: 4,
-    bedrooms: 2,
-    bathrooms: 2,
-    parking: 1,
-    image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=800&auto=format&fit=crop",
-    images: [
-      "https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
-    ],
-    status: "Exclusif",
-    description: "Superbe duplex situé sur l'une des plus belles places de Saint-Germain-des-Prés. Le premier niveau accueille les espaces de réception avec une hauteur sous plafond de 3,5m. L'étage est dédié à l'espace nuit avec deux suites parentales. Terrasse avec vue sur les toits de Paris.",
-    features: ["Hauteur 3,5m", "Terrasse", "Vue dégagée", "Prestations luxe"],
-  },
-  {
-    id: 8,
-    title: "Loft Marais",
-    country: "France",
-    arrondissement: "Paris 3ème",
-    type: "Loft",
-    price: 2900000,
-    surface: 180,
-    rooms: 3,
-    bedrooms: 2,
-    bathrooms: 2,
-    parking: 0,
-    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=800&auto=format&fit=crop",
-    images: [
-      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop",
-    ],
-    status: "Off-Market",
-    description: "Loft atypique aménagé dans une ancienne manufacture du Marais. Cet espace unique conserve son caractère industriel avec poutres métalliques apparentes, verrières d'atelier et sol en béton ciré. La mezzanine accueille une suite parentale avec vue sur le double séjour.",
-    features: ["Verrières atelier", "Mezzanine", "Caractère industriel", "Lumineux"],
-  },
-];
 
 const reasonKeys = ["successions", "arbitrages", "family", "allocation", "repositioning", "inheritance"] as const;
 
@@ -222,7 +54,25 @@ const types = ["Tous", "Appartement", "Maison", "Villa", "Hôtel Particulier", "
 const roomsOptions = ["Tous", "1+", "2+", "3+", "4+", "5+", "6+", "8+", "10+"];
 const bedroomsOptions = ["Tous", "1+", "2+", "3+", "4+", "5+"];
 
-type Property = typeof properties[0];
+// Property interface for display
+interface Property {
+  id: number;
+  title: string;
+  country: string;
+  arrondissement: string;
+  type: string;
+  price: number;
+  surface: number;
+  rooms: number;
+  bedrooms: number;
+  bathrooms: number;
+  parking: number;
+  image: string;
+  images: string[];
+  status: string;
+  description: string;
+  features: string[];
+}
 
 export function OffMarketContent() {
   const { locale } = useLanguage();
@@ -244,14 +94,15 @@ export function OffMarketContent() {
 
       if (data.data && Array.isArray(data.data)) {
         const mappedProperties: Property[] = data.data.map((item: StrapiProperty) => {
-          // Parse comma-separated image filenames from Strapi
-          const imageFilenames = item.images
-            ? item.images.split(",").map(f => f.trim()).filter(f => f.length > 0)
-            : [];
-
-          // Construct URLs from /images/properties/ folder
-          const allImages = imageFilenames.length > 0
-            ? imageFilenames.map(filename => `/images/properties/${filename}`)
+          // Parse images from Strapi Media Library
+          const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || "https://ophir-strapi.onrender.com";
+          const allImages = item.images && item.images.length > 0
+            ? item.images.map((img: StrapiImage) => {
+                // Use large format if available, otherwise use original URL
+                const imageUrl = img.formats?.large?.url || img.url;
+                // Prepend Strapi URL if the path is relative
+                return imageUrl.startsWith("http") ? imageUrl : `${strapiUrl}${imageUrl}`;
+              })
             : ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop"];
 
           const imageUrl = allImages[0];
@@ -302,8 +153,8 @@ export function OffMarketContent() {
 
   const allLabel = t.properties.all;
 
-  // Use Strapi properties if available, otherwise use fallback
-  const displayProperties = strapiProperties.length > 0 ? strapiProperties : (propertiesError ? properties : []);
+  // Only use Strapi properties
+  const displayProperties = strapiProperties;
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(allLabel);
