@@ -45,277 +45,25 @@ import {
   Eye
 } from "lucide-react";
 
-// Luxury properties data - bilingual
-const luxuryPropertiesData = {
-  fr: [
-    {
-      id: 1,
-      title: "Appartement d'Exception - Avenue Montaigne",
-      country: "France",
-      arrondissement: "Paris 8ème",
-      type: "Appartement",
-      price: 8500000,
-      surface: 320,
-      rooms: 6,
-      bedrooms: 4,
-      bathrooms: 3,
-      parking: 2,
-      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop",
-      ],
-      highlight: "Vue Tour Eiffel",
-      description: "Appartement d'exception situé sur la prestigieuse Avenue Montaigne, offrant une vue imprenable sur la Tour Eiffel. Prestations de très haut standing avec parquet en point de Hongrie, moulures d'époque et cheminées en marbre. Triple exposition, luminosité exceptionnelle.",
-      features: ["Vue Tour Eiffel", "Terrasse 50m²", "Cave", "Gardien 24h"],
-    },
-    {
-      id: 2,
-      title: "Penthouse Panoramique - Trocadéro",
-      country: "France",
-      arrondissement: "Paris 16ème",
-      type: "Appartement",
-      price: 12900000,
-      surface: 450,
-      rooms: 8,
-      bedrooms: 5,
-      bathrooms: 4,
-      parking: 3,
-      image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=1200&auto=format&fit=crop",
-      ],
-      highlight: "Dernier étage",
-      description: "Penthouse d'exception au dernier étage d'un immeuble Art Déco face au Trocadéro. Vue panoramique à 360° sur Paris et la Tour Eiffel. Terrasses de 200m² aménagées en jardin suspendu. Piscine intérieure, hammam et salle de sport privés.",
-      features: ["Piscine intérieure", "Terrasse 200m²", "Hammam", "Vue 360°"],
-    },
-    {
-      id: 3,
-      title: "Hôtel Particulier - Faubourg Saint-Honoré",
-      country: "France",
-      arrondissement: "Paris 8ème",
-      type: "Hôtel Particulier",
-      price: 28000000,
-      surface: 850,
-      rooms: 12,
-      bedrooms: 7,
-      bathrooms: 6,
-      parking: 4,
-      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=1200&auto=format&fit=crop",
-      ],
-      highlight: "Monument historique",
-      description: "Hôtel particulier classé monument historique, édifié au XVIIIème siècle. Jardins à la française de 500m², salons de réception lambrissés, escalier d'honneur en pierre. Entièrement restauré dans le respect des éléments d'époque.",
-      features: ["Jardin 500m²", "Classé MH", "Cave voûtée", "Ascenseur"],
-    },
-    {
-      id: 4,
-      title: "Duplex Contemporain - Saint-Germain",
-      country: "France",
-      arrondissement: "Paris 6ème",
-      type: "Appartement",
-      price: 6200000,
-      surface: 240,
-      rooms: 5,
-      bedrooms: 3,
-      bathrooms: 3,
-      parking: 1,
-      image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=800&auto=format&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
-      ],
-      highlight: "Architecte renommé",
-      description: "Duplex entièrement repensé par un architecte de renom, alliant éléments haussmanniens et design contemporain. Double hauteur spectaculaire dans le séjour, verrière d'atelier, matériaux nobles. Emplacement d'exception au cœur de Saint-Germain-des-Prés.",
-      features: ["Double hauteur", "Verrière", "Domotique", "Terrasse"],
-    },
-    {
-      id: 5,
-      title: "Villa d'Architecte - Neuilly",
-      country: "France",
-      arrondissement: "Neuilly-sur-Seine",
-      type: "Villa",
-      price: 15500000,
-      surface: 600,
-      rooms: 10,
-      bedrooms: 6,
-      bathrooms: 5,
-      parking: 4,
-      image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=800&auto=format&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop",
-      ],
-      highlight: "Jardin 1200m²",
-      description: "Villa d'architecte contemporaine nichée dans un parc arboré de 1200m² au cœur de Neuilly. Architecture audacieuse mêlant verre, béton et bois. Piscine à débordement, pool house, dépendances. Sécurité maximale et intimité absolue.",
-      features: ["Piscine débordement", "Parc 1200m²", "Pool house", "Sécurité"],
-    },
-    {
-      id: 6,
-      title: "Appartement Élysée - Triangle d'Or",
-      country: "France",
-      arrondissement: "Paris 8ème",
-      type: "Appartement",
-      price: 9800000,
-      surface: 380,
-      rooms: 7,
-      bedrooms: 4,
-      bathrooms: 4,
-      parking: 2,
-      image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=800&auto=format&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
-      ],
-      highlight: "Rénové 2024",
-      description: "Appartement de grand standing entièrement rénové en 2024 avec des matériaux d'exception. Situé à deux pas de l'Élysée, il offre des volumes généreux et une distribution parfaite. Cuisine Bulthaup, domotique dernière génération.",
-      features: ["Rénové 2024", "Cuisine Bulthaup", "Domotique", "Cave"],
-    },
-  ],
-  en: [
-    {
-      id: 1,
-      title: "Exceptional Apartment - Avenue Montaigne",
-      country: "France",
-      arrondissement: "Paris 8th",
-      type: "Apartment",
-      price: 8500000,
-      surface: 320,
-      rooms: 6,
-      bedrooms: 4,
-      bathrooms: 3,
-      parking: 2,
-      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop",
-      ],
-      highlight: "Eiffel Tower View",
-      description: "Exceptional apartment located on the prestigious Avenue Montaigne, offering a breathtaking view of the Eiffel Tower. Very high-end features with Hungarian point parquet, period moldings and marble fireplaces. Triple exposure, exceptional brightness.",
-      features: ["Eiffel Tower View", "50sqm Terrace", "Cellar", "24h Concierge"],
-    },
-    {
-      id: 2,
-      title: "Panoramic Penthouse - Trocadéro",
-      country: "France",
-      arrondissement: "Paris 16th",
-      type: "Apartment",
-      price: 12900000,
-      surface: 450,
-      rooms: 8,
-      bedrooms: 5,
-      bathrooms: 4,
-      parking: 3,
-      image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=1200&auto=format&fit=crop",
-      ],
-      highlight: "Top Floor",
-      description: "Exceptional penthouse on the top floor of an Art Deco building facing the Trocadéro. 360° panoramic view of Paris and the Eiffel Tower. 200sqm terraces arranged as a hanging garden. Indoor pool, hammam and private gym.",
-      features: ["Indoor Pool", "200sqm Terrace", "Hammam", "360° View"],
-    },
-    {
-      id: 3,
-      title: "Private Mansion - Faubourg Saint-Honoré",
-      country: "France",
-      arrondissement: "Paris 8th",
-      type: "Mansion",
-      price: 28000000,
-      surface: 850,
-      rooms: 12,
-      bedrooms: 7,
-      bathrooms: 6,
-      parking: 4,
-      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=1200&auto=format&fit=crop",
-      ],
-      highlight: "Historic Monument",
-      description: "Private mansion classified as a historic monument, built in the 18th century. 500sqm French gardens, paneled reception rooms, stone grand staircase. Fully restored respecting period elements.",
-      features: ["500sqm Garden", "Listed Monument", "Vaulted Cellar", "Elevator"],
-    },
-    {
-      id: 4,
-      title: "Contemporary Duplex - Saint-Germain",
-      country: "France",
-      arrondissement: "Paris 6th",
-      type: "Apartment",
-      price: 6200000,
-      surface: 240,
-      rooms: 5,
-      bedrooms: 3,
-      bathrooms: 3,
-      parking: 1,
-      image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=800&auto=format&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
-      ],
-      highlight: "Renowned Architect",
-      description: "Duplex entirely redesigned by a renowned architect, combining Haussmannian elements and contemporary design. Spectacular double height in the living room, workshop glass roof, noble materials. Exceptional location in the heart of Saint-Germain-des-Prés.",
-      features: ["Double Height", "Glass Roof", "Home Automation", "Terrace"],
-    },
-    {
-      id: 5,
-      title: "Architect's Villa - Neuilly",
-      country: "France",
-      arrondissement: "Neuilly-sur-Seine",
-      type: "Villa",
-      price: 15500000,
-      surface: 600,
-      rooms: 10,
-      bedrooms: 6,
-      bathrooms: 5,
-      parking: 4,
-      image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=800&auto=format&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop",
-      ],
-      highlight: "1200sqm Garden",
-      description: "Contemporary architect's villa nestled in a 1200sqm wooded park in the heart of Neuilly. Bold architecture blending glass, concrete and wood. Infinity pool, pool house, outbuildings. Maximum security and absolute privacy.",
-      features: ["Infinity Pool", "1200sqm Park", "Pool House", "Security"],
-    },
-    {
-      id: 6,
-      title: "Élysée Apartment - Golden Triangle",
-      country: "France",
-      arrondissement: "Paris 8th",
-      type: "Apartment",
-      price: 9800000,
-      surface: 380,
-      rooms: 7,
-      bedrooms: 4,
-      bathrooms: 4,
-      parking: 2,
-      image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=800&auto=format&fit=crop",
-      images: [
-        "https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop",
-      ],
-      highlight: "Renovated 2024",
-      description: "High-end apartment fully renovated in 2024 with exceptional materials. Located steps from the Élysée Palace, it offers generous volumes and perfect layout. Bulthaup kitchen, latest generation home automation.",
-      features: ["Renovated 2024", "Bulthaup Kitchen", "Home Automation", "Cellar"],
-    },
-  ],
-};
+// Property type definition
+interface Property {
+  id: number;
+  title: string;
+  country: string;
+  arrondissement: string;
+  type: string;
+  price: number;
+  surface: number;
+  rooms: number;
+  bedrooms: number;
+  bathrooms: number;
+  parking: number;
+  image: string;
+  images: string[];
+  highlight: string;
+  description: string;
+  features: string[];
+}
 
 const filterOptions = {
   fr: {
@@ -341,20 +89,16 @@ function formatPrice(price: number, locale: string = 'fr'): string {
   }).format(price);
 }
 
-type Property = typeof luxuryPropertiesData.fr[0];
-
 export function PatrimoineContent() {
   const { locale, t } = useLanguage();
 
   // Strapi properties state
   const [strapiProperties, setStrapiProperties] = useState<Property[]>([]);
   const [loadingProperties, setLoadingProperties] = useState(true);
-  const [propertiesError, setPropertiesError] = useState(false);
 
   // Fetch properties from Strapi
   const fetchProperties = useCallback(async () => {
     setLoadingProperties(true);
-    setPropertiesError(false);
     try {
       const response = await fetch("/api/properties?category=patrimoine");
       if (!response.ok) throw new Error("Failed to fetch");
@@ -397,7 +141,6 @@ export function PatrimoineContent() {
       }
     } catch (error) {
       console.error("Error fetching properties:", error);
-      setPropertiesError(true);
     } finally {
       setLoadingProperties(false);
     }
@@ -407,11 +150,8 @@ export function PatrimoineContent() {
     fetchProperties();
   }, [fetchProperties]);
 
-  // Get localized fallback data
-  const fallbackProperties = luxuryPropertiesData[locale as keyof typeof luxuryPropertiesData] || luxuryPropertiesData.fr;
-
-  // Use Strapi properties if available, otherwise use fallback
-  const luxuryProperties = strapiProperties.length > 0 ? strapiProperties : (propertiesError ? fallbackProperties : []);
+  // Only use Strapi properties
+  const luxuryProperties = strapiProperties;
 
   const filters = filterOptions[locale as keyof typeof filterOptions] || filterOptions.fr;
   const allLabel = locale === 'en' ? 'All' : 'Tous';
