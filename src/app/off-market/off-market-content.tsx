@@ -28,13 +28,8 @@ interface StrapiProperty {
   parking: number | null;
   propertyId: string;
   category: "patrimoine" | "offmarket";
-  images: {
-    id: number;
-    url: string;
-  }[];
+  images: string | null; // Comma-separated filenames stored in Git
 }
-
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || "https://ophir-strapi.onrender.com";
 
 // Sample properties data
 const properties = [
@@ -249,11 +244,17 @@ export function OffMarketContent() {
 
       if (data.data && Array.isArray(data.data)) {
         const mappedProperties: Property[] = data.data.map((item: StrapiProperty) => {
-          const imageUrl = item.images?.[0]?.url
-            ? `${STRAPI_URL}${item.images[0].url}`
-            : "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop";
+          // Parse comma-separated image filenames from Strapi
+          const imageFilenames = item.images
+            ? item.images.split(",").map(f => f.trim()).filter(f => f.length > 0)
+            : [];
 
-          const allImages = item.images?.map(img => `${STRAPI_URL}${img.url}`) || [imageUrl];
+          // Construct URLs from /images/properties/ folder
+          const allImages = imageFilenames.length > 0
+            ? imageFilenames.map(filename => `/images/properties/${filename}`)
+            : ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop"];
+
+          const imageUrl = allImages[0];
 
           return {
             id: item.id,
