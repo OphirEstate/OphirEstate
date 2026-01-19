@@ -8,6 +8,13 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const category = searchParams.get("category");
 
+    // DEBUG: Log configuration
+    console.log("=== DEBUG PROPERTIES API ===");
+    console.log("STRAPI_URL:", STRAPI_URL);
+    console.log("Token present:", !!STRAPI_API_TOKEN);
+    console.log("Token length:", STRAPI_API_TOKEN?.length || 0);
+    console.log("Category filter:", category);
+
     const headers: HeadersInit = {
       "Content-Type": "application/json",
     };
@@ -22,25 +29,35 @@ export async function GET(request: NextRequest) {
       url += `&filters[category][$eq]=${category}`;
     }
 
+    console.log("Full URL:", url);
+
     const response = await fetch(url, {
       headers,
       cache: "no-store",
     });
 
+    console.log("Response status:", response.status);
+    console.log("Response ok:", response.ok);
+
     if (!response.ok) {
-      console.error("Strapi error:", await response.text());
+      const errorText = await response.text();
+      console.error("Strapi error response:", errorText);
       return NextResponse.json(
-        { error: "Erreur lors de la récupération des biens" },
+        { error: "Erreur lors de la récupération des biens", details: errorText },
         { status: 500 }
       );
     }
 
     const data = await response.json();
+    console.log("Data received:", JSON.stringify(data, null, 2));
+    console.log("Number of properties:", data.data?.length || 0);
+    console.log("=== END DEBUG ===");
+
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error("API error:", error);
     return NextResponse.json(
-      { error: "Erreur serveur" },
+      { error: "Erreur serveur", details: String(error) },
       { status: 500 }
     );
   }

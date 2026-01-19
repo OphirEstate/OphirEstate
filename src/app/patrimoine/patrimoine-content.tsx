@@ -98,14 +98,30 @@ export function PatrimoineContent() {
 
   // Fetch properties from Strapi
   const fetchProperties = useCallback(async () => {
+    console.log("=== DEBUG CLIENT FETCH ===");
+    console.log("Starting fetch...");
     setLoadingProperties(true);
     try {
       const response = await fetch("/api/properties?category=patrimoine");
-      if (!response.ok) throw new Error("Failed to fetch");
+      console.log("Response status:", response.status);
+      console.log("Response ok:", response.ok);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Fetch failed:", errorText);
+        throw new Error("Failed to fetch");
+      }
+
       const data = await response.json();
+      console.log("Raw data received:", data);
+      console.log("data.data exists:", !!data.data);
+      console.log("data.data is array:", Array.isArray(data.data));
+      console.log("data.data length:", data.data?.length);
 
       if (data.data && Array.isArray(data.data)) {
         const mappedProperties: Property[] = data.data.map((item: StrapiProperty) => {
+          console.log("Mapping item:", item.id, item.name);
+
           // Parse comma-separated image filenames from Strapi
           const imageFilenames = item.images
             ? item.images.split(",").map(f => f.trim()).filter(f => f.length > 0)
@@ -137,12 +153,17 @@ export function PatrimoineContent() {
             features: item.views?.split(",").map(v => v.trim()) || [],
           };
         });
+        console.log("Mapped properties count:", mappedProperties.length);
+        console.log("Mapped properties:", mappedProperties);
         setStrapiProperties(mappedProperties);
+      } else {
+        console.log("No data.data array found!");
       }
     } catch (error) {
       console.error("Error fetching properties:", error);
     } finally {
       setLoadingProperties(false);
+      console.log("=== END DEBUG CLIENT ===");
     }
   }, []);
 
