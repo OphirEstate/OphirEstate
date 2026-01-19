@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
       headers["Authorization"] = `Bearer ${STRAPI_API_TOKEN}`;
     }
 
-    let url = `${STRAPI_URL}/api/properties?sort=createdAt:desc`;
+    let url = `${STRAPI_URL}/api/properties?populate=images&sort=createdAt:desc`;
 
     if (category) {
       url += `&filters[category][$eq]=${category}`;
