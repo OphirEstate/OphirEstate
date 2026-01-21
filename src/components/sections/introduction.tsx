@@ -14,7 +14,7 @@ const pillarIcons = [
 export function Introduction() {
   const { t } = useLanguage();
   return (
-    <section className="py-32 bg-dark-lighter relative overflow-hidden">
+    <section id="maison-patrimoniale" className="py-32 bg-dark-lighter relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
       <div className="absolute top-20 right-20 w-64 h-64 border border-gold/5 rounded-full hidden lg:block" />

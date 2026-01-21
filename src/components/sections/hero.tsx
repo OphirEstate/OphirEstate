@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { Button, Badge } from "@/components/ui";
 import { HERO_CONFIG } from "@/lib/constants";
 import { useLanguage } from "@/lib/language-context";
@@ -101,17 +102,21 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-col md:flex-row items-center justify-center gap-6"
         >
-          <Button size="lg" className="w-full md:w-auto font-semibold">
-            {t("hero.ctaPrimary")}
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            className="w-full md:w-auto group flex items-center gap-3"
-          >
-            {t("hero.ctaSecondary")}
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <Link href="/patrimoine">
+            <Button size="lg" className="w-full md:w-auto font-semibold">
+              {t("hero.ctaPrimary")}
+            </Button>
+          </Link>
+          <Link href="#maison-patrimoniale">
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full md:w-auto group flex items-center gap-3"
+            >
+              {t("hero.ctaSecondary")}
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
         </motion.div>
       </div>
 
