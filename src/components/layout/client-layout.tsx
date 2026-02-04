@@ -1,21 +1,18 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { SplashScreen, CookieBanner } from "@/components/ui";
+import { MaintenancePage } from "@/components/maintenance-page";
 
 interface ClientLayoutProps {
   children: React.ReactNode;
 }
 
-export function ClientLayout({ children }: ClientLayoutProps) {
-  const pathname = usePathname();
-  const isHomePage = pathname === "/";
+// MAINTENANCE MODE: Set to false to restore the site
+const MAINTENANCE_MODE = true;
 
-  return (
-    <>
-      {isHomePage && <SplashScreen />}
-      {children}
-      <CookieBanner />
-    </>
-  );
+export function ClientLayout({ children }: ClientLayoutProps) {
+  if (MAINTENANCE_MODE) {
+    return <MaintenancePage />;
+  }
+
+  return <>{children}</>;
 }
