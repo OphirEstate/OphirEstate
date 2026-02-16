@@ -7,7 +7,8 @@ function isAuthenticated(request: NextRequest): boolean {
 
   try {
     const decoded = Buffer.from(session.value, "base64").toString("utf-8");
-    const [, timestamp] = decoded.split(":");
+    const parts = decoded.split(":");
+    const timestamp = parts[parts.length - 1];
     const sessionAge = Date.now() - parseInt(timestamp);
     const maxAge = 24 * 60 * 60 * 1000;
     return sessionAge <= maxAge;
