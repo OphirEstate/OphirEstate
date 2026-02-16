@@ -18,6 +18,8 @@ import {
   Building,
   Layers,
   ImageIcon,
+  Trash2,
+  Save,
 } from "lucide-react";
 
 interface Property {
@@ -56,6 +58,7 @@ const initialForm = {
   parking: "",
   price: "",
   nearby_visits: "",
+  views: "",
 };
 
 export default function DevDashboardPage() {
@@ -71,6 +74,19 @@ export default function DevDashboardPage() {
   const [customType, setCustomType] = useState("");
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [nextPropertyId, setNextPropertyId] = useState("P001");
+
+  // Edit state
+  const [editProperty, setEditProperty] = useState<Property | null>(null);
+  const [editForm, setEditForm] = useState(initialForm);
+  const [editShowCustomType, setEditShowCustomType] = useState(false);
+  const [editCustomType, setEditCustomType] = useState("");
+  const [editSelectedFiles, setEditSelectedFiles] = useState<File[]>([]);
+  const [existingImages, setExistingImages] = useState<string[]>([]);
+  const [editSubmitting, setEditSubmitting] = useState(false);
+
+  // Delete state
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const fetchProperties = useCallback(async () => {
     setLoading(true);
@@ -123,14 +139,66 @@ export default function DevDashboardPage() {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
+  const updateEditForm = (field: string, value: string) => {
+    setEditForm((prev) => ({ ...prev, [field]: value }));
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setSelectedFiles(Array.from(e.target.files));
     }
   };
 
+  const handleEditFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setEditSelectedFiles((prev) => [...prev, ...Array.from(e.target.files!)]);
+    }
+  };
+
   const removeFile = (index: number) => {
     setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const removeEditFile = (index: number) => {
+    setEditSelectedFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const removeExistingImage = (index: number) => {
+    setExistingImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const openEditModal = (property: Property) => {
+    setEditProperty(property);
+    setEditForm({
+      category: property.category,
+      visible_from: "",
+      name: property.name,
+      type: property.type || "",
+      description: property.description || "",
+      location: property.location,
+      rooms: String(property.rooms || ""),
+      bedrooms: String(property.bedrooms || ""),
+      surface: String(property.surface || ""),
+      bathrooms: String(property.bathrooms || ""),
+      parking: String(property.parking || ""),
+      price: property.price === "0" ? "" : property.price,
+      nearby_visits: "",
+      views: property.views || "",
+    });
+    setExistingImages(
+      property.images ? property.images.split(",").filter(Boolean) : []
+    );
+    setEditSelectedFiles([]);
+    setEditShowCustomType(false);
+    setEditCustomType("");
+    setShowDeleteConfirm(false);
+    setSuccess("");
+    setError("");
+  };
+
+  const closeEditModal = () => {
+    setEditProperty(null);
+    setShowDeleteConfirm(false);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -140,7 +208,6 @@ export default function DevDashboardPage() {
     setSuccess("");
 
     try {
-      // 1. Upload images if any
       let imageFilenames: string[] = [];
       if (selectedFiles.length > 0) {
         const formData = new FormData();
@@ -160,7 +227,6 @@ export default function DevDashboardPage() {
         imageFilenames = uploadData.filenames;
       }
 
-      // 2. Create property
       const typeValue = showCustomType ? customType : form.type;
 
       const res = await fetch("/api/properties", {
@@ -204,12 +270,110 @@ export default function DevDashboardPage() {
     }
   };
 
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editProperty) return;
+    setEditSubmitting(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      // Upload new images if any
+      let newImageFilenames: string[] = [];
+      if (editSelectedFiles.length > 0) {
+        const formData = new FormData();
+        editSelectedFiles.forEach((file) => formData.append("images", file));
+
+        const uploadRes = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!uploadRes.ok) {
+          const uploadError = await uploadRes.json();
+          throw new Error(uploadError.error || "Erreur lors de l'upload des images");
+        }
+
+        const uploadData = await uploadRes.json();
+        newImageFilenames = uploadData.filenames;
+      }
+
+      const allImages = [...existingImages, ...newImageFilenames];
+      const typeValue = editShowCustomType ? editCustomType : editForm.type;
+
+      const res = await fetch(`/api/properties/${editProperty.documentId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: editForm.name,
+          location: editForm.location,
+          description: editForm.description,
+          rooms: parseInt(editForm.rooms) || 0,
+          bedrooms: parseInt(editForm.bedrooms) || 0,
+          bathrooms: parseInt(editForm.bathrooms) || 0,
+          surface: parseInt(editForm.surface) || 0,
+          price: editForm.price || "0",
+          type: typeValue || null,
+          parking: parseInt(editForm.parking) || 0,
+          category: editForm.category,
+          images: allImages.length > 0 ? allImages.join(",") : null,
+          visible_from: editForm.visible_from || null,
+          nearby_visits: editForm.nearby_visits || null,
+          views: editForm.views || null,
+        }),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || "Erreur lors de la modification");
+      }
+
+      setSuccess(`Bien "${editForm.name}" modifié avec succès`);
+      closeEditModal();
+      fetchProperties();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erreur lors de la modification");
+    } finally {
+      setEditSubmitting(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!editProperty) return;
+    setDeleting(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      const res = await fetch(`/api/properties/${editProperty.documentId}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Erreur lors de la suppression");
+      }
+
+      setSuccess(`Bien "${editProperty.name}" supprimé avec succès`);
+      closeEditModal();
+      fetchProperties();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erreur lors de la suppression");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("fr-FR", {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
     });
+  };
+
+  const getStorageUrl = (filename: string) => {
+    if (filename.startsWith("http")) return filename;
+    return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/property-images/${filename}`;
   };
 
   const patrimoineCount = properties.filter((p) => p.category === "patrimoine").length;
@@ -335,7 +499,8 @@ export default function DevDashboardPage() {
               {properties.map((property) => (
                 <div
                   key={property.documentId}
-                  className="bg-dark-lighter border border-gold/10 p-4"
+                  onClick={() => openEditModal(property)}
+                  className="bg-dark-lighter border border-gold/10 p-4 cursor-pointer hover:border-gold/30 transition-colors active:bg-gold/5"
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div>
@@ -387,7 +552,11 @@ export default function DevDashboardPage() {
                   </thead>
                   <tbody className="divide-y divide-gray-800">
                     {properties.map((property) => (
-                      <tr key={property.documentId} className="hover:bg-gold/5 transition-colors">
+                      <tr
+                        key={property.documentId}
+                        onClick={() => openEditModal(property)}
+                        className="hover:bg-gold/5 transition-colors cursor-pointer"
+                      >
                         <td className="px-4 py-4 text-sm text-gray-400 font-mono">{property.propertyId}</td>
                         <td className="px-4 py-4 text-sm text-white font-medium">{property.name}</td>
                         <td className="px-4 py-4">
@@ -438,7 +607,6 @@ export default function DevDashboardPage() {
             <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-5">
               {/* Row: Category + Date + ID */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {/* Category */}
                 <div className="space-y-2">
                   <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em] flex items-center gap-2">
                     <Layers className="w-4 h-4" />
@@ -456,7 +624,6 @@ export default function DevDashboardPage() {
                   </select>
                 </div>
 
-                {/* Date */}
                 <div className="space-y-2">
                   <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em] flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
@@ -470,7 +637,6 @@ export default function DevDashboardPage() {
                   />
                 </div>
 
-                {/* Auto ID */}
                 <div className="space-y-2">
                   <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em] flex items-center gap-2">
                     <FileText className="w-4 h-4" />
@@ -484,7 +650,6 @@ export default function DevDashboardPage() {
 
               {/* Row: Name + Type */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Name */}
                 <div className="space-y-2">
                   <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">
                     Nom *
@@ -499,7 +664,6 @@ export default function DevDashboardPage() {
                   />
                 </div>
 
-                {/* Type */}
                 <div className="space-y-2">
                   <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em] flex items-center gap-2">
                     <Building className="w-4 h-4" />
@@ -592,82 +756,28 @@ export default function DevDashboardPage() {
               {/* Numbers Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
-                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">
-                    Pièces
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={form.rooms}
-                    onChange={(e) => updateForm("rooms", e.target.value)}
-                    placeholder="0"
-                    className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500"
-                  />
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Pièces</label>
+                  <input type="number" min="0" value={form.rooms} onChange={(e) => updateForm("rooms", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">
-                    Chambres
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={form.bedrooms}
-                    onChange={(e) => updateForm("bedrooms", e.target.value)}
-                    placeholder="0"
-                    className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500"
-                  />
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Chambres</label>
+                  <input type="number" min="0" value={form.bedrooms} onChange={(e) => updateForm("bedrooms", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">
-                    Surface (m²)
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={form.surface}
-                    onChange={(e) => updateForm("surface", e.target.value)}
-                    placeholder="0"
-                    className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500"
-                  />
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Surface (m²)</label>
+                  <input type="number" min="0" value={form.surface} onChange={(e) => updateForm("surface", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">
-                    Salle de bains
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={form.bathrooms}
-                    onChange={(e) => updateForm("bathrooms", e.target.value)}
-                    placeholder="0"
-                    className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500"
-                  />
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Salle de bains</label>
+                  <input type="number" min="0" value={form.bathrooms} onChange={(e) => updateForm("bathrooms", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">
-                    Parking
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={form.parking}
-                    onChange={(e) => updateForm("parking", e.target.value)}
-                    placeholder="0"
-                    className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500"
-                  />
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Parking</label>
+                  <input type="number" min="0" value={form.parking} onChange={(e) => updateForm("parking", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">
-                    Prix (€)
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={form.price}
-                    onChange={(e) => updateForm("price", e.target.value)}
-                    placeholder="0"
-                    className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500"
-                  />
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Prix (€)</label>
+                  <input type="number" min="0" value={form.price} onChange={(e) => updateForm("price", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
                 </div>
               </div>
 
@@ -702,35 +812,21 @@ export default function DevDashboardPage() {
                   />
                   <label htmlFor="image-upload" className="cursor-pointer">
                     <Upload className="w-8 h-8 text-gray-500 mx-auto mb-2" />
-                    <p className="text-gray-400 text-sm">
-                      Cliquez pour sélectionner des images
-                    </p>
-                    <p className="text-gray-500 text-xs mt-1">
-                      JPG, PNG, WebP — Une ou plusieurs images
-                    </p>
+                    <p className="text-gray-400 text-sm">Cliquez pour sélectionner des images</p>
+                    <p className="text-gray-500 text-xs mt-1">JPG, PNG, WebP — Une ou plusieurs images</p>
                   </label>
                 </div>
 
-                {/* File Preview */}
                 {selectedFiles.length > 0 && (
                   <div className="space-y-2 mt-3">
                     {selectedFiles.map((file, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between bg-dark border border-gray-700 px-3 py-2 text-sm"
-                      >
+                      <div key={index} className="flex items-center justify-between bg-dark border border-gray-700 px-3 py-2 text-sm">
                         <div className="flex items-center gap-2 truncate">
                           <ImageIcon className="w-4 h-4 text-gold shrink-0" />
                           <span className="text-gray-300 truncate">{file.name}</span>
-                          <span className="text-gray-500 text-xs shrink-0">
-                            ({(file.size / 1024 / 1024).toFixed(1)} MB)
-                          </span>
+                          <span className="text-gray-500 text-xs shrink-0">({(file.size / 1024 / 1024).toFixed(1)} MB)</span>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => removeFile(index)}
-                          className="p-1 text-red-400 hover:text-red-300 transition-colors shrink-0"
-                        >
+                        <button type="button" onClick={() => removeFile(index)} className="p-1 text-red-400 hover:text-red-300 transition-colors shrink-0">
                           <X className="w-4 h-4" />
                         </button>
                       </div>
@@ -765,6 +861,369 @@ export default function DevDashboardPage() {
                     </>
                   )}
                 </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Property Modal */}
+      {editProperty && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
+          <div
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={closeEditModal}
+          />
+
+          <div className="relative bg-dark-lighter border-t sm:border border-gold/20 w-full sm:max-w-3xl max-h-[90vh] overflow-y-auto rounded-t-2xl sm:rounded-none">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gold/20 sticky top-0 bg-dark-lighter z-10">
+              <div>
+                <h2 className="font-serif text-lg sm:text-xl text-white">
+                  Modifier le <span className="text-gold">bien</span>
+                </h2>
+                <p className="text-gray-400 text-xs mt-1">
+                  {editProperty.propertyId} — Créé le {formatDate(editProperty.createdAt)}
+                </p>
+              </div>
+              <button
+                onClick={closeEditModal}
+                className="p-2 text-gray-400 hover:text-white transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Edit Form */}
+            <form onSubmit={handleEditSubmit} className="p-4 sm:p-6 space-y-5">
+              {/* Row: Category + Views */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em] flex items-center gap-2">
+                    <Layers className="w-4 h-4" />
+                    Catégorie *
+                  </label>
+                  <select
+                    value={editForm.category}
+                    onChange={(e) => updateEditForm("category", e.target.value)}
+                    required
+                    className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm appearance-none"
+                  >
+                    <option value="">Sélectionner</option>
+                    <option value="patrimoine">Patrimoine</option>
+                    <option value="offmarket">OffMarket</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">
+                    Vues
+                  </label>
+                  <input
+                    type="text"
+                    value={editForm.views}
+                    onChange={(e) => updateEditForm("views", e.target.value)}
+                    placeholder="Vue sur la Seine, Tour Eiffel..."
+                    className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500"
+                  />
+                </div>
+              </div>
+
+              {/* Row: Name + Type */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">
+                    Nom *
+                  </label>
+                  <input
+                    type="text"
+                    value={editForm.name}
+                    onChange={(e) => updateEditForm("name", e.target.value)}
+                    placeholder="Nom du bien"
+                    required
+                    className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em] flex items-center gap-2">
+                    <Building className="w-4 h-4" />
+                    Type
+                  </label>
+                  {!editShowCustomType ? (
+                    <select
+                      value={editForm.type}
+                      onChange={(e) => {
+                        if (e.target.value === "__custom__") {
+                          setEditShowCustomType(true);
+                          updateEditForm("type", "");
+                        } else {
+                          updateEditForm("type", e.target.value);
+                        }
+                      }}
+                      className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm appearance-none"
+                    >
+                      <option value="">Sélectionner un type</option>
+                      {TYPE_OPTIONS.map((t) => (
+                        <option key={t} value={t}>{t}</option>
+                      ))}
+                      {editForm.type && !TYPE_OPTIONS.includes(editForm.type) && (
+                        <option value={editForm.type}>{editForm.type}</option>
+                      )}
+                      <option value="__custom__">+ Ajouter un nouveau Type</option>
+                    </select>
+                  ) : (
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={editCustomType}
+                        onChange={(e) => setEditCustomType(e.target.value)}
+                        placeholder="Nouveau type..."
+                        className="flex-1 bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500"
+                        autoFocus
+                      />
+                      <button
+                        type="button"
+                        onClick={() => {
+                          updateEditForm("type", editCustomType);
+                          setEditShowCustomType(false);
+                        }}
+                        className="px-3 py-2 bg-gold text-dark text-sm font-semibold hover:bg-gold-light transition-colors"
+                      >
+                        OK
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditShowCustomType(false);
+                          setEditCustomType("");
+                        }}
+                        className="px-3 py-2 border border-gray-600 text-gray-400 text-sm hover:text-white transition-colors"
+                      >
+                        Annuler
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="space-y-2">
+                <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">
+                  Description
+                </label>
+                <textarea
+                  value={editForm.description}
+                  onChange={(e) => updateEditForm("description", e.target.value)}
+                  placeholder="Description détaillée du bien..."
+                  rows={4}
+                  className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500 resize-none"
+                />
+              </div>
+
+              {/* Location */}
+              <div className="space-y-2">
+                <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em] flex items-center gap-2">
+                  <MapPin className="w-4 h-4" />
+                  Lieu *
+                </label>
+                <input
+                  type="text"
+                  value={editForm.location}
+                  onChange={(e) => updateEditForm("location", e.target.value)}
+                  placeholder="Adresse ou arrondissement"
+                  required
+                  className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500"
+                />
+              </div>
+
+              {/* Numbers Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Pièces</label>
+                  <input type="number" min="0" value={editForm.rooms} onChange={(e) => updateEditForm("rooms", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Chambres</label>
+                  <input type="number" min="0" value={editForm.bedrooms} onChange={(e) => updateEditForm("bedrooms", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Surface (m²)</label>
+                  <input type="number" min="0" value={editForm.surface} onChange={(e) => updateEditForm("surface", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Salle de bains</label>
+                  <input type="number" min="0" value={editForm.bathrooms} onChange={(e) => updateEditForm("bathrooms", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Parking</label>
+                  <input type="number" min="0" value={editForm.parking} onChange={(e) => updateEditForm("parking", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Prix (€)</label>
+                  <input type="number" min="0" value={editForm.price} onChange={(e) => updateEditForm("price", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
+                </div>
+              </div>
+
+              {/* Nearby Visits */}
+              <div className="space-y-2">
+                <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">
+                  Lieu autour (visites à proximité)
+                </label>
+                <input
+                  type="text"
+                  value={editForm.nearby_visits}
+                  onChange={(e) => updateEditForm("nearby_visits", e.target.value)}
+                  placeholder="Tour Eiffel, Musée du Louvre..."
+                  className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500"
+                />
+              </div>
+
+              {/* Images */}
+              <div className="space-y-2">
+                <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em] flex items-center gap-2">
+                  <ImageIcon className="w-4 h-4" />
+                  Images
+                </label>
+
+                {/* Existing Images */}
+                {existingImages.length > 0 && (
+                  <div className="space-y-2">
+                    <p className="text-gray-400 text-xs">Images actuelles :</p>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {existingImages.map((img, index) => (
+                        <div key={index} className="relative group border border-gray-700 bg-dark overflow-hidden">
+                          <img
+                            src={getStorageUrl(img)}
+                            alt={`Image ${index + 1}`}
+                            className="w-full h-24 object-cover"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeExistingImage(index)}
+                            className="absolute top-1 right-1 p-1 bg-red-500/80 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                          <p className="text-gray-500 text-[10px] px-2 py-1 truncate">{img}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Upload New Images */}
+                <div className="border border-dashed border-gray-700 hover:border-gold/50 transition-colors p-4 text-center">
+                  <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    onChange={handleEditFileChange}
+                    className="hidden"
+                    id="edit-image-upload"
+                  />
+                  <label htmlFor="edit-image-upload" className="cursor-pointer">
+                    <Upload className="w-6 h-6 text-gray-500 mx-auto mb-1" />
+                    <p className="text-gray-400 text-sm">Ajouter des images</p>
+                  </label>
+                </div>
+
+                {/* New Files Preview */}
+                {editSelectedFiles.length > 0 && (
+                  <div className="space-y-2 mt-2">
+                    <p className="text-gray-400 text-xs">Nouvelles images :</p>
+                    {editSelectedFiles.map((file, index) => (
+                      <div key={index} className="flex items-center justify-between bg-dark border border-gray-700 px-3 py-2 text-sm">
+                        <div className="flex items-center gap-2 truncate">
+                          <ImageIcon className="w-4 h-4 text-gold shrink-0" />
+                          <span className="text-gray-300 truncate">{file.name}</span>
+                          <span className="text-gray-500 text-xs shrink-0">({(file.size / 1024 / 1024).toFixed(1)} MB)</span>
+                        </div>
+                        <button type="button" onClick={() => removeEditFile(index)} className="p-1 text-red-400 hover:text-red-300 transition-colors shrink-0">
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Delete Confirmation */}
+              {showDeleteConfirm && (
+                <div className="p-4 bg-red-500/10 border border-red-500/30 space-y-3">
+                  <p className="text-red-400 text-sm font-medium">
+                    Êtes-vous sûr de vouloir supprimer &quot;{editProperty.name}&quot; ?
+                  </p>
+                  <p className="text-red-400/70 text-xs">
+                    Cette action est irréversible. Le bien et toutes ses données seront définitivement supprimés.
+                  </p>
+                  <div className="flex gap-3">
+                    <button
+                      type="button"
+                      onClick={handleDelete}
+                      disabled={deleting}
+                      className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold text-sm transition-colors disabled:opacity-50 flex items-center gap-2"
+                    >
+                      {deleting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          Suppression...
+                        </>
+                      ) : (
+                        <>
+                          <Trash2 className="w-4 h-4" />
+                          Confirmer la suppression
+                        </>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setShowDeleteConfirm(false)}
+                      className="px-4 py-2 border border-gray-600 text-gray-300 hover:text-white text-sm transition-colors"
+                    >
+                      Annuler
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-gold/20">
+                <button
+                  type="button"
+                  onClick={() => setShowDeleteConfirm(true)}
+                  disabled={showDeleteConfirm}
+                  className="px-4 py-3 sm:py-2 border border-red-500/30 text-red-400 hover:bg-red-500/10 hover:border-red-500/50 transition-colors text-sm flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Supprimer
+                </button>
+                <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={closeEditModal}
+                    className="px-6 py-3 sm:py-2 border border-gray-600 text-gray-300 hover:border-gold hover:text-gold transition-colors text-sm"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={editSubmitting}
+                    className="px-6 py-3 sm:py-2 bg-gold hover:bg-gold-light text-dark font-semibold tracking-wide transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
+                  >
+                    {editSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Sauvegarde...
+                      </>
+                    ) : (
+                      <>
+                        <Save className="w-4 h-4" />
+                        Sauvegarder
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </form>
           </div>
