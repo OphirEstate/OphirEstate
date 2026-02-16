@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { supabase } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -27,24 +28,20 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const { data, error } = await supabase
+      .from("contact_submissions")
+      .select("*")
+      .order("created_at", { ascending: false });
 
-    // Direct REST API call instead of client library
-    const res = await fetch(
-      `${url}/rest/v1/contact_submissions?select=*&order=created_at.desc`,
-      {
-        headers: {
-          "apikey": key!,
-          "Authorization": `Bearer ${key}`,
-        },
-        cache: "no-store",
-      }
-    );
+    if (error) {
+      console.error("Supabase error:", error);
+      return NextResponse.json(
+        { error: "Erreur lors de la récupération des contacts" },
+        { status: 500 }
+      );
+    }
 
-    const rawData = await res.json();
-
-    const mappedData = (rawData || []).map((row: Record<string, unknown>) => ({
+    const mappedData = (data || []).map((row) => ({
       id: row.id,
       documentId: row.document_id,
       fullName: row.full_name,
@@ -55,18 +52,11 @@ export async function GET(request: NextRequest) {
       createdAt: row.created_at,
     }));
 
-    return NextResponse.json({
-      data: mappedData,
-      _debug: {
-        count: rawData?.length || 0,
-        restStatus: res.status,
-        urlPrefix: url?.substring(0, 30),
-        keyPrefix: key?.substring(0, 20),
-      },
-    }, { status: 200 });
+    return NextResponse.json({ data: mappedData }, { status: 200 });
   } catch (error) {
+    console.error("API error:", error);
     return NextResponse.json(
-      { error: "Erreur serveur", details: String(error) },
+      { error: "Erreur serveur" },
       { status: 500 }
     );
   }
