@@ -233,8 +233,11 @@ export function Footer() {
             })}
           </div>
 
-          {/* Copyright */}
-          <div className="text-center pt-6 mt-2 border-t border-gray-800/50">
+          {/* Carte T & Copyright */}
+          <div className="text-center pt-6 mt-2 border-t border-gray-800/50 space-y-2">
+            <p className="text-gray-600 text-xs font-light tracking-wide">
+              {t("footer.carteT")}
+            </p>
             <p className="text-gray-600 text-xs font-light tracking-wide">
               © {new Date().getFullYear()} {t("footer.copyright")}
             </p>
