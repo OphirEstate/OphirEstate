@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabaseRest } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -8,26 +8,22 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const category = searchParams.get("category");
 
-    let query = supabase
-      .from("properties")
-      .select("*")
-      .order("created_at", { ascending: false });
-
+    let path = "properties?select=*&order=created_at.desc";
     if (category) {
-      query = query.eq("category", category);
+      path += `&category=eq.${category}`;
     }
 
-    const { data, error } = await query;
+    const res = await supabaseRest(path);
+    const rawData = await res.json();
 
-    if (error) {
-      console.error("Supabase error:", error);
+    if (!res.ok) {
       return NextResponse.json(
-        { error: "Erreur lors de la récupération des biens", details: error.message },
+        { error: "Erreur lors de la récupération des biens", details: JSON.stringify(rawData) },
         { status: 500 }
       );
     }
 
-    const mappedData = (data || []).map((row) => ({
+    const mappedData = (rawData || []).map((row: Record<string, unknown>) => ({
       id: row.id,
       documentId: row.document_id,
       name: row.name,
@@ -58,7 +54,6 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  // Verify auth + dev role
   const session = request.cookies.get("admin_session");
   if (!session?.value) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
@@ -86,28 +81,17 @@ export async function POST(request: NextRequest) {
     } = body;
 
     if (!name || !location || !category) {
-      return NextResponse.json(
-        { error: "Nom, lieu et catégorie sont requis" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Nom, lieu et catégorie sont requis" }, { status: 400 });
     }
 
-    // Auto-generate property_id (P001, P002...)
-    const { count, error: countError } = await supabase
-      .from("properties")
-      .select("*", { count: "exact", head: true });
+    // Count existing properties for auto-ID
+    const countRes = await supabaseRest("properties?select=id", { method: "HEAD", headers: { "Prefer": "count=exact" } });
+    const count = parseInt(countRes.headers.get("content-range")?.split("/")[1] || "0");
+    const propertyId = `P${String(count + 1).padStart(3, "0")}`;
 
-    if (countError) {
-      console.error("Count error:", countError);
-      return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
-    }
-
-    const nextId = (count || 0) + 1;
-    const propertyId = `P${String(nextId).padStart(3, "0")}`;
-
-    const { data, error } = await supabase
-      .from("properties")
-      .insert({
+    const insertRes = await supabaseRest("properties", {
+      method: "POST",
+      body: JSON.stringify({
         name,
         location,
         description: description || "",
@@ -123,20 +107,20 @@ export async function POST(request: NextRequest) {
         images: images || null,
         visible_from: visible_from || null,
         nearby_visits: nearby_visits || null,
-      })
-      .select()
-      .single();
+      }),
+    });
 
-    if (error) {
-      console.error("Insert error:", error);
+    const insertData = await insertRes.json();
+
+    if (!insertRes.ok) {
       return NextResponse.json(
-        { error: "Erreur lors de la création du bien", details: error.message },
+        { error: "Erreur lors de la création du bien", details: JSON.stringify(insertData) },
         { status: 500 }
       );
     }
 
     return NextResponse.json(
-      { success: true, data, propertyId },
+      { success: true, data: insertData, propertyId },
       { status: 201 }
     );
   } catch (error) {

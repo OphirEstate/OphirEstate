@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabaseRest } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -21,27 +21,18 @@ function isAuthenticated(request: NextRequest): boolean {
 
 export async function GET(request: NextRequest) {
   if (!isAuthenticated(request)) {
-    return NextResponse.json(
-      { error: "Non autorisé" },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   }
 
   try {
-    const { data, error } = await supabase
-      .from("contact_submissions")
-      .select("*")
-      .order("created_at", { ascending: false });
+    const res = await supabaseRest("contact_submissions?select=*&order=created_at.desc");
+    const rawData = await res.json();
 
-    if (error) {
-      console.error("Supabase error:", error);
-      return NextResponse.json(
-        { error: "Erreur lors de la récupération des contacts" },
-        { status: 500 }
-      );
+    if (!res.ok) {
+      return NextResponse.json({ error: "Erreur lors de la récupération des contacts" }, { status: 500 });
     }
 
-    const mappedData = (data || []).map((row) => ({
+    const mappedData = (rawData || []).map((row: Record<string, unknown>) => ({
       id: row.id,
       documentId: row.document_id,
       fullName: row.full_name,
@@ -55,9 +46,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ data: mappedData }, { status: 200 });
   } catch (error) {
     console.error("API error:", error);
-    return NextResponse.json(
-      { error: "Erreur serveur" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }

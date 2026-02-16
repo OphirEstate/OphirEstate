@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+
+export const dynamic = "force-dynamic";
 
 function isAuthenticated(request: NextRequest): boolean {
   const session = request.cookies.get("admin_session");
@@ -22,6 +23,9 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
     const formData = await request.formData();
     const files = formData.getAll("images") as File[];
 
@@ -39,15 +43,22 @@ export async function POST(request: NextRequest) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
-      const { error } = await supabase.storage
-        .from("property-images")
-        .upload(filename, buffer, {
-          contentType: file.type,
-          upsert: false,
-        });
+      const res = await fetch(
+        `${url}/storage/v1/object/property-images/${filename}`,
+        {
+          method: "POST",
+          headers: {
+            "apikey": key,
+            "Authorization": `Bearer ${key}`,
+            "Content-Type": file.type,
+          },
+          body: buffer,
+        }
+      );
 
-      if (error) {
-        console.error("Upload error:", error);
+      if (!res.ok) {
+        const err = await res.text();
+        console.error("Upload error:", err);
         return NextResponse.json(
           { error: `Erreur lors de l'upload de ${file.name}` },
           { status: 500 }

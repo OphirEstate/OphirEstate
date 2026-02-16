@@ -1,15 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabaseRest } from "@/lib/supabase";
+
+export const dynamic = "force-dynamic";
 
 async function getCredentialsByEmail(email: string) {
-  const { data, error } = await supabase
-    .from("admin_credentials")
-    .select("email, password, role")
-    .eq("email", email)
-    .single();
+  const res = await supabaseRest(
+    `admin_credentials?select=email,password,role&email=eq.${encodeURIComponent(email)}`
+  );
+  const data = await res.json();
 
-  if (error || !data) return null;
-  return { email: data.email, password: data.password, role: data.role as string };
+  if (!res.ok || !Array.isArray(data) || data.length === 0) return null;
+  return { email: data[0].email, password: data[0].password, role: data[0].role as string };
 }
 
 export async function POST(request: NextRequest) {
@@ -18,19 +19,13 @@ export async function POST(request: NextRequest) {
     const { email, password } = body;
 
     if (!email || !password) {
-      return NextResponse.json(
-        { error: "Email et mot de passe requis" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Email et mot de passe requis" }, { status: 400 });
     }
 
     const credentials = await getCredentialsByEmail(email);
 
     if (!credentials || email !== credentials.email || password !== credentials.password) {
-      return NextResponse.json(
-        { error: "Email ou mot de passe incorrect" },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Email ou mot de passe incorrect" }, { status: 401 });
     }
 
     const token = Buffer.from(`${email}:${credentials.role}:${Date.now()}`).toString("base64");
@@ -51,9 +46,6 @@ export async function POST(request: NextRequest) {
     return response;
   } catch (error) {
     console.error("Login error:", error);
-    return NextResponse.json(
-      { error: "Erreur serveur" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }

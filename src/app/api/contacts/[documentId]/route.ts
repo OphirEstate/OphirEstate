@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { supabaseRest } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
@@ -24,44 +24,28 @@ export async function DELETE(
   { params }: { params: { documentId: string } }
 ) {
   if (!isAuthenticated(request)) {
-    return NextResponse.json(
-      { error: "Non autorisé" },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   }
 
   const { documentId } = params;
 
   if (!documentId) {
-    return NextResponse.json(
-      { error: "ID du document requis" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "ID du document requis" }, { status: 400 });
   }
 
   try {
-    const { error } = await supabase
-      .from("contact_submissions")
-      .delete()
-      .eq("document_id", documentId);
+    const res = await supabaseRest(
+      `contact_submissions?document_id=eq.${documentId}`,
+      { method: "DELETE" }
+    );
 
-    if (error) {
-      console.error("Supabase delete error:", error);
-      return NextResponse.json(
-        { error: "Erreur lors de la suppression" },
-        { status: 500 }
-      );
+    if (!res.ok) {
+      return NextResponse.json({ error: "Erreur lors de la suppression" }, { status: 500 });
     }
 
-    return NextResponse.json(
-      { success: true, message: "Contact supprimé" },
-      { status: 200 }
-    );
+    return NextResponse.json({ success: true, message: "Contact supprimé" }, { status: 200 });
   } catch (error) {
     console.error("API error:", error);
-    return NextResponse.json(
-      { error: "Erreur serveur" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }
