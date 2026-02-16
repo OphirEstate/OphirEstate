@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
 
@@ -31,28 +30,21 @@ export async function GET(request: NextRequest) {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    if (!url || !key) {
-      return NextResponse.json(
-        { error: "Config manquante", hasUrl: !!url, hasKey: !!key },
-        { status: 500 }
-      );
-    }
+    // Direct REST API call instead of client library
+    const res = await fetch(
+      `${url}/rest/v1/contact_submissions?select=*&order=created_at.desc`,
+      {
+        headers: {
+          "apikey": key!,
+          "Authorization": `Bearer ${key}`,
+        },
+        cache: "no-store",
+      }
+    );
 
-    const supabase = createClient(url, key);
+    const rawData = await res.json();
 
-    const { data, error } = await supabase
-      .from("contact_submissions")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      return NextResponse.json(
-        { error: "Erreur Supabase", details: error.message, code: error.code },
-        { status: 500 }
-      );
-    }
-
-    const mappedData = (data || []).map((row) => ({
+    const mappedData = (rawData || []).map((row: Record<string, unknown>) => ({
       id: row.id,
       documentId: row.document_id,
       fullName: row.full_name,
@@ -63,7 +55,15 @@ export async function GET(request: NextRequest) {
       createdAt: row.created_at,
     }));
 
-    return NextResponse.json({ data: mappedData, _debug: { count: data?.length || 0 } }, { status: 200 });
+    return NextResponse.json({
+      data: mappedData,
+      _debug: {
+        count: rawData?.length || 0,
+        restStatus: res.status,
+        urlPrefix: url?.substring(0, 30),
+        keyPrefix: key?.substring(0, 20),
+      },
+    }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: "Erreur serveur", details: String(error) },
