@@ -31,8 +31,12 @@ export default function LoginPage() {
         throw new Error(data.error || "Erreur de connexion");
       }
 
-      // Redirect to dashboard using window.location for reliable redirect
-      window.location.href = "/formulaire/info/dashboard";
+      // Redirect based on role
+      if (data.role === "dev") {
+        window.location.href = "/formulaire/info/dev-dashboard";
+      } else {
+        window.location.href = "/formulaire/info/dashboard";
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erreur de connexion");
       setLoading(false);
@@ -51,7 +55,7 @@ export default function LoginPage() {
             Espace <span className="text-gold">Administration</span>
           </h1>
           <p className="text-gray-400 text-xs sm:text-sm px-4">
-            Connectez-vous pour accéder aux formulaires de contact
+            Connectez-vous pour accéder à votre espace
           </p>
         </div>
 

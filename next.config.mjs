@@ -8,11 +8,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'ophir-strapi.onrender.com',
+        hostname: 'res.cloudinary.com',
       },
       {
         protocol: 'https',
-        hostname: 'res.cloudinary.com',
+        hostname: '**.supabase.co',
       },
     ],
   },

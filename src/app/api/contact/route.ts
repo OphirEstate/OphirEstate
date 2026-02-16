@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-
-const STRAPI_URL = process.env.STRAPI_URL || "http://localhost:1337";
+import { supabase } from "@/lib/supabase";
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,33 +23,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Send to Strapi
-    const response = await fetch(`${STRAPI_URL}/api/contact-submissions`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        data: {
-          fullName,
-          Email,
-          Country,
-          Subject,
-          Message,
-        },
-      }),
-    });
+    const { data, error } = await supabase
+      .from("contact_submissions")
+      .insert({
+        full_name: fullName,
+        email: Email,
+        country: Country,
+        subject: Subject,
+        message: Message,
+      })
+      .select()
+      .single();
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Strapi error:", errorData);
+    if (error) {
+      console.error("Supabase error:", error);
       return NextResponse.json(
         { error: "Erreur lors de l'envoi du message" },
         { status: 500 }
       );
     }
 
-    const data = await response.json();
     return NextResponse.json(
       { success: true, message: "Message envoyé avec succès", data },
       { status: 201 }

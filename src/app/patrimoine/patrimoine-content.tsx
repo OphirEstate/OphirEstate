@@ -122,14 +122,21 @@ export function PatrimoineContent() {
         const mappedProperties: Property[] = data.data.map((item: StrapiProperty) => {
           console.log("Mapping item:", item.id, item.name);
 
-          // Parse comma-separated image filenames from Strapi (images stored in GitHub)
+          // Parse comma-separated image filenames
           const imageFilenames = item.images
             ? item.images.split(",").map(f => f.trim()).filter(f => f.length > 0)
             : [];
 
-          // Construct URLs from /images/properties/ folder (GitHub)
+          const resolveImageUrl = (filename: string): string => {
+            if (filename.startsWith("http")) return filename;
+            if (/^\d{10,}-/.test(filename)) {
+              return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/property-images/${filename}`;
+            }
+            return `/images/properties/${filename}`;
+          };
+
           const allImages = imageFilenames.length > 0
-            ? imageFilenames.map(filename => `/images/properties/${filename}`)
+            ? imageFilenames.map(resolveImageUrl)
             : ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop"];
 
           const imageUrl = allImages[0];

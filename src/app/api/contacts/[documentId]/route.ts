@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { supabase } from "@/lib/supabase";
 
-const STRAPI_URL = process.env.STRAPI_URL || "http://localhost:1337";
-const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || "";
-
-// Middleware to check authentication
 function isAuthenticated(request: NextRequest): boolean {
   const session = request.cookies.get("admin_session");
   if (!session || !session.value) return false;
@@ -19,7 +16,6 @@ function isAuthenticated(request: NextRequest): boolean {
   }
 }
 
-// DELETE - Delete a contact by documentId
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { documentId: string } }
@@ -41,26 +37,13 @@ export async function DELETE(
   }
 
   try {
-    const headers: HeadersInit = {
-      "Content-Type": "application/json",
-    };
+    const { error } = await supabase
+      .from("contact_submissions")
+      .delete()
+      .eq("document_id", documentId);
 
-    if (STRAPI_API_TOKEN) {
-      headers["Authorization"] = `Bearer ${STRAPI_API_TOKEN}`;
-    }
-
-    const response = await fetch(
-      `${STRAPI_URL}/api/contact-submissions/${documentId}`,
-      {
-        method: "DELETE",
-        headers,
-        cache: 'no-store'
-      }
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Strapi delete error:", errorData);
+    if (error) {
+      console.error("Supabase delete error:", error);
       return NextResponse.json(
         { error: "Erreur lors de la suppression" },
         { status: 500 }

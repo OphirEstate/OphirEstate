@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { supabase } from "@/lib/supabase";
 
-const STRAPI_URL = process.env.STRAPI_URL || "http://localhost:1337";
-const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || "";
-
-// Middleware to check authentication
 function isAuthenticated(request: NextRequest): boolean {
   const session = request.cookies.get("admin_session");
   if (!session || !session.value) return false;
@@ -19,7 +16,6 @@ function isAuthenticated(request: NextRequest): boolean {
   }
 }
 
-// GET - Fetch all contacts
 export async function GET(request: NextRequest) {
   if (!isAuthenticated(request)) {
     return NextResponse.json(
@@ -29,33 +25,31 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const headers: HeadersInit = {
-      "Content-Type": "application/json",
-    };
+    const { data, error } = await supabase
+      .from("contact_submissions")
+      .select("*")
+      .order("created_at", { ascending: false });
 
-    if (STRAPI_API_TOKEN) {
-      headers["Authorization"] = `Bearer ${STRAPI_API_TOKEN}`;
-    }
-
-    const response = await fetch(
-      `${STRAPI_URL}/api/contact-submissions?sort=createdAt:desc`,
-      {
-        headers,
-        cache: 'no-store'
-      }
-    );
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("Strapi error:", errorData);
+    if (error) {
+      console.error("Supabase error:", error);
       return NextResponse.json(
         { error: "Erreur lors de la récupération des contacts" },
         { status: 500 }
       );
     }
 
-    const data = await response.json();
-    return NextResponse.json(data, { status: 200 });
+    const mappedData = (data || []).map((row) => ({
+      id: row.id,
+      documentId: row.document_id,
+      fullName: row.full_name,
+      Email: row.email,
+      Country: row.country,
+      Subject: row.subject,
+      Message: row.message,
+      createdAt: row.created_at,
+    }));
+
+    return NextResponse.json({ data: mappedData }, { status: 200 });
   } catch (error) {
     console.error("API error:", error);
     return NextResponse.json(

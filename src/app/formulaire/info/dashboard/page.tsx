@@ -50,6 +50,11 @@ export default function DashboardPage() {
         router.push("/formulaire/info/login");
         return;
       }
+      const data = await response.json();
+      if (data.role === "dev") {
+        router.push("/formulaire/info/dev-dashboard");
+        return;
+      }
       fetchContacts();
     } catch {
       router.push("/formulaire/info/login");

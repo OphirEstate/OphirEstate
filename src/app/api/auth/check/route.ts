@@ -10,14 +10,26 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  // Verify the token is valid (simple check)
   try {
     const decoded = Buffer.from(session.value, "base64").toString("utf-8");
-    const [email, timestamp] = decoded.split(":");
+    const parts = decoded.split(":");
 
-    // Check if session is expired (24 hours)
+    let email: string, role: string, timestamp: string;
+
+    if (parts.length === 3) {
+      [email, role, timestamp] = parts;
+    } else if (parts.length === 2) {
+      [email, timestamp] = parts;
+      role = "admin";
+    } else {
+      return NextResponse.json(
+        { authenticated: false },
+        { status: 401 }
+      );
+    }
+
     const sessionAge = Date.now() - parseInt(timestamp);
-    const maxAge = 24 * 60 * 60 * 1000; // 24 hours in ms
+    const maxAge = 24 * 60 * 60 * 1000;
 
     if (sessionAge > maxAge) {
       return NextResponse.json(
@@ -27,7 +39,7 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { authenticated: true, email },
+      { authenticated: true, email, role },
       { status: 200 }
     );
   } catch {
