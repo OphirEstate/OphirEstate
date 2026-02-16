@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
 
@@ -28,15 +28,26 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!url || !key) {
+      return NextResponse.json(
+        { error: "Config manquante", hasUrl: !!url, hasKey: !!key },
+        { status: 500 }
+      );
+    }
+
+    const supabase = createClient(url, key);
+
     const { data, error } = await supabase
       .from("contact_submissions")
       .select("*")
       .order("created_at", { ascending: false });
 
     if (error) {
-      console.error("Supabase error:", error);
       return NextResponse.json(
-        { error: "Erreur lors de la récupération des contacts" },
+        { error: "Erreur Supabase", details: error.message, code: error.code },
         { status: 500 }
       );
     }
@@ -52,11 +63,10 @@ export async function GET(request: NextRequest) {
       createdAt: row.created_at,
     }));
 
-    return NextResponse.json({ data: mappedData }, { status: 200 });
+    return NextResponse.json({ data: mappedData, _debug: { count: data?.length || 0 } }, { status: 200 });
   } catch (error) {
-    console.error("API error:", error);
     return NextResponse.json(
-      { error: "Erreur serveur" },
+      { error: "Erreur serveur", details: String(error) },
       { status: 500 }
     );
   }
