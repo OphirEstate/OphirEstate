@@ -33,6 +33,7 @@ export async function GET(request: NextRequest) {
       bedrooms: row.bedrooms,
       bathrooms: row.bathrooms,
       surface: row.surface,
+      surfaceUnit: row.surface_unit || "m2",
       price: row.price,
       views: row.views,
       type: row.type,
@@ -77,7 +78,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const {
       name, location, description, rooms, bedrooms, bathrooms,
-      surface, price, type, parking, category, images,
+      surface, surface_unit, price, type, parking, category, images,
       visible_from, nearby_visits,
     } = body;
 
@@ -100,6 +101,7 @@ export async function POST(request: NextRequest) {
         bedrooms: bedrooms || 0,
         bathrooms: bathrooms || 0,
         surface: surface || 0,
+        surface_unit: surface_unit || "m2",
         price: String(price || "0"),
         type: type || null,
         parking: parking || 0,

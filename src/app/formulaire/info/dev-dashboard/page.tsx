@@ -34,6 +34,7 @@ interface Property {
   bedrooms: number;
   bathrooms: number;
   surface: number;
+  surfaceUnit: string;
   price: string;
   views: string | null;
   type: string | null;
@@ -57,6 +58,7 @@ const initialForm = {
   rooms: "",
   bedrooms: "",
   surface: "",
+  surface_unit: "m2",
   bathrooms: "",
   parking: "",
   price: "",
@@ -185,6 +187,7 @@ export default function DevDashboardPage() {
       rooms: String(property.rooms || ""),
       bedrooms: String(property.bedrooms || ""),
       surface: String(property.surface || ""),
+      surface_unit: property.surfaceUnit || "m2",
       bathrooms: String(property.bathrooms || ""),
       parking: String(property.parking || ""),
       price: property.price === "0" ? "" : property.price,
@@ -246,6 +249,7 @@ export default function DevDashboardPage() {
           bedrooms: parseInt(form.bedrooms) || 0,
           bathrooms: parseInt(form.bathrooms) || 0,
           surface: parseInt(form.surface) || 0,
+          surface_unit: form.surface_unit,
           price: form.price || "0",
           type: typeValue || null,
           parking: parseInt(form.parking) || 0,
@@ -318,6 +322,7 @@ export default function DevDashboardPage() {
           bedrooms: parseInt(editForm.bedrooms) || 0,
           bathrooms: parseInt(editForm.bathrooms) || 0,
           surface: parseInt(editForm.surface) || 0,
+          surface_unit: editForm.surface_unit,
           price: editForm.price || "0",
           type: typeValue || null,
           parking: parseInt(editForm.parking) || 0,
@@ -412,6 +417,9 @@ export default function DevDashboardPage() {
     if (filename.startsWith("http")) return filename;
     return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/property-images/${filename}`;
   };
+
+  const formatSurface = (surface: number, unit: string) =>
+    `${surface} ${unit === "hectares" ? "ha" : "m²"}`;
 
   const patrimoineCount = properties.filter((p) => p.category === "patrimoine").length;
   const offmarketCount = properties.filter((p) => p.category === "offmarket").length;
@@ -591,7 +599,7 @@ export default function DevDashboardPage() {
                     )}
                     <div className="flex items-center gap-4 text-gray-400 text-xs mt-2">
                       <span>{property.rooms} pièces</span>
-                      <span>{property.surface} m²</span>
+                      <span>{formatSurface(property.surface, property.surfaceUnit)}</span>
                       <span>{property.price === "0" ? "Prix sur demande" : `${Number(property.price).toLocaleString("fr-FR")} €`}</span>
                     </div>
                   </div>
@@ -632,7 +640,7 @@ export default function DevDashboardPage() {
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-300">{property.type || "—"}</td>
                         <td className="px-4 py-4 text-sm text-gray-300">{property.location}</td>
-                        <td className="px-4 py-4 text-sm text-gray-300">{property.surface} m²</td>
+                        <td className="px-4 py-4 text-sm text-gray-300">{formatSurface(property.surface, property.surfaceUnit)}</td>
                         <td className="px-4 py-4 text-sm text-gray-300">
                           {property.price === "0" ? "Sur demande" : `${Number(property.price).toLocaleString("fr-FR")} €`}
                         </td>
@@ -846,8 +854,14 @@ export default function DevDashboardPage() {
                   <input type="number" min="0" value={form.bedrooms} onChange={(e) => updateForm("bedrooms", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Surface (m²)</label>
-                  <input type="number" min="0" value={form.surface} onChange={(e) => updateForm("surface", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Surface</label>
+                  <div className="flex gap-2">
+                    <input type="number" min="0" value={form.surface} onChange={(e) => updateForm("surface", e.target.value)} placeholder="0" className="flex-1 bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
+                    <select value={form.surface_unit} onChange={(e) => updateForm("surface_unit", e.target.value)} className="bg-dark border border-gray-700 focus:border-gold px-2 py-3 text-white outline-none transition-colors text-sm appearance-none">
+                      <option value="m2">m²</option>
+                      <option value="hectares">ha</option>
+                    </select>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Salle de bains</label>
@@ -1130,8 +1144,14 @@ export default function DevDashboardPage() {
                   <input type="number" min="0" value={editForm.bedrooms} onChange={(e) => updateEditForm("bedrooms", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Surface (m²)</label>
-                  <input type="number" min="0" value={editForm.surface} onChange={(e) => updateEditForm("surface", e.target.value)} placeholder="0" className="w-full bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
+                  <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Surface</label>
+                  <div className="flex gap-2">
+                    <input type="number" min="0" value={editForm.surface} onChange={(e) => updateEditForm("surface", e.target.value)} placeholder="0" className="flex-1 bg-dark border border-gray-700 focus:border-gold px-3 py-3 text-white outline-none transition-colors text-sm placeholder:text-gray-500" />
+                    <select value={editForm.surface_unit} onChange={(e) => updateEditForm("surface_unit", e.target.value)} className="bg-dark border border-gray-700 focus:border-gold px-2 py-3 text-white outline-none transition-colors text-sm appearance-none">
+                      <option value="m2">m²</option>
+                      <option value="hectares">ha</option>
+                    </select>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-gold-light text-xs font-semibold uppercase tracking-[0.15em]">Salle de bains</label>

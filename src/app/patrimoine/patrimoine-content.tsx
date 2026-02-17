@@ -18,13 +18,14 @@ interface StrapiProperty {
   bedrooms: number;
   bathrooms: number;
   surface: number;
+  surfaceUnit: string;
   price: string;
   views: string | null;
   type: string | null;
   parking: number | null;
   propertyId: string;
   category: "patrimoine" | "offmarket";
-  images: string | null; // Comma-separated image filenames stored in GitHub
+  images: string | null;
 }
 import {
   Search,
@@ -54,6 +55,7 @@ interface Property {
   type: string;
   price: number;
   surface: number;
+  surfaceUnit: string;
   rooms: number;
   bedrooms: number;
   bathrooms: number;
@@ -149,6 +151,7 @@ export function PatrimoineContent() {
             type: item.type || "Appartement",
             price: parseInt(item.price) || 0,
             surface: item.surface,
+            surfaceUnit: item.surfaceUnit || "m2",
             rooms: item.rooms,
             bedrooms: item.bedrooms,
             bathrooms: item.bathrooms,
@@ -644,7 +647,7 @@ export function PatrimoineContent() {
                     <div className="flex flex-wrap items-center gap-6 mb-6">
                       <div className="flex items-center gap-2">
                         <Maximize className="w-4 h-4 text-gold" />
-                        <span className="text-white font-medium">{property.surface} m²</span>
+                        <span className="text-white font-medium">{property.surface} {property.surfaceUnit === "hectares" ? "ha" : "m²"}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Home className="w-4 h-4 text-gold" />
@@ -927,7 +930,7 @@ export function PatrimoineContent() {
                     <Maximize className="w-4 h-4" />
                     <span className="text-sm uppercase tracking-wider">{t("patrimoine.modal.surface")}</span>
                   </div>
-                  <span className="text-2xl font-serif text-white">{selectedProperty.surface} m²</span>
+                  <span className="text-2xl font-serif text-white">{selectedProperty.surface} {selectedProperty.surfaceUnit === "hectares" ? "ha" : "m²"}</span>
                 </div>
                 <div className="p-4 bg-dark border border-gold/10">
                   <div className="flex items-center gap-2 text-gold-light mb-1">

@@ -34,7 +34,7 @@ export async function PATCH(
     const body = await request.json();
     const {
       name, location, description, rooms, bedrooms, bathrooms,
-      surface, price, type, parking, category, images,
+      surface, surface_unit, price, type, parking, category, images,
       visible_from, nearby_visits, views, visible,
     } = body;
 
@@ -46,6 +46,7 @@ export async function PATCH(
     if (bedrooms !== undefined) updateData.bedrooms = bedrooms;
     if (bathrooms !== undefined) updateData.bathrooms = bathrooms;
     if (surface !== undefined) updateData.surface = surface;
+    if (surface_unit !== undefined) updateData.surface_unit = surface_unit;
     if (price !== undefined) updateData.price = String(price);
     if (type !== undefined) updateData.type = type;
     if (parking !== undefined) updateData.parking = parking;
