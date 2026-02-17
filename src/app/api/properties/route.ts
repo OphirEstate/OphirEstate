@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 
     let path = "properties?select=*&order=created_at.desc";
     if (category) {
-      path += `&category=eq.${category}`;
+      path += `&category=eq.${category}&visible=eq.true`;
     }
 
     const res = await supabaseRest(path);
@@ -40,6 +40,7 @@ export async function GET(request: NextRequest) {
       propertyId: row.property_id,
       category: row.category,
       images: row.images,
+      visible: row.visible !== false,
       createdAt: row.created_at,
     }));
 

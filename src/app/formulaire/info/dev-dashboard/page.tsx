@@ -20,6 +20,8 @@ import {
   ImageIcon,
   Trash2,
   Save,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 
 interface Property {
@@ -39,6 +41,7 @@ interface Property {
   propertyId: string;
   category: string;
   images: string | null;
+  visible: boolean;
   createdAt: string;
 }
 
@@ -87,6 +90,9 @@ export default function DevDashboardPage() {
   // Delete state
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
+
+  // Visibility toggle state
+  const [togglingVisibility, setTogglingVisibility] = useState<string | null>(null);
 
   const fetchProperties = useCallback(async () => {
     setLoading(true);
@@ -363,6 +369,37 @@ export default function DevDashboardPage() {
     }
   };
 
+  const toggleVisibility = async (property: Property, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setTogglingVisibility(property.documentId);
+    setError("");
+
+    try {
+      const res = await fetch(`/api/properties/${property.documentId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ visible: !property.visible }),
+      });
+
+      if (!res.ok) throw new Error("Erreur lors de la modification");
+
+      setProperties((prev) =>
+        prev.map((p) =>
+          p.documentId === property.documentId
+            ? { ...p, visible: !p.visible }
+            : p
+        )
+      );
+      setSuccess(
+        `Bien "${property.name}" ${!property.visible ? "affiché" : "masqué"} avec succès`
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Erreur");
+    } finally {
+      setTogglingVisibility(null);
+    }
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("fr-FR", {
       day: "2-digit",
@@ -378,6 +415,7 @@ export default function DevDashboardPage() {
 
   const patrimoineCount = properties.filter((p) => p.category === "patrimoine").length;
   const offmarketCount = properties.filter((p) => p.category === "offmarket").length;
+  const visibleCount = properties.filter((p) => p.visible).length;
 
   return (
     <div className="min-h-screen bg-dark">
@@ -424,7 +462,7 @@ export default function DevDashboardPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-6 sm:mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 sm:mb-8">
           <div className="bg-dark-lighter border border-gold/10 p-4 sm:p-6">
             <div className="flex items-center gap-3 sm:gap-4">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gold/10 flex items-center justify-center">
@@ -433,6 +471,17 @@ export default function DevDashboardPage() {
               <div>
                 <p className="text-gray-400 text-xs sm:text-sm">Total</p>
                 <p className="text-xl sm:text-2xl font-semibold text-white">{properties.length}</p>
+              </div>
+            </div>
+          </div>
+          <div className="bg-dark-lighter border border-gold/10 p-4 sm:p-6">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/10 flex items-center justify-center">
+                <Eye className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
+              </div>
+              <div>
+                <p className="text-gray-400 text-xs sm:text-sm">Visibles</p>
+                <p className="text-xl sm:text-2xl font-semibold text-white">{visibleCount}</p>
               </div>
             </div>
           </div>
@@ -500,7 +549,7 @@ export default function DevDashboardPage() {
                 <div
                   key={property.documentId}
                   onClick={() => openEditModal(property)}
-                  className="bg-dark-lighter border border-gold/10 p-4 cursor-pointer hover:border-gold/30 transition-colors active:bg-gold/5"
+                  className={`bg-dark-lighter border p-4 cursor-pointer hover:border-gold/30 transition-colors active:bg-gold/5 ${!property.visible ? "border-gray-700 opacity-60" : "border-gold/10"}`}
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div>
@@ -509,9 +558,25 @@ export default function DevDashboardPage() {
                         {property.propertyId} — {formatDate(property.createdAt)}
                       </p>
                     </div>
-                    <span className={`text-xs px-2 py-1 ${property.category === "patrimoine" ? "bg-gold/20 text-gold" : "bg-blue-500/20 text-blue-400"}`}>
-                      {property.category === "patrimoine" ? "Patrimoine" : "Off-Market"}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={(e) => toggleVisibility(property, e)}
+                        disabled={togglingVisibility === property.documentId}
+                        className={`p-1.5 rounded transition-colors ${property.visible ? "text-green-400 hover:bg-green-500/10" : "text-gray-500 hover:bg-gray-500/10"}`}
+                        title={property.visible ? "Masquer le bien" : "Afficher le bien"}
+                      >
+                        {togglingVisibility === property.documentId ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : property.visible ? (
+                          <Eye className="w-4 h-4" />
+                        ) : (
+                          <EyeOff className="w-4 h-4" />
+                        )}
+                      </button>
+                      <span className={`text-xs px-2 py-1 ${property.category === "patrimoine" ? "bg-gold/20 text-gold" : "bg-blue-500/20 text-blue-400"}`}>
+                        {property.category === "patrimoine" ? "Patrimoine" : "Off-Market"}
+                      </span>
+                    </div>
                   </div>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center gap-2">
@@ -547,6 +612,7 @@ export default function DevDashboardPage() {
                       <th className="px-4 py-4 text-left text-xs font-semibold text-gold uppercase tracking-wider">Lieu</th>
                       <th className="px-4 py-4 text-left text-xs font-semibold text-gold uppercase tracking-wider">Surface</th>
                       <th className="px-4 py-4 text-left text-xs font-semibold text-gold uppercase tracking-wider">Prix</th>
+                      <th className="px-4 py-4 text-center text-xs font-semibold text-gold uppercase tracking-wider">Visible</th>
                       <th className="px-4 py-4 text-left text-xs font-semibold text-gold uppercase tracking-wider">Date</th>
                     </tr>
                   </thead>
@@ -555,7 +621,7 @@ export default function DevDashboardPage() {
                       <tr
                         key={property.documentId}
                         onClick={() => openEditModal(property)}
-                        className="hover:bg-gold/5 transition-colors cursor-pointer"
+                        className={`hover:bg-gold/5 transition-colors cursor-pointer ${!property.visible ? "opacity-50" : ""}`}
                       >
                         <td className="px-4 py-4 text-sm text-gray-400 font-mono">{property.propertyId}</td>
                         <td className="px-4 py-4 text-sm text-white font-medium">{property.name}</td>
@@ -569,6 +635,22 @@ export default function DevDashboardPage() {
                         <td className="px-4 py-4 text-sm text-gray-300">{property.surface} m²</td>
                         <td className="px-4 py-4 text-sm text-gray-300">
                           {property.price === "0" ? "Sur demande" : `${Number(property.price).toLocaleString("fr-FR")} €`}
+                        </td>
+                        <td className="px-4 py-4 text-center">
+                          <button
+                            onClick={(e) => toggleVisibility(property, e)}
+                            disabled={togglingVisibility === property.documentId}
+                            className={`p-1.5 rounded transition-colors ${property.visible ? "text-green-400 hover:bg-green-500/10" : "text-gray-500 hover:bg-gray-500/10"}`}
+                            title={property.visible ? "Masquer le bien" : "Afficher le bien"}
+                          >
+                            {togglingVisibility === property.documentId ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : property.visible ? (
+                              <Eye className="w-4 h-4" />
+                            ) : (
+                              <EyeOff className="w-4 h-4" />
+                            )}
+                          </button>
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-400">{formatDate(property.createdAt)}</td>
                       </tr>
