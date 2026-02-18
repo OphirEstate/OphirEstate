@@ -165,7 +165,7 @@
       "famille": { "label": "Famille", "description": "Transmission générationnelle" },
       "heritage": { "label": "Héritage", "description": "Préservation patrimoniale" }
     },
-    "stats": "Années d'histoire"
+    "stats": "An d'histoire"
   },
   "diasporaBridge": {
     "label": "International",

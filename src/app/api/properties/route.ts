@@ -42,6 +42,7 @@ export async function GET(request: NextRequest) {
       category: row.category,
       images: row.images,
       visible: row.visible !== false,
+      exclusive: row.exclusive === true,
       createdAt: row.created_at,
     }));
 
@@ -79,7 +80,7 @@ export async function POST(request: NextRequest) {
     const {
       name, location, description, rooms, bedrooms, bathrooms,
       surface, surface_unit, price, type, parking, category, images,
-      visible_from, nearby_visits,
+      visible_from, nearby_visits, exclusive,
     } = body;
 
     if (!name || !location || !category) {
@@ -110,6 +111,7 @@ export async function POST(request: NextRequest) {
         images: images || null,
         visible_from: visible_from || null,
         nearby_visits: nearby_visits || null,
+        exclusive: exclusive === true,
       }),
     });
 

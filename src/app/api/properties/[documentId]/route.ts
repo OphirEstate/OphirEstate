@@ -35,7 +35,7 @@ export async function PATCH(
     const {
       name, location, description, rooms, bedrooms, bathrooms,
       surface, surface_unit, price, type, parking, category, images,
-      visible_from, nearby_visits, views, visible,
+      visible_from, nearby_visits, views, visible, exclusive,
     } = body;
 
     const updateData: Record<string, unknown> = {};
@@ -56,6 +56,7 @@ export async function PATCH(
     if (nearby_visits !== undefined) updateData.nearby_visits = nearby_visits || null;
     if (views !== undefined) updateData.views = views;
     if (visible !== undefined) updateData.visible = visible;
+    if (exclusive !== undefined) updateData.exclusive = exclusive;
 
     const res = await supabaseRest(
       `properties?document_id=eq.${documentId}`,

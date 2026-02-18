@@ -26,6 +26,7 @@ interface StrapiProperty {
   propertyId: string;
   category: "patrimoine" | "offmarket";
   images: string | null;
+  exclusive: boolean;
 }
 import {
   Search,
@@ -60,6 +61,7 @@ interface Property {
   bedrooms: number;
   bathrooms: number;
   parking: number;
+  exclusive: boolean;
   image: string;
   images: string[];
   highlight: string;
@@ -71,12 +73,12 @@ const filterOptions = {
   fr: {
     countries: ["France", "Monaco", "Suisse", "Belgique"],
     arrondissements: ["Paris 6ème", "Paris 7ème", "Paris 8ème", "Paris 16ème", "Neuilly-sur-Seine"],
-    types: ["Appartement", "Maison", "Villa", "Hôtel Particulier", "Loft"],
+    types: ["Appartement", "Maison", "Villa", "Hôtel Particulier", "Loft", "Domaine", "Domaine équestre", "Châteaux", "Immeuble", "Manoir", "Terrain"],
   },
   en: {
     countries: ["France", "Monaco", "Switzerland", "Belgium"],
     arrondissements: ["Paris 6th", "Paris 7th", "Paris 8th", "Paris 16th", "Neuilly-sur-Seine"],
-    types: ["Apartment", "House", "Villa", "Mansion", "Loft"],
+    types: ["Apartment", "House", "Villa", "Private Mansion", "Loft", "Estate", "Equestrian Estate", "Castle", "Building", "Manor", "Land"],
   },
 };
 
@@ -156,6 +158,7 @@ export function PatrimoineContent() {
             bedrooms: item.bedrooms,
             bathrooms: item.bathrooms,
             parking: item.parking || 0,
+            exclusive: item.exclusive === true,
             image: imageUrl,
             images: allImages,
             highlight: item.views?.split(",")[0]?.trim() || "Exclusif",
@@ -198,6 +201,7 @@ export function PatrimoineContent() {
   const [surfaceMax, setSurfaceMax] = useState("");
   const [selectedRooms, setSelectedRooms] = useState("");
   const [selectedBedrooms, setSelectedBedrooms] = useState("");
+  const [selectedExclusive, setSelectedExclusive] = useState("");
   const [showFilters, setShowFilters] = useState(false);
 
   // Modal states
@@ -239,9 +243,13 @@ export function PatrimoineContent() {
       const minBedrooms = !selectedBedrooms ? 0 : parseInt(selectedBedrooms.replace("+", ""));
       const matchesBedrooms = property.bedrooms >= minBedrooms;
 
-      return matchesSearch && matchesCountry && matchesArrondissement && matchesType && matchesPrice && matchesSurface && matchesRooms && matchesBedrooms;
+      const matchesExclusive = !selectedExclusive ||
+        (selectedExclusive === "Exclusif" && property.exclusive) ||
+        (selectedExclusive === "Classique" && !property.exclusive);
+
+      return matchesSearch && matchesCountry && matchesArrondissement && matchesType && matchesPrice && matchesSurface && matchesRooms && matchesBedrooms && matchesExclusive;
     });
-  }, [luxuryProperties, searchQuery, selectedCountry, selectedArrondissement, selectedType, priceMin, priceMax, surfaceMin, surfaceMax, selectedRooms, selectedBedrooms]);
+  }, [luxuryProperties, searchQuery, selectedCountry, selectedArrondissement, selectedType, priceMin, priceMax, surfaceMin, surfaceMax, selectedRooms, selectedBedrooms, selectedExclusive]);
 
   const activeFiltersCount = [
     selectedCountry !== "",
@@ -251,6 +259,7 @@ export function PatrimoineContent() {
     surfaceMin !== "" || surfaceMax !== "",
     selectedRooms !== "",
     selectedBedrooms !== "",
+    selectedExclusive !== "",
   ].filter(Boolean).length;
 
   const clearFilters = () => {
@@ -263,6 +272,7 @@ export function PatrimoineContent() {
     setSurfaceMax("");
     setSelectedRooms("");
     setSelectedBedrooms("");
+    setSelectedExclusive("");
     setSearchQuery("");
   };
 
@@ -527,7 +537,7 @@ export function PatrimoineContent() {
                   </div>
 
                   {/* Row 3 */}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-3 gap-4">
                     <div>
                       <label className="block text-sm text-gray-400 mb-2 uppercase tracking-wider">{t("patrimoine.filters.rooms")}</label>
                       <div className="relative">
@@ -552,6 +562,21 @@ export function PatrimoineContent() {
                         >
                           <option value="">{allLabel}</option>
                           {bedroomsOptions.map((b) => <option key={b} value={b}>{b} {t("patrimoine.filters.bedroomsUnit")}</option>)}
+                        </select>
+                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm text-gray-400 mb-2 uppercase tracking-wider">Statut</label>
+                      <div className="relative">
+                        <select
+                          value={selectedExclusive}
+                          onChange={(e) => setSelectedExclusive(e.target.value)}
+                          className="w-full px-4 py-3 bg-dark border border-gold/10 text-white appearance-none focus:border-gold/30 focus:outline-none cursor-pointer"
+                        >
+                          <option value="">{allLabel}</option>
+                          <option value="Exclusif">Exclusif</option>
+                          <option value="Classique">Classique</option>
                         </select>
                         <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
                       </div>
@@ -962,6 +987,9 @@ export function PatrimoineContent() {
                   {selectedProperty.description}
                 </p>
               </div>
+
+              {/* Info on demand */}
+              <p className="text-gold-light text-sm italic mb-6">+ d&apos;informations sur demande</p>
 
               {/* Features */}
               <div className="mb-8">

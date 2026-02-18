@@ -98,7 +98,7 @@ export function ParisPatrimoine() {
               <div className="absolute -top-4 -right-4 w-full h-full border border-gold/30 -z-10" />
               {/* Stats overlay */}
               <div className="absolute -bottom-6 -left-6 bg-dark/95 backdrop-blur-sm p-6 border border-gold/20">
-                <span className="text-4xl font-serif text-gold-light block">150+</span>
+                <span className="text-4xl font-serif text-gold-light block">1+</span>
                 <span className="text-gray-400 text-sm uppercase tracking-wider">{t("parisPatrimoine.stats")}</span>
               </div>
             </div>

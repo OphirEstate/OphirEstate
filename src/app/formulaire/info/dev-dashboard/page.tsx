@@ -22,6 +22,7 @@ import {
   Save,
   Eye,
   EyeOff,
+  Star,
 } from "lucide-react";
 
 interface Property {
@@ -43,10 +44,11 @@ interface Property {
   category: string;
   images: string | null;
   visible: boolean;
+  exclusive: boolean;
   createdAt: string;
 }
 
-const TYPE_OPTIONS = ["Appartement", "Villa", "Bureau", "Terrain", "Château"];
+const TYPE_OPTIONS = ["Appartement", "Maison", "Villa", "Hôtel Particulier", "Loft", "Domaine", "Domaine équestre", "Châteaux", "Immeuble", "Manoir", "Terrain"];
 
 const initialForm = {
   category: "",
@@ -78,6 +80,7 @@ export default function DevDashboardPage() {
   const [showCustomType, setShowCustomType] = useState(false);
   const [customType, setCustomType] = useState("");
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [isExclusive, setIsExclusive] = useState(false);
   const [nextPropertyId, setNextPropertyId] = useState("P001");
 
   // Edit state
@@ -87,6 +90,7 @@ export default function DevDashboardPage() {
   const [editCustomType, setEditCustomType] = useState("");
   const [editSelectedFiles, setEditSelectedFiles] = useState<File[]>([]);
   const [existingImages, setExistingImages] = useState<string[]>([]);
+  const [editIsExclusive, setEditIsExclusive] = useState(false);
   const [editSubmitting, setEditSubmitting] = useState(false);
 
   // Delete state
@@ -197,6 +201,7 @@ export default function DevDashboardPage() {
     setExistingImages(
       property.images ? property.images.split(",").filter(Boolean) : []
     );
+    setEditIsExclusive(property.exclusive === true);
     setEditSelectedFiles([]);
     setEditShowCustomType(false);
     setEditCustomType("");
@@ -257,6 +262,7 @@ export default function DevDashboardPage() {
           images: imageFilenames.length > 0 ? imageFilenames.join(",") : null,
           visible_from: form.visible_from || null,
           nearby_visits: form.nearby_visits || null,
+          exclusive: isExclusive,
         }),
       });
 
@@ -269,6 +275,7 @@ export default function DevDashboardPage() {
       setSuccess(`Bien créé avec succès — ID: ${result.propertyId}`);
       setForm(initialForm);
       setSelectedFiles([]);
+      setIsExclusive(false);
       setShowCustomType(false);
       setCustomType("");
       setShowAddForm(false);
@@ -331,6 +338,7 @@ export default function DevDashboardPage() {
           visible_from: editForm.visible_from || null,
           nearby_visits: editForm.nearby_visits || null,
           views: editForm.views || null,
+          exclusive: editIsExclusive,
         }),
       });
 
@@ -584,6 +592,12 @@ export default function DevDashboardPage() {
                       <span className={`text-xs px-2 py-1 ${property.category === "patrimoine" ? "bg-gold/20 text-gold" : "bg-blue-500/20 text-blue-400"}`}>
                         {property.category === "patrimoine" ? "Patrimoine" : "Off-Market"}
                       </span>
+                      {property.exclusive && (
+                        <span className="text-xs px-2 py-1 bg-amber-500/20 text-amber-400 flex items-center gap-1">
+                          <Star className="w-3 h-3" />
+                          Exclusif
+                        </span>
+                      )}
                     </div>
                   </div>
                   <div className="space-y-2 text-sm">
@@ -616,6 +630,7 @@ export default function DevDashboardPage() {
                       <th className="px-4 py-4 text-left text-xs font-semibold text-gold uppercase tracking-wider">ID</th>
                       <th className="px-4 py-4 text-left text-xs font-semibold text-gold uppercase tracking-wider">Nom</th>
                       <th className="px-4 py-4 text-left text-xs font-semibold text-gold uppercase tracking-wider">Catégorie</th>
+                      <th className="px-4 py-4 text-center text-xs font-semibold text-gold uppercase tracking-wider">Exclusif</th>
                       <th className="px-4 py-4 text-left text-xs font-semibold text-gold uppercase tracking-wider">Type</th>
                       <th className="px-4 py-4 text-left text-xs font-semibold text-gold uppercase tracking-wider">Lieu</th>
                       <th className="px-4 py-4 text-left text-xs font-semibold text-gold uppercase tracking-wider">Surface</th>
@@ -637,6 +652,13 @@ export default function DevDashboardPage() {
                           <span className={`text-xs px-2 py-1 ${property.category === "patrimoine" ? "bg-gold/20 text-gold" : "bg-blue-500/20 text-blue-400"}`}>
                             {property.category === "patrimoine" ? "Patrimoine" : "Off-Market"}
                           </span>
+                        </td>
+                        <td className="px-4 py-4 text-center">
+                          {property.exclusive ? (
+                            <Star className="w-4 h-4 text-amber-400 mx-auto" />
+                          ) : (
+                            <span className="text-gray-600">—</span>
+                          )}
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-300">{property.type || "—"}</td>
                         <td className="px-4 py-4 text-sm text-gray-300">{property.location}</td>
@@ -810,6 +832,23 @@ export default function DevDashboardPage() {
                       </button>
                     </div>
                   )}
+                </div>
+              </div>
+
+              {/* Exclusive Toggle */}
+              <div className="flex items-center gap-3 p-3 bg-dark border border-gray-700 rounded">
+                <button
+                  type="button"
+                  onClick={() => setIsExclusive(!isExclusive)}
+                  className={`relative w-11 h-6 rounded-full transition-colors ${isExclusive ? "bg-gold" : "bg-gray-600"}`}
+                >
+                  <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${isExclusive ? "translate-x-5" : ""}`} />
+                </button>
+                <div className="flex items-center gap-2">
+                  <Star className={`w-4 h-4 ${isExclusive ? "text-gold" : "text-gray-500"}`} />
+                  <span className={`text-sm font-medium ${isExclusive ? "text-gold" : "text-gray-400"}`}>
+                    {isExclusive ? "Exclusif" : "Classique"}
+                  </span>
                 </div>
               </div>
 
@@ -1100,6 +1139,23 @@ export default function DevDashboardPage() {
                       </button>
                     </div>
                   )}
+                </div>
+              </div>
+
+              {/* Exclusive Toggle */}
+              <div className="flex items-center gap-3 p-3 bg-dark border border-gray-700 rounded">
+                <button
+                  type="button"
+                  onClick={() => setEditIsExclusive(!editIsExclusive)}
+                  className={`relative w-11 h-6 rounded-full transition-colors ${editIsExclusive ? "bg-gold" : "bg-gray-600"}`}
+                >
+                  <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${editIsExclusive ? "translate-x-5" : ""}`} />
+                </button>
+                <div className="flex items-center gap-2">
+                  <Star className={`w-4 h-4 ${editIsExclusive ? "text-gold" : "text-gray-500"}`} />
+                  <span className={`text-sm font-medium ${editIsExclusive ? "text-gold" : "text-gray-400"}`}>
+                    {editIsExclusive ? "Exclusif" : "Classique"}
+                  </span>
                 </div>
               </div>
 

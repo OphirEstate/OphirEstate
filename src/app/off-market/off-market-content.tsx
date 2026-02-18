@@ -30,6 +30,7 @@ interface StrapiProperty {
   propertyId: string;
   category: "patrimoine" | "offmarket";
   images: string | null;
+  exclusive: boolean;
 }
 
 const reasonKeys = ["successions", "arbitrages", "family", "allocation", "repositioning", "inheritance"] as const;
@@ -39,7 +40,7 @@ const approachIcons = [Key, Handshake, Shield];
 
 const countries = ["Tous", "France", "Monaco", "Suisse", "Belgique"];
 const arrondissements = ["Tous", "Paris 2ème", "Paris 3ème", "Paris 6ème", "Paris 7ème", "Paris 8ème", "Paris 16ème", "Neuilly-sur-Seine"];
-const types = ["Tous", "Appartement", "Maison", "Villa", "Hôtel Particulier", "Loft", "Immeuble de bureaux"];
+const types = ["Tous", "Appartement", "Maison", "Villa", "Hôtel Particulier", "Loft", "Domaine", "Domaine équestre", "Châteaux", "Immeuble", "Manoir", "Terrain"];
 const roomsOptions = ["Tous", "1+", "2+", "3+", "4+", "5+", "6+", "8+", "10+"];
 const bedroomsOptions = ["Tous", "1+", "2+", "3+", "4+", "5+"];
 
@@ -57,6 +58,7 @@ interface Property {
   bedrooms: number;
   bathrooms: number;
   parking: number;
+  exclusive: boolean;
   image: string;
   images: string[];
   status: string;
@@ -116,6 +118,7 @@ export function OffMarketContent() {
             bedrooms: item.bedrooms,
             bathrooms: item.bathrooms,
             parking: item.parking || 0,
+            exclusive: item.exclusive === true,
             image: imageUrl,
             images: allImages,
             status: "Off-Market",
@@ -213,6 +216,7 @@ export function OffMarketContent() {
   const [surfaceMax, setSurfaceMax] = useState("");
   const [selectedRooms, setSelectedRooms] = useState(allLabel);
   const [selectedBedrooms, setSelectedBedrooms] = useState(allLabel);
+  const [selectedExclusive, setSelectedExclusive] = useState(allLabel);
   const [showFilters, setShowFilters] = useState(false);
 
   const filteredProperties = useMemo(() => {
@@ -233,9 +237,13 @@ export function OffMarketContent() {
       const minBedrooms = selectedBedrooms === allLabel ? 0 : parseInt(selectedBedrooms.replace("+", ""));
       const matchesBedrooms = property.bedrooms >= minBedrooms;
 
-      return matchesSearch && matchesCountry && matchesArrondissement && matchesType && matchesSurface && matchesRooms && matchesBedrooms;
+      const matchesExclusive = selectedExclusive === allLabel ||
+        (selectedExclusive === "Exclusif" && property.exclusive) ||
+        (selectedExclusive === "Classique" && !property.exclusive);
+
+      return matchesSearch && matchesCountry && matchesArrondissement && matchesType && matchesSurface && matchesRooms && matchesBedrooms && matchesExclusive;
     });
-  }, [displayProperties, searchQuery, selectedCountry, selectedArrondissement, selectedType, surfaceMin, surfaceMax, selectedRooms, selectedBedrooms, allLabel]);
+  }, [displayProperties, searchQuery, selectedCountry, selectedArrondissement, selectedType, surfaceMin, surfaceMax, selectedRooms, selectedBedrooms, selectedExclusive, allLabel]);
 
   const activeFiltersCount = [
     selectedCountry !== allLabel,
@@ -244,6 +252,7 @@ export function OffMarketContent() {
     surfaceMin !== "" || surfaceMax !== "",
     selectedRooms !== allLabel,
     selectedBedrooms !== allLabel,
+    selectedExclusive !== allLabel,
   ].filter(Boolean).length;
 
   const clearFilters = () => {
@@ -254,6 +263,7 @@ export function OffMarketContent() {
     setSurfaceMax("");
     setSelectedRooms(allLabel);
     setSelectedBedrooms(allLabel);
+    setSelectedExclusive(allLabel);
     setSearchQuery("");
   };
 
@@ -470,8 +480,27 @@ export function OffMarketContent() {
                     </div>
                   </div>
 
-                  {/* Row 2: Surface range */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  {/* Row 2: Exclusive + Surface range */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    {/* Exclusive filter */}
+                    <div>
+                      <label className="block text-sm text-gray-400 mb-2 uppercase tracking-wider">
+                        Statut
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={selectedExclusive}
+                          onChange={(e) => setSelectedExclusive(e.target.value)}
+                          className="w-full px-4 py-3 bg-dark-lighter border border-gold/10 text-white appearance-none focus:border-gold/30 focus:outline-none cursor-pointer"
+                        >
+                          <option value={allLabel}>{allLabel}</option>
+                          <option value="Exclusif">Exclusif</option>
+                          <option value="Classique">Classique</option>
+                        </select>
+                        <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+                      </div>
+                    </div>
+
                     {/* Surface range */}
                     <div>
                       <label className="block text-sm text-gray-400 mb-2 uppercase tracking-wider">
@@ -1042,6 +1071,9 @@ export function OffMarketContent() {
                   {selectedProperty.description}
                 </p>
               </div>
+
+              {/* Info on demand */}
+              <p className="text-gold-light text-sm italic mb-6">+ d&apos;informations sur demande</p>
 
               {/* Features */}
               <div className="mb-8">
