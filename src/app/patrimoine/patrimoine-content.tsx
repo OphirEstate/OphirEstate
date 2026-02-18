@@ -17,7 +17,7 @@ interface StrapiProperty {
   rooms: number;
   bedrooms: number;
   bathrooms: number;
-  surface: number;
+  surface: string;
   surfaceUnit: string;
   price: string;
   views: string | null;
@@ -55,7 +55,7 @@ interface Property {
   arrondissement: string;
   type: string;
   price: number;
-  surface: number;
+  surface: string;
   surfaceUnit: string;
   rooms: number;
   bedrooms: number;
@@ -235,7 +235,8 @@ export function PatrimoineContent() {
 
       const minSurface = surfaceMin ? parseInt(surfaceMin) : 0;
       const maxSurface = surfaceMax ? parseInt(surfaceMax) : Infinity;
-      const matchesSurface = property.surface >= minSurface && property.surface <= maxSurface;
+      const numericSurface = parseInt(String(property.surface).replace(/[^0-9]/g, "")) || 0;
+      const matchesSurface = numericSurface >= minSurface && numericSurface <= maxSurface;
 
       const minRooms = !selectedRooms ? 0 : parseInt(selectedRooms.replace("+", ""));
       const matchesRooms = property.rooms >= minRooms;
