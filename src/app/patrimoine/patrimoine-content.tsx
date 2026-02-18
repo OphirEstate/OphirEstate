@@ -642,9 +642,13 @@ export function PatrimoineContent() {
 
                     {/* Highlight badge */}
                     <div className="absolute top-6 left-6">
-                      <div className="px-4 py-2 bg-gold text-dark text-xs uppercase tracking-wider font-semibold flex items-center gap-2">
+                      <div className={`px-4 py-2 text-xs uppercase tracking-wider font-semibold flex items-center gap-2 ${
+                        property.exclusive
+                          ? "bg-gold text-dark"
+                          : "bg-dark/80 text-gold-light border border-gold/30"
+                      }`}>
                         <Sparkles className="w-3 h-3" />
-                        {property.highlight}
+                        {property.exclusive ? "Exclusif" : "Classique"}
                       </div>
                     </div>
 
@@ -925,9 +929,13 @@ export function PatrimoineContent() {
 
               {/* Highlight badge */}
               <div className="absolute top-4 left-4">
-                <div className="px-4 py-2 bg-gold text-dark text-sm uppercase tracking-wider font-semibold flex items-center gap-2">
+                <div className={`px-4 py-2 text-sm uppercase tracking-wider font-semibold flex items-center gap-2 ${
+                  selectedProperty.exclusive
+                    ? "bg-gold text-dark"
+                    : "bg-dark/80 text-gold-light border border-gold/30"
+                }`}>
                   <Sparkles className="w-4 h-4" />
-                  {selectedProperty.highlight}
+                  {selectedProperty.exclusive ? "Exclusif" : "Classique"}
                 </div>
               </div>
             </div>

@@ -629,11 +629,11 @@ export function OffMarketContent() {
                     {/* Status badge */}
                     <div className="absolute top-4 left-4">
                       <span className={`px-3 py-1 text-xs uppercase tracking-wider font-semibold ${
-                        property.status === "Exclusif"
+                        property.exclusive
                           ? "bg-gold text-dark"
                           : "bg-dark/80 text-gold-light border border-gold/30"
                       }`}>
-                        {property.status}
+                        {property.exclusive ? "Exclusif" : "Classique"}
                       </span>
                     </div>
                     {/* Lock overlay */}
@@ -1005,11 +1005,11 @@ export function OffMarketContent() {
               {/* Status badge */}
               <div className="absolute top-4 left-4">
                 <span className={`px-4 py-2 text-sm uppercase tracking-wider font-semibold ${
-                  selectedProperty.status === "Exclusif"
+                  selectedProperty.exclusive
                     ? "bg-gold text-dark"
                     : "bg-dark/80 text-gold-light border border-gold/30"
                 }`}>
-                  {selectedProperty.status}
+                  {selectedProperty.exclusive ? "Exclusif" : "Classique"}
                 </span>
               </div>
             </div>
