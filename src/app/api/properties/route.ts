@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
         rooms: rooms || 0,
         bedrooms: bedrooms || 0,
         bathrooms: bathrooms || 0,
-        surface: String(surface || "0"),
+        surface: surface || "0",
         surface_unit: surface_unit || "m2",
         price: String(price || "0"),
         type: type || null,

@@ -45,7 +45,7 @@ export async function PATCH(
     if (rooms !== undefined) updateData.rooms = rooms;
     if (bedrooms !== undefined) updateData.bedrooms = bedrooms;
     if (bathrooms !== undefined) updateData.bathrooms = bathrooms;
-    if (surface !== undefined) updateData.surface = String(surface);
+    if (surface !== undefined) updateData.surface = surface;
     if (surface_unit !== undefined) updateData.surface_unit = surface_unit;
     if (price !== undefined) updateData.price = String(price);
     if (type !== undefined) updateData.type = type;
