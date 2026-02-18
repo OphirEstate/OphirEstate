@@ -190,8 +190,8 @@ export default function DevDashboardPage() {
       location: property.location,
       rooms: String(property.rooms || ""),
       bedrooms: String(property.bedrooms || ""),
-      surface: String(property.surface || ""),
-      surface_unit: property.surfaceUnit || "m2",
+      surface: String(property.surface || "").replace(/\s*(m²|ha)$/i, "").trim(),
+      surface_unit: String(property.surface || "").includes("ha") ? "hectares" : "m2",
       bathrooms: String(property.bathrooms || ""),
       parking: String(property.parking || ""),
       price: property.price === "0" ? "" : property.price,
@@ -253,8 +253,7 @@ export default function DevDashboardPage() {
           rooms: parseInt(form.rooms) || 0,
           bedrooms: parseInt(form.bedrooms) || 0,
           bathrooms: parseInt(form.bathrooms) || 0,
-          surface: form.surface || "0",
-          surface_unit: form.surface_unit,
+          surface: form.surface ? `${form.surface} ${form.surface_unit === "hectares" ? "ha" : "m²"}` : "0",
           price: form.price || "0",
           type: typeValue || null,
           parking: parseInt(form.parking) || 0,
@@ -328,8 +327,7 @@ export default function DevDashboardPage() {
           rooms: parseInt(editForm.rooms) || 0,
           bedrooms: parseInt(editForm.bedrooms) || 0,
           bathrooms: parseInt(editForm.bathrooms) || 0,
-          surface: editForm.surface || "0",
-          surface_unit: editForm.surface_unit,
+          surface: editForm.surface ? `${editForm.surface} ${editForm.surface_unit === "hectares" ? "ha" : "m²"}` : "0",
           price: editForm.price || "0",
           type: typeValue || null,
           parking: parseInt(editForm.parking) || 0,
@@ -426,8 +424,10 @@ export default function DevDashboardPage() {
     return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/property-images/${filename}`;
   };
 
-  const formatSurface = (surface: string, unit: string) =>
-    `${surface} ${unit === "hectares" ? "ha" : "m²"}`;
+  const formatSurface = (surface: string) => {
+    if (!surface || surface === "0") return "—";
+    return surface;
+  };
 
   const patrimoineCount = properties.filter((p) => p.category === "patrimoine").length;
   const offmarketCount = properties.filter((p) => p.category === "offmarket").length;
@@ -613,7 +613,7 @@ export default function DevDashboardPage() {
                     )}
                     <div className="flex items-center gap-4 text-gray-400 text-xs mt-2">
                       <span>{property.rooms} pièces</span>
-                      <span>{formatSurface(property.surface, property.surfaceUnit)}</span>
+                      <span>{formatSurface(property.surface)}</span>
                       <span>{property.price === "0" ? "Prix sur demande" : `${Number(property.price).toLocaleString("fr-FR")} €`}</span>
                     </div>
                   </div>
@@ -662,7 +662,7 @@ export default function DevDashboardPage() {
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-300">{property.type || "—"}</td>
                         <td className="px-4 py-4 text-sm text-gray-300">{property.location}</td>
-                        <td className="px-4 py-4 text-sm text-gray-300">{formatSurface(property.surface, property.surfaceUnit)}</td>
+                        <td className="px-4 py-4 text-sm text-gray-300">{formatSurface(property.surface)}</td>
                         <td className="px-4 py-4 text-sm text-gray-300">
                           {property.price === "0" ? "Sur demande" : `${Number(property.price).toLocaleString("fr-FR")} €`}
                         </td>

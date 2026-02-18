@@ -668,7 +668,7 @@ export function OffMarketContent() {
                       )}
                       <div className="flex items-center gap-1">
                         <Maximize className="w-4 h-4" />
-                        <span>{property.surface} {property.surfaceUnit === "hectares" ? "ha" : "m²"}</span>
+                        <span>{property.surface}</span>
                       </div>
                     </div>
 
@@ -1038,7 +1038,7 @@ export function OffMarketContent() {
                     <Maximize className="w-4 h-4" />
                     <span className="text-sm uppercase tracking-wider">{t.modal.surface}</span>
                   </div>
-                  <span className="text-2xl font-serif text-white">{selectedProperty.surface} {selectedProperty.surfaceUnit === "hectares" ? "ha" : "m²"}</span>
+                  <span className="text-2xl font-serif text-white">{selectedProperty.surface}</span>
                 </div>
                 <div className="p-4 bg-dark-lighter border border-gold/10">
                   <div className="flex items-center gap-2 text-gold-light mb-1">
