@@ -426,7 +426,7 @@ export default function DevDashboardPage() {
 
   const formatSurface = (surface: string) => {
     if (!surface || surface === "0") return "—";
-    return surface;
+    return /[a-zA-Z²]/.test(surface) ? surface : `${surface} m²`;
   };
 
   const patrimoineCount = properties.filter((p) => p.category === "patrimoine").length;

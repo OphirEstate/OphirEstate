@@ -668,7 +668,7 @@ export function OffMarketContent() {
                       )}
                       <div className="flex items-center gap-1">
                         <Maximize className="w-4 h-4" />
-                        <span>{property.surface}</span>
+                        <span>{/[a-zA-Z²]/.test(property.surface) ? property.surface : `${property.surface} m²`}</span>
                       </div>
                     </div>
 
@@ -1038,7 +1038,7 @@ export function OffMarketContent() {
                     <Maximize className="w-4 h-4" />
                     <span className="text-sm uppercase tracking-wider">{t.modal.surface}</span>
                   </div>
-                  <span className="text-2xl font-serif text-white">{selectedProperty.surface}</span>
+                  <span className="text-2xl font-serif text-white">{/[a-zA-Z²]/.test(selectedProperty.surface) ? selectedProperty.surface : `${selectedProperty.surface} m²`}</span>
                 </div>
                 <div className="p-4 bg-dark-lighter border border-gold/10">
                   <div className="flex items-center gap-2 text-gold-light mb-1">
