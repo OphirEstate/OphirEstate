@@ -72,12 +72,12 @@ interface Property {
 const filterOptions = {
   fr: {
     countries: ["France", "Monaco", "Suisse", "Belgique"],
-    arrondissements: ["Paris 6ème", "Paris 7ème", "Paris 8ème", "Paris 16ème", "Neuilly-sur-Seine"],
+    arrondissements: ["Paris 01", "Paris 02", "Paris 03", "Paris 04", "Paris 05", "Paris 06", "Paris 07", "Paris 08", "Paris 09", "Paris 10", "Paris 11", "Paris 12", "Paris 13", "Paris 14", "Paris 15", "Paris 16", "Paris 17", "Paris 18", "Paris 19", "Paris 20", "92", "78"],
     types: ["Appartement", "Maison", "Villa", "Hôtel Particulier", "Loft", "Domaine", "Domaine équestre", "Châteaux", "Immeuble", "Manoir", "Terrain"],
   },
   en: {
     countries: ["France", "Monaco", "Switzerland", "Belgium"],
-    arrondissements: ["Paris 6th", "Paris 7th", "Paris 8th", "Paris 16th", "Neuilly-sur-Seine"],
+    arrondissements: ["Paris 01", "Paris 02", "Paris 03", "Paris 04", "Paris 05", "Paris 06", "Paris 07", "Paris 08", "Paris 09", "Paris 10", "Paris 11", "Paris 12", "Paris 13", "Paris 14", "Paris 15", "Paris 16", "Paris 17", "Paris 18", "Paris 19", "Paris 20", "92", "78"],
     types: ["Apartment", "House", "Villa", "Private Mansion", "Loft", "Estate", "Equestrian Estate", "Castle", "Building", "Manor", "Land"],
   },
 };

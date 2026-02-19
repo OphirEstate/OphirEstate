@@ -39,7 +39,7 @@ const approachKeys = ["mandate", "introduction", "verified"] as const;
 const approachIcons = [Key, Handshake, Shield];
 
 const countries = ["Tous", "France", "Monaco", "Suisse", "Belgique"];
-const arrondissements = ["Tous", "Paris 2ème", "Paris 3ème", "Paris 6ème", "Paris 7ème", "Paris 8ème", "Paris 16ème", "Neuilly-sur-Seine"];
+const arrondissements = ["Tous", "Paris 01", "Paris 02", "Paris 03", "Paris 04", "Paris 05", "Paris 06", "Paris 07", "Paris 08", "Paris 09", "Paris 10", "Paris 11", "Paris 12", "Paris 13", "Paris 14", "Paris 15", "Paris 16", "Paris 17", "Paris 18", "Paris 19", "Paris 20", "92", "78"];
 const types = ["Tous", "Appartement", "Maison", "Villa", "Hôtel Particulier", "Loft", "Domaine", "Domaine équestre", "Châteaux", "Immeuble", "Manoir", "Terrain"];
 const roomsOptions = ["Tous", "1+", "2+", "3+", "4+", "5+", "6+", "8+", "10+"];
 const bedroomsOptions = ["Tous", "1+", "2+", "3+", "4+", "5+"];
